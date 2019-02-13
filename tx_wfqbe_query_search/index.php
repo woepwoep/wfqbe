@@ -324,11 +324,6 @@ class tx_wfqbe_tx_wfqbe_query_searchwiz extends \TYPO3\CMS\Backend\Module\BaseSc
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/tx_wfqbe_query_search/index.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/tx_wfqbe_query_search/index.php']);
-}
-
-
 // Make instance:
 $SOBE = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_tx_wfqbe_query_searchwiz');
 $SOBE->initModule($MCONF);

@@ -321,11 +321,6 @@ class tx_wfqbe_query_insertwiz extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/tx_wfqbe_query_insert/index.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/tx_wfqbe_query_insert/index.php']);
-}
-
-
 // Make instance:
 $SOBE = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_query_insertwiz');
 $SOBE->initModule($MCONF);

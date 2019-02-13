@@ -442,9 +442,3 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     }
 
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/pi1/class.tx_wfqbe_pi1.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/pi1/class.tx_wfqbe_pi1.php']);
-}
-

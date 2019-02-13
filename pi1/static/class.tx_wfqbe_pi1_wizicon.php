@@ -55,10 +55,3 @@ class tx_wfqbe_pi1_wizicon {
 		return $LOCAL_LANG;
 	}
 }
-
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/pi1/static/class.tx_wfqbe_pi1_wizicon.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/wfqbe/pi1/static/class.tx_wfqbe_pi1_wizicon.php']);
-}
-
