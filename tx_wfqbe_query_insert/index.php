@@ -319,12 +319,3 @@ class tx_wfqbe_query_insertwiz extends \TYPO3\CMS\Backend\Module\BaseScriptClass
         }
     }
 }
-
-
-// Make instance:
-$SOBE = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_query_insertwiz');
-$SOBE->initModule($MCONF);
-
-
-$SOBE->main();
-$SOBE->printContent();

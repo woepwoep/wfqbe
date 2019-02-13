@@ -322,12 +322,3 @@ class tx_wfqbe_tx_wfqbe_query_searchwiz extends \TYPO3\CMS\Backend\Module\BaseSc
         }
     }
 }
-
-
-// Make instance:
-$SOBE = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_tx_wfqbe_query_searchwiz');
-$SOBE->initModule($MCONF);
-
-
-$SOBE->main();
-$SOBE->printContent();

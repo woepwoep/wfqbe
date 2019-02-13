@@ -325,12 +325,3 @@ class tx_wfqbe_tx_wfqbe_query_querywiz extends \TYPO3\CMS\Backend\Module\BaseScr
         //}
     }
 }
-
-
-// Make instance:
-$SOBE = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_tx_wfqbe_query_querywiz');
-$SOBE->initModule($MCONF);
-
-
-$SOBE->main();
-$SOBE->printContent();
