@@ -465,7 +465,6 @@ class tx_wfqbe_search
             $id = $value['form']['custom_id'];
 
         if ($value['form']['date2cal'] == 'si' && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('date2cal')) {
-            include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::siteRelPath('date2cal') . '/src/class.jscalendar.php');
             // init jscalendar class
             $JSCalendar = JSCalendar::getInstance();
             $JSCalendar->setInputField($id);

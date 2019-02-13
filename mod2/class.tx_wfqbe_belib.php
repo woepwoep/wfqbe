@@ -21,8 +21,6 @@
  * BE module
  *
  */
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . 'pi1/class.tx_wfqbe_pi1.php');
-
 class tx_wfqbe_belib
 {
 

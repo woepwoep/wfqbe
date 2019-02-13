@@ -21,11 +21,6 @@ $MCONF['name'] = 'xMOD_tx_wfqbe_tx_wfqbe_query_insertwiz';
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_insert/locallang.xml');
 
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_insert/locallang.xml');
-//includo il file form_generator.php. La prima parte dell'argomento mi da il path della estensione
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "tx_wfqbe_query_insert/class.tx_wfqbe_insertform_generator.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_connect.php");
-// ....(But no access check here...)
-// DEFAULT initialization of a module [END]
 
 class tx_wfqbe_query_insertwiz extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {

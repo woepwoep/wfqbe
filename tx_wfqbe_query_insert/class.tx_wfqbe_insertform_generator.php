@@ -17,9 +17,6 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_array2xml.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_xml2array.php");
-
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_insert/locallang.xml');
 
 class tx_wfqbe_insertform_generator
@@ -853,8 +850,6 @@ class tx_wfqbe_insertform_generator
      */
     function showPHPFunction($key, $form)
     {
-        //$html = 'require_once: <input type="text" name="wfqbe[fields]['.$key.'][form][require_once]" value="'.$form['require_once'].'" />';
-        //$html .= '<br />Function: <input type="text" name="wfqbe[fields]['.$key.'][form][function]" value="'.$form['function'].'" />';
         $html = 'PHP Code: <textarea cols="60" rows="10" name="wfqbe[fields][' . $key . '][form][code]">' . $form['code'] . '</textarea>';
         return $html;
     }
@@ -869,8 +864,6 @@ class tx_wfqbe_insertform_generator
      */
     function showRawHTML($key, $form)
     {
-        //$html = 'require_once: <input type="text" name="wfqbe[fields]['.$key.'][form][require_once]" value="'.$form['require_once'].'" />';
-        //$html .= '<br />Function: <input type="text" name="wfqbe[fields]['.$key.'][form][function]" value="'.$form['function'].'" />';
         $html = 'Raw HTML code: <textarea cols="60" rows="10" name="wfqbe[fields][' . $key . '][form][code]">' . $form['code'] . '</textarea>';
         return $html;
     }

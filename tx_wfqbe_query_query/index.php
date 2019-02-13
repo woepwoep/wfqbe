@@ -22,11 +22,6 @@ $MCONF['name'] = 'xMOD_tx_wfqbe_tx_wfqbe_query_querywiz';
 
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_query/locallang.xml');
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "tx_wfqbe_query_query/class.tx_wfqbe_queryform_generator.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_connect.php");
-// ....(But no access check here...)
-// DEFAULT initialization of a module [END]
-
 class tx_wfqbe_tx_wfqbe_query_querywiz extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {
     var $P;

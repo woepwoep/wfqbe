@@ -26,15 +26,6 @@
  *
  * @author    Mauro Lorenzutti <mauro.lorenzutti@webformat.com>
  */
-
-
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_xml2array.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_utils.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_connect.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "pi1/class.tx_wfqbe_results.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "tx_wfqbe_query_query/class.tx_wfqbe_queryform_generator.php");
-
-
 class tx_wfqbe_api_query
 {
     var $extKey = 'wfqbe';    // The extension key.

@@ -21,16 +21,6 @@
  *
  */
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_xml2array.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_utils.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_connect.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "tx_wfqbe_query_query/class.tx_wfqbe_queryform_generator.php");
-
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "pi1/class.tx_wfqbe_results.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "pi1/class.tx_wfqbe_search.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "pi1/class.tx_wfqbe_insert.php");
-
-
 class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 {
     var $prefixId = 'tx_wfqbe_pi1';        // Same as class name
@@ -115,8 +105,6 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
          * Instantiate the xajax object and configure it
          */
         if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('xajax') && $this->conf['enableXAJAX'] == 1) {
-            // Include xaJax
-            require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('xajax') . 'class.tx_xajax.php');
             // Make the instance
             $this->xajax = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_xajax');
             // nothing to set, we send to the same URI

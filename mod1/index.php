@@ -23,8 +23,6 @@ $MCONF['name'] = 'web_txwfqbeM1';
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/mod1/locallang.xml');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_connect.php");
-
 /**
  * Module 'DB structure' for the 'wfqbe' extension.
  *

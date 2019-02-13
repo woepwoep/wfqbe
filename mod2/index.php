@@ -22,9 +22,6 @@ $MCONF['name'] = 'web_txwfqbeM2';
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/mod2/locallang.xml');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . 'mod2/class.tx_wfqbe_belib.php');
-
-
 /**
  * Module 'DB management' for the 'wfqbe' extension.
  *

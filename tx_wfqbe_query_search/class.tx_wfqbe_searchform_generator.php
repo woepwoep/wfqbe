@@ -17,9 +17,6 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_array2xml.php");
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_xml2array.php");
-
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_search/locallang.xml');
 
 

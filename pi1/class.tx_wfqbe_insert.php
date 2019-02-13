@@ -186,7 +186,6 @@ class tx_wfqbe_insert
 
             // Sends an email to site administrator
             if ($results['inserted'] == 1 && $this->conf['email.']['send_email'] == 1 && $this->conf['email.']['notify_email'] != '') {
-                require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . 'lib/class.tx_wfqbe_mail.php');
                 $mail = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_mail');
                 $mail->init($this->cObj, $this->conf, $this->pibase->piVars, $this);
                 $sent = $mail->sendEmail($this->conf['email.']['notify_email'], $this->conf['email.']['notify_subject'], $results, 'ADMIN');
@@ -194,7 +193,6 @@ class tx_wfqbe_insert
 
             // Sends a confirmation email to user
             if ($results['inserted'] == 1 && $this->conf['email.']['send_email_user'] == 1 && $this->conf['email.']['field_email_user'] != '' && \TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($this->pibase->piVars[$this->conf['email.']['field_email_user']])) {
-                require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . 'lib/class.tx_wfqbe_mail.php');
                 $mail = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_mail');
                 $mail->init($this->cObj, $this->conf, $this->pibase->piVars, $this);
                 $sent = $mail->sendEmail($this->pibase->piVars[$this->conf['email.']['field_email_user']], $this->conf['email.']['notify_subject_user'], $results, 'USER');
@@ -712,7 +710,6 @@ class tx_wfqbe_insert
     function showCalendar($value, $name, $id, &$blockTemplate)
     {
         if ($value['form']['date2cal'] == 'si' && t3lib_extMgm::isLoaded('date2cal')) {
-            include_once(t3lib_extMgm::siteRelPath('date2cal') . '/src/class.jscalendar.php');
             // init jscalendar class
             $JSCalendar = JSCalendar::getInstance();
             $JSCalendar->setInputField($id);
@@ -2042,7 +2039,6 @@ class tx_wfqbe_insert
      */
     function checkIDRestricting($h, $idRestrictQuery, $editing_record)
     {
-        require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . '/Classes/class.tx_wfqbe_results.php';
         $API = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_results');
         $tsMarkers = $API->getTSMarkers($idRestrictQuery);
         if (is_array($tsMarkers)) {
