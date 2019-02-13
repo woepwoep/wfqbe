@@ -17,8 +17,6 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility:: extPath('adodb') . 'adodb/adodb.inc.php');
-
 class tx_wfqbe_connect
 {
     var $extKey = 'wfqbe'; // The extension key.
@@ -30,7 +28,7 @@ class tx_wfqbe_connect
             $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
             if (!isset($GLOBALS['WFQBE'][$row['credentials']])) {
                 $h = $this->connectNow($row['credentials'], $row['dbname']);
-                $h->SetFetchMode(ADODB_FETCH_BOTH);
+                //RW $h->SetFetchMode(ADODB_FETCH_BOTH);
                 $GLOBALS['WFQBE'][$row['credentials']] = $h;
             } else {
                 $h = $GLOBALS['WFQBE'][$row['credentials']];

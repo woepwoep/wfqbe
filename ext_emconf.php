@@ -11,7 +11,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
     'title' => 'DB Integration',
-    'description' => 'This extension allows to generate queries (with a little sql knowledge), search forms and insert forms to generic databases through a wizard. The results visualization is template-based and fully configurable via TS. The extension uses ADOdb.',
+    'description' => 'This extension allows to generate queries (with a little sql knowledge), search forms and insert forms to generic databases through a wizard. The results visualization is template-based and fully configurable via TS.',
     'category' => 'plugin',
     'version' => '7.6.4',
     'state' => 'beta',
@@ -25,7 +25,6 @@ $EM_CONF[$_EXTKEY] = array(
         array(
             'depends' =>
                 array(
-                    'adodb' => '',
                     'php' => '5.5.0-7.0.0',
                     'typo3' => '7.6.0-7.6.999',
                 ),

@@ -21,8 +21,6 @@ require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe'
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . "lib/class.tx_wfqbe_api_xml2array.php");
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('wfqbe') . 'mod2/class.tx_wfqbe_belib.php');
 
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('adodb') . 'adodb/adodb.inc.php');
-
 class tx_wfqbe_queryform_generator
 {
     var $extKey = 'wfqbe';    // The extension key.
