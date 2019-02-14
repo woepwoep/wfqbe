@@ -89,11 +89,11 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 
         //controllo se è stato definito un css. Se si lo utilizzo altrimenti prendo quello di default
         if ($this->conf['style'] != "") {
-            $css = $this->cObj->fileResource($this->conf["style"]);
+            $css = file_get_contents($this->conf["style"]);
             $GLOBALS["TSFE"]->setCSS($this->extKey, $css);
         }
 
-        $js = $this->cObj->fileResource('EXT:wfqbe/res/functions.js');
+        $js = $GLOBALS['TSFE']->tmpl->getFileName('EXT:wfqbe/res/functions.js');
         $GLOBALS["TSFE"]->setJS($this->extKey, $js);
         unset($css, $js);
 

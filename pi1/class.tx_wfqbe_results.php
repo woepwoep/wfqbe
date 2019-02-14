@@ -300,7 +300,7 @@ class tx_wfqbe_results
         if ($this->pibase->templateContent != '')
             $file = $this->pibase->templateContent;
         else
-            $file = $this->cObj->fileResource($this->conf['template']);
+            $file = file_get_contents($this->conf['template']);
         $emptyTemplate = trim($this->cObj->getSubpart($file, "EMPTY_RESULT_TEMPLATE"));
 
         foreach ($row as $key => $value)
@@ -386,7 +386,7 @@ class tx_wfqbe_results
         if ($this->pibase->beMode != '') {
             $file = @file_get_contents(PATH_site . $GLOBALS['TSFE']->tmpl->getFileName($this->conf['template']));
         }else {
-            $file = $this->cObj->fileResource($this->conf['template']);
+            $file = file_get_contents($this->conf['template']);
         }
 
         if ($this->pibase->piVars['wfqbe_select_wizard'] != '') {

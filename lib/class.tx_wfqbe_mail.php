@@ -42,7 +42,7 @@ class tx_wfqbe_mail
 
     function sendEmail($to, $subject, $results, $mode = 'ADMIN')
     {
-        $file = $this->cObj->fileResource($this->conf['email.']['template']);
+        $file = file_get_contents($this->conf['email.']['template']);
         $content = $this->cObj->getSubpart($file, '###MAIL_' . $mode . '_INSERT###');
         $mA = array();
         $sent = 0;

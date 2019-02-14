@@ -80,7 +80,7 @@ class tx_wfqbe_insert
         if ($this->pibase->beMode != '')
             $file = @file_get_contents(PATH_site . $GLOBALS['TSFE']->tmpl->getFileName($this->conf['template']));
         else
-            $file = $this->cObj->fileResource($this->conf['template']);
+            $file = file_get_contents($this->conf['template']);
         $this->row = $row;
         $this->blocks = $this->getBlocks($row);
         $this->blocks['query_row'] = $row;
@@ -313,7 +313,7 @@ class tx_wfqbe_insert
             if ($this->pibase->piVars['wfqbe_destination_id'] != "") {
                 $this->blocks = $this->getBlocks($connection_obj['row']);
                 if (is_array($this->blocks['fields'])) {
-                    $file = $this->cObj->fileResource($this->conf['template']);
+                    $file = file_get_contents($this->conf['template']);
                     $file = $this->cObj->getSubpart($file, '###INSERT_TEMPLATE###');
                     $blockTemplate = $this->cObj->getSubpart($file, '###FIELD_BLOCK###');
                     $hiddenTemplate = $this->cObj->getSubpart($file, '###HIDDEN_BLOCK###');

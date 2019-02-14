@@ -60,7 +60,7 @@ class tx_wfqbe_search
         if ($this->pibase->beMode != '')
             $file = @file_get_contents(PATH_site . $GLOBALS['TSFE']->tmpl->getFileName($this->conf['template']));
         else
-            $file = $this->cObj->fileResource($this->conf['template']);
+            $file = file_get_contents($this->conf['template']);
         $file = $this->cObj->getSubpart($file, '###SEARCH_TEMPLATE###');
 
         // Search module creation
@@ -661,7 +661,7 @@ class tx_wfqbe_search
 
             $blocks = $this->getBlocks($connection_obj['row'], $connection_obj['conn']);
             if (is_array($blocks)) {
-                $file = $this->cObj->fileResource($this->conf['template']);
+                $file = file_get_contents($this->conf['template']);
                 $file = $this->cObj->getSubpart($file, '###SEARCH_TEMPLATE###');
                 $blockTemplate = $this->cObj->getSubpart($file, '###FIELD_BLOCK###');
 
