@@ -13,7 +13,11 @@ $TCA['tt_content']['types']['list']['subtypes_addlist']['wfqbe_pi1'] = 'pi_flexf
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('wfqbe_pi1', 'FILE:EXT:wfqbe/flexform_ds.xml');
 
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(Array('LLL:EXT:wfqbe/locallang_db.xml:tt_content.list_type_pi1', 'wfqbe_pi1'), 'list_type');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(
+    Array('LLL:EXT:wfqbe/locallang_db.xml:tt_content.list_type_pi1', 'wfqbe_pi1'),
+    'list_type',
+    'wfqbe'
+);
 
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('wfqbe', "pi1/static/", "DB Integration");
