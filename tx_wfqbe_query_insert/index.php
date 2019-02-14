@@ -178,7 +178,6 @@ class tx_wfqbe_query_insertwiz extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                 $this->pageinfo = array('title' => '[root-level]', 'uid' => 0, 'pid' => 0);
             }
 
-            //$headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.\TYPO3\CMS\Core\Utility\GeneralUtility::fixed_lgd_pre($this->pageinfo['_thePath'],50);
             $headerSection = "";
             $this->content .= "<div id=\"tx_wfqbe_insertform\">";
             $this->content .= $this->doc->startPage($LANG->getLL('title'));
