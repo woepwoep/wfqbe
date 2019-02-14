@@ -20,7 +20,7 @@
 
 $MCONF['name'] = 'web_txwfqbeM1';
 
-$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/mod1/locallang.xml');
+$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/mod1_locallang.xml');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
 /**
@@ -73,11 +73,6 @@ class tx_wfqbe_module1 extends \TYPO3\CMS\Backend\Module\BaseScriptClass
     function main()
     {
         global $BE_USER, $LANG, $BACK_PATH, $TCA_DESCR, $TCA, $CLIENT, $TYPO3_CONF_VARS;
-
-        // Access check!
-        // The page will show only if there is a valid page and if this page may be viewed by the user
-        //$this->pageinfo = \TYPO3\CMS\Backend\Utility\BackendUtility::readPageAccess($this->id,$this->perms_clause);
-        //$access = is_array($this->pageinfo) ? 1 : 0;
 
         if (true) {
 
@@ -225,6 +220,7 @@ class tx_wfqbe_module1 extends \TYPO3\CMS\Backend\Module\BaseScriptClass
             $content .= '<option value="0"' . $selected . '>' . $LANG->getLL('typo3_credentials') . '</option>';
         }
 
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit mod1 1,'mod1');exit(1);
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_credentials', 'deleted=0' . $where);
         if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
             while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {

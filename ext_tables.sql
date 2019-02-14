@@ -1,7 +1,7 @@
 #
-# Table structure for table 'tx_wfqbe_credentials'
+# Table structure for table 'tx_wfqbe_domain_model_credentials'
 #
-CREATE TABLE tx_wfqbe_credentials (
+CREATE TABLE tx_wfqbe_domain_model_credentials (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -28,9 +28,9 @@ CREATE TABLE tx_wfqbe_credentials (
 
 
 #
-# Table structure for table 'tx_wfqbe_query'
+# Table structure for table 'tx_wfqbe_domain_model_query'
 #
-CREATE TABLE tx_wfqbe_query (
+CREATE TABLE tx_wfqbe_domain_model_query (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,
@@ -56,9 +56,9 @@ CREATE TABLE tx_wfqbe_query (
 
 
 #
-# Table structure for table 'tx_wfqbe_backend'
+# Table structure for table 'tx_wfqbe_domain_model_backend'
 #
-CREATE TABLE tx_wfqbe_backend (
+CREATE TABLE tx_wfqbe_domain_model_backend (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
 	tstamp int(11) DEFAULT '0' NOT NULL,

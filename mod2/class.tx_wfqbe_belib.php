@@ -62,6 +62,7 @@ class tx_wfqbe_belib
             $where .= ' AND uid=' . $backend_id;
         }
 
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit mod2 1,'searchformgen');exit(1);
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_backend', 'deleted=0 AND hidden=0 AND pid=' . $this->page_id . $where, '', 'sorting ASC');
         if ($res !== false && $GLOBALS['TYPO3_DB']->sql_num_rows($res) > 1) {
             $content = $this->getAvailableBackend($res);
@@ -225,7 +226,7 @@ class tx_wfqbe_belib
                 if ($backend['export_mode'] != '' && $_GET['type'] == 181) {
                     //$PI1->conf['ff_data']['csvDownload'] = 1;
                     $PI1->conf['export_mode'] = $backend['export_mode'];
-                    $PI1->conf['template'] = 'EXT:wfqbe/pi1/wfqbe_' . $backend['export_mode'] . '_template.html';
+                    $PI1->conf['template'] = 'EXT:wfqbe/Resources/Private/Templates/wfqbe_' . $backend['export_mode'] . '_template.html';
                     $PI1->conf['defLayout'] = 0;
                     $PI1->conf['exportAll'] = 1;
                 }
@@ -333,6 +334,8 @@ class tx_wfqbe_belib
         // Generates the constants/config and hierarchy info for the template.
         $GLOBALS['TSFE']->tmpl->runThroughTemplates($rootline, 0);
         $GLOBALS['TSFE']->tmpl->generateConfig();
+
+\TYPO3\CMS\Core\Utility\DebugUtility::debug($GLOBALS['TSFE']->tmpl,'tmpl');exit(1);
 
         if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_wfqbe_pi1.'])) {
             $result = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_wfqbe_pi1.'];

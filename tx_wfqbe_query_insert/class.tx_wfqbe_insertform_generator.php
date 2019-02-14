@@ -17,7 +17,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_insert/locallang.xml');
+$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/insert_locallang.xml');
 
 class tx_wfqbe_insertform_generator
 {
@@ -345,6 +345,7 @@ class tx_wfqbe_insertform_generator
             $label['def'] = $def;
         }
         $html = 'Label: <input type="text" name="wfqbe[fields][' . $key . '][form][label][def]" value="' . $label['def'] . '" />';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit insert_formgen 1,'insert_formgen');exit(1);
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_language', 'hidden=0', '', 'title ASC');
         while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
             $html .= '<br />&nbsp;&nbsp;&nbsp;Label (' . $row['title'] . '): <input type="text" name="wfqbe[fields][' . $key . '][form][label][' . $row['uid'] . ']" value="' . $label[$row['uid']] . '" />';
@@ -365,6 +366,7 @@ class tx_wfqbe_insertform_generator
             $label['def'] = $def;
         }
         $html = '<br />-----<br />Help text: <textarea cols="80" name="wfqbe[fields][' . $numForm . '][help][def]">' . $label['def'] . '</textarea>';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit insert_formgen 2,'insert_formgen');exit(1);
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_language', 'hidden=0', '', 'title ASC');
         while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
             $html .= '<br />&nbsp;&nbsp;&nbsp;Help text (' . $row['title'] . '): <textarea cols="80" name="wfqbe[fields][' . $numForm . '][help][' . $row['uid'] . ']">' . $label[$row['uid']] . '</textarea>';
@@ -965,7 +967,8 @@ class tx_wfqbe_insertform_generator
                 $q_type = 'insert';
                 break;
         }
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, title', 'tx_wfqbe_query', 'deleted!=1 AND type="' . $q_type . '"', '', 'title');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit insert_formgen 3','insert_formgen');exit(1);
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid, title', 'tx_wfqbe_domain_model_query', 'deleted!=1 AND type="' . $q_type . '"', '', 'title');
         $html = '';
 
         if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
@@ -1059,7 +1062,8 @@ class tx_wfqbe_insertform_generator
 
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');
         //estraggo la query salvata dal database (modalità xml) e la converto in array
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('insertq', 'tx_wfqbe_query', 'tx_wfqbe_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_query.deleted!=1', '', '', '');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit insert_formgen 4','insert_formgen');exit(1);
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('insertq', 'tx_wfqbe_domain_model_query', 'tx_wfqbe_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_query.deleted!=1', '', '', '');
         $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
         $this->blocks = $API->xml2array($row["insertq"]);
     }

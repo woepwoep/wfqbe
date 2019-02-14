@@ -18,7 +18,7 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43(
     'wfqbe',
-    'pi1/class.tx_wfqbe_pi1.php',
+    'Classes/Controller/QueryController.php',
     '_pi1',
     'list_type',
     0
@@ -28,3 +28,6 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
 $TYPO3_CONF_VARS['BE']['AJAX']['tx_wfqbe_mod1_ajax::fieldTypeHelp'] = 'typo3conf/ext/wfqbe/mod1/class.tx_wfqbe_mod1_ajax.php:tx_wfqbe_mod1_ajax->ajaxFieldTypeHelp';
 
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+    '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:wfqbe/Configuration/PageTS/NewContentElementWizard.ts">'
+);

@@ -19,7 +19,7 @@
 
 $MCONF['name'] = 'web_txwfqbeM2';
 
-$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/mod2/locallang.xml');
+$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/mod2_locallang.xml');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
 
 /**

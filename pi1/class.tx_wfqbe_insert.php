@@ -304,7 +304,7 @@ class tx_wfqbe_insert
     {
         $content = "";
         if ($this->pibase->piVars['wfqbe_this_query'] != "") {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->pibase->piVars['wfqbe_this_query']) . ' AND ';
+            $where = 'tx_wfqbe_domain_model_query.uid=' . intval($this->pibase->piVars['wfqbe_this_query']) . ' AND ';
 
             // Creates the connection to the remote DB
             $CONN = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_connect");
@@ -638,7 +638,6 @@ class tx_wfqbe_insert
             else
                 $path = $this->conf['insert.']['select_wizard.']['icon'];
             $rA['###INSERT_SELECT_WIZARD###'] = "<a href='#' onclick=\"javascript:submitActions(); document.getElementById('wfqbe_select_wizard').value='" . $key . "'; document.getElementById('" . $this->conf['ff_data']['div_id'] . "_form').submit(); return false;\"><img src='" . \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $path . "' /></a>";
-            //$rA['###INSERT_SELECT_WIZARD###'] = '<input id="'.$name.'" type="image" name="tx_wfqbe_pi1[wfqbe_select_wizard]" value="'.$key.'" src="'.\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_URL').$path.'" />';
         } else {
             $rA['###INSERT_SELECT_WIZARD###'] = '';
         }
@@ -856,6 +855,7 @@ class tx_wfqbe_insert
             }
         }
 
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 1,'searchformgen');exit(1);
         $query = 'SELECT ' . $select . ' FROM ' . $value['form']['table'] . ' WHERE ' . $value['form']['field_insert'] . ' IN (' . $uids . ')';
         $ris = $h->Execute($query);
 
@@ -983,6 +983,7 @@ class tx_wfqbe_insert
                 $where = 'WHERE ' . $this->substituteInsertMarkers($value['form']['where']) . " ";
             }
             $orderby = $value['form']['field_orderby'] != '' ? ($value['form']['field_orderby'] . ' ' . $value['form']['field_orderby_mod']) : $value['form']['field_view'];
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 2,'searchformgen');exit(1);
             $query = 'SELECT ' . $value['form']['field_view'] . ', ' . $value['form']['field_insert'] . ' FROM ' . $value['form']['table'] . ' ' . $where . 'ORDER BY ' . $orderby;
             $ris = $h->Execute($query);
 
@@ -1035,6 +1036,7 @@ class tx_wfqbe_insert
                 $where = 'WHERE ' . $this->substituteInsertMarkers($value['form']['where']) . " ";
             }
             $orderby = $value['form']['field_orderby'] != '' ? ($value['form']['field_orderby'] . ' ' . $value['form']['field_orderby_mod']) : $value['form']['field_view'];
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 3,'searchformgen');exit(1);
             $query = 'SELECT ' . $value['form']['field_view'] . ', ' . $value['form']['field_insert'] . ' FROM ' . $value['form']['table'] . ' ' . $where . 'ORDER BY ' . $orderby;
             $ris = $h->Execute($query);
             $i = 0;
@@ -1105,6 +1107,7 @@ class tx_wfqbe_insert
             }
 
             $orderby = $value['form']['field_orderby'] != '' ? ($value['form']['field_orderby'] . ' ' . $value['form']['field_orderby_mod']) : $value['form']['field_view'];
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 4,'searchformgen');exit(1);
             $query = 'SELECT ' . $value['form']['field_view'] . ', ' . $value['form']['field_insert'] . $select . ' FROM ' . $value['form']['table'] . ' ' . $where . 'ORDER BY ' . $orderby;
             $ris = $h->Execute($query);
 
@@ -1337,6 +1340,7 @@ class tx_wfqbe_insert
 
                     if (is_array($value) && $value[0] != '') {
                         if ($blocks['fields'][$key]['form']['source'] == 'db' || $blocks['fields'][$key]['type'] == 'relation') {
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 5,'searchformgen');exit(1);
                             $query = 'SELECT ' . $blocks['fields'][$key]['form']['field_view'] . ' FROM ' . $blocks['fields'][$key]['form']['table'] . ' WHERE ' . $blocks['fields'][$key]['form']['field_insert'] . ' IN (' . implode(",", $value) . ')';
                             $res = $h->Execute($query);
                             if ($res !== false)
@@ -1362,6 +1366,7 @@ class tx_wfqbe_insert
                         } elseif (($blocks['fields'][$key]['form']['source'] == 'db' || $blocks['fields'][$key]['type'] == 'relation') && $value != '' && !is_array($value)) {
                             if (!is_numeric($value))
                                 $value = addslashes($value);
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 6,'searchformgen');exit(1);
                             $query = 'SELECT ' . $blocks['fields'][$key]['form']['field_view'] . ' FROM ' . $blocks['fields'][$key]['form']['table'] . ' WHERE ' . $blocks['fields'][$key]['form']['field_insert'] . '="' . $value . '"';
                             $res = $h->Execute($query);
                             $mA['###INSERT_VALUE###'] = '';
@@ -1497,6 +1502,7 @@ class tx_wfqbe_insert
                     $id = intval($this->pibase->piVars['wfqbe_id_field']);
             }
 
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 7,'searchformgen');exit(1);
             $query = "SELECT * FROM " . $blocks['table'] . " WHERE " . $blocks['ID_field'] . "=" . $id;
             $res = $h->Execute($query);
             if ($res !== false && $res->recordCount() == 1)
@@ -1629,6 +1635,7 @@ class tx_wfqbe_insert
                         $results['id'] = $id;
                         unset($results['insert_data']);
 
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 8,'searchformgen');exit(1);
                         $query = "SELECT * FROM " . $blocks['table'] . " WHERE " . $blocks['ID_field'] . "=" . $id;
                         $res = $h->Execute($query);
                         if ($res !== false && $res->recordCount() == 1)
@@ -1829,6 +1836,7 @@ class tx_wfqbe_insert
     {
         if ($id == '')
             $id = intval($this->pibase->piVars[$this->blocks['ID_field']]);
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-insert 9,'searchformgen');exit(1);
         $query = "SELECT * FROM " . $this->blocks['table'] . " WHERE " . $this->blocks['ID_field'] . "=" . $id;
         $res = $h->Execute($query);
         if ($res === false)

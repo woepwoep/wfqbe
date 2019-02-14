@@ -17,13 +17,37 @@
  * The TYPO3 project - inspiring people to share!
  */
 
+use \RedSeadog\Wfqbe\Domain\Model\Query;
+use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+
 class tx_wfqbe_connect
 {
+    /**
+     * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
+     */
+    protected $QueryRepository = null;
+
     var $extKey = 'wfqbe'; // The extension key.
+
+    public function injectQueryRepository(QueryRepository $queryRepository)
+    {
+	$this->queryRepository = $queryRepository;
+    }
+
 
     function connect($where)
     {
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug($where,'class.tx_wfqbe_connect');exit(1);
+	$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_wfqbe_domain_model_query');
+	$queryBuilder->select('*')
+	->from('tx_wfqbe_domain_model_query')
+	->where($where);
+\TYPO3\CMS\Core\Utility\DebugUtility::debug($queryBuilder->getSQL(),'sql');exit(1);
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-connect 1','queryformgen');exit(1);
+        $res = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
         if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
             $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
             if (!isset($GLOBALS['WFQBE'][$row['credentials']])) {
@@ -65,6 +89,7 @@ class tx_wfqbe_connect
                 return false;
             }
         } else {
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-connect 2','queryformgen');exit(1);
             $res2 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('host,dbms,username,passw,conn_type,setdbinit,dbname,type,connection_uri,connection_localconf', 'tx_wfqbe_credentials', 'tx_wfqbe_credentials.uid=' . intval($credentials), '', '', '');
             while ($row2 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res2)) {
                 if ($row2['type'] == 'localconf') {

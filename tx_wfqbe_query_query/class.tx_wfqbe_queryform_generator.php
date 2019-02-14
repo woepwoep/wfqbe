@@ -121,7 +121,8 @@ class tx_wfqbe_queryform_generator
 
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');
         //estraggo la query salvata dal database (modalita' xml) e la converto in array
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('query', 'tx_wfqbe_query', 'tx_wfqbe_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_query.deleted!=1', '', '', '');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit queryformgen 1','queryformgen');exit(1);
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('query', 'tx_wfqbe_domain_model_query', 'tx_wfqbe_domain_model_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_domain_model_query.deleted!=1', '', '', '');
         $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
         $saveXml = $API->xml2array($row["query"]);
         $saveXml = $saveXml['contentwfqbe'];
@@ -1082,6 +1083,7 @@ class tx_wfqbe_queryform_generator
                 continue;
 
             //sezione select
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit queryformgen 2','queryformgen');exit(1);
             $query .= "SELECT";
             $query .= " ";
             //se e' stata selezionata la clausola distinct la aggiungo ma se e' stata selezionata la clausola all non la agguingo perche' per lo

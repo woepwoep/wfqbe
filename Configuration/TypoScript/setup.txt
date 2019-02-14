@@ -1,7 +1,6 @@
-
 plugin.tx_wfqbe_pi1 {
-	template = EXT:wfqbe/pi1/wfqbe_template.html
-	style = EXT:wfqbe/pi1/stile.css
+	template = EXT:wfqbe/Resources/Private/Templates/wfqbe_template.html
+	style = EXT:wfqbe/Resources/Public/Css/stile.css
 	defLayout = 0
 	debugQuery = 0
 	wrapInBaseClass = 1
@@ -21,16 +20,16 @@ plugin.tx_wfqbe_pi1 {
 		pageConfirmation = 1
 		requiredSymbol = *
 		add_new	{
-			icon = EXT:wfqbe/res/add.gif
+			icon = EXT:wfqbe/Resources/Public/Icons/add.gif
 		}
 		select_wizard	{
-			icon = EXT:wfqbe/res/open.gif
+			icon = EXT:wfqbe/Resources/Public/Icons/open.gif
 		}
 		edit_wizard	{
-			icon = EXT:wfqbe/res/edit.gif
+			icon = EXT:wfqbe/Resources/Public/Icons/edit.gif
 		}
 		delete_wizard	{
-			icon = EXT:wfqbe/res/delete.gif
+			icon = EXT:wfqbe/Resources/Public/Icons/delete.gif
 		}
 		
 		help_link = ?
@@ -49,7 +48,7 @@ plugin.tx_wfqbe_pi1 {
 		bcc = wfqbe@domain.com
 		notify_email = 
 		notify_subject = 
-		template = EXT:wfqbe/res/mail_template.html
+		template = EXT:wfqbe/Resources/Public/Templates/mail_template.html
 		send_email = 0
 		
 		send_email_user = 0
@@ -59,7 +58,7 @@ plugin.tx_wfqbe_pi1 {
 	
 	
 	backend {
-		template = EXT:wfqbe/res/backend_default_template.html
+		template = EXT:wfqbe/Resources/Public/Templates/backend_default_template.html
 	}
 	
 	
@@ -73,7 +72,7 @@ csv_wfqbe {
   typeNum = 181
 
   10 =< plugin.tx_wfqbe_pi1
-  10.template = EXT:wfqbe/pi1/wfqbe_csv_template.html
+  10.template = EXT:wfqbe/Resources/Public/Templates/wfqbe_csv_template.html
   10.defLayout = 0
   10.export_mode = csv
   10.exportAll = 1
@@ -82,7 +81,6 @@ csv_wfqbe {
   config {
     disableAllHeaderCode = 1
     additionalHeaders = Content-type:application/csv|Content-Disposition: attachment; filename=results.csv|Content-Transfer-Encoding:binary
-#    additionalHeaders = Content-type:application/xls|Content-Disposition: attachment; filename=results.xls|Content-Transfer-Encoding:binary
     xhtml_cleaning = 0
     admPanel = 0
   }

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
+		<header/>
+		<body>
+			<trans-unit id="tx_wfqbe_domain_model_credentials" xml:space="preserve">
+				<source>User credentials</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.title" xml:space="preserve">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.host" xml:space="preserve">
+				<source>Host</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.connection_uri" xml:space="preserve">
+				<source>Connection URI (ex. mysql://$user:$pwd@$server/$dbname?persist)</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.type" xml:space="preserve">
+				<source>Connection mode</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.type.I.0" xml:space="preserve">
+				<source>Standard</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.type.I.1" xml:space="preserve">
+				<source>Alternative URI</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.type.I.2" xml:space="preserve">
+				<source>Connection specified in LocalConfiguration.php</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.0" xml:space="preserve">
+				<source>MySql</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.1" xml:space="preserve">
+				<source>PostgreSQL</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.2" xml:space="preserve">
+				<source>MSSQL Server</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.3" xml:space="preserve">
+				<source>Oracle (oci8)</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.4" xml:space="preserve">
+				<source>MS Access</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.5" xml:space="preserve">
+				<source>Sybase</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms" xml:space="preserve">
+				<source>DBMS type</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.dbname" xml:space="preserve">
+				<source>DB name</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.username" xml:space="preserve">
+				<source>Username</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.passw" xml:space="preserve">
+				<source>Password</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type.I.0" xml:space="preserve">
+				<source>Connect</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type.I.1" xml:space="preserve">
+				<source>PConnect</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type.I.2" xml:space="preserve">
+				<source>NConnect</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type" xml:space="preserve">
+				<source>Connection type</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.setdbinit" xml:space="preserve">
+				<source>Connection SQL configuration</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_credentials.connection_localconf" xml:space="preserve">
+				<source>Select connection (if empty, please configure it in typo3conf/localconf.php)</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query" xml:space="preserve">
+				<source>Query table</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.title" xml:space="preserve">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.description" xml:space="preserve">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.query" xml:space="preserve">
+				<source>Query</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.search" xml:space="preserve">
+				<source>Search module</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.credentials" xml:space="preserve">
+				<source>User credentials</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.credentials.I.0" xml:space="preserve">
+				<source>Local TYPO3 DB</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.dbname" xml:space="preserve">
+				<source>Database name</source>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_pi1" xml:space="preserve">
+				<source>DB Integration</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.type" xml:space="preserve">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.insertq" xml:space="preserve">
+				<source>Insert form</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.type.I.0" xml:space="preserve">
+				<source>Select</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.type.I.1" xml:space="preserve">
+				<source>Insert / Edit</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.type.I.2" xml:space="preserve">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_query.searchinquery" xml:space="preserve">
+				<source>Results query</source>
+			</trans-unit>
+			<trans-unit id="sheet_general" xml:space="preserve">
+				<source>General</source>
+			</trans-unit>
+			<trans-unit id="sheet_results" xml:space="preserve">
+				<source>Results</source>
+			</trans-unit>
+			<trans-unit id="sheet_insert" xml:space="preserve">
+				<source>Insert</source>
+			</trans-unit>
+			<trans-unit id="sheet_search" xml:space="preserve">
+				<source>Search</source>
+			</trans-unit>
+			<trans-unit id="query" xml:space="preserve">
+				<source>Query record</source>
+			</trans-unit>
+			<trans-unit id="max_items_in_list" xml:space="preserve">
+				<source>Records for page</source>
+			</trans-unit>
+			<trans-unit id="debugQuery" xml:space="preserve">
+				<source>Debug query</source>
+			</trans-unit>
+			<trans-unit id="parameterCheck" xml:space="preserve">
+				<source>Execute query if the following parameter is not empty (eg. tx_wfqbe_pi1|submit means tx_wfqbe_pi1[submit])</source>
+			</trans-unit>
+			<trans-unit id="templateFile" xml:space="preserve">
+				<source>Template</source>
+			</trans-unit>
+			<trans-unit id="customTemplate" xml:space="preserve">
+				<source>Template type</source>
+			</trans-unit>
+			<trans-unit id="customTemplate.I.0" xml:space="preserve">
+				<source>From TypoScript</source>
+			</trans-unit>
+			<trans-unit id="customTemplate.I.1" xml:space="preserve">
+				<source>Default (Table based)</source>
+			</trans-unit>
+			<trans-unit id="customTemplate.I.2" xml:space="preserve">
+				<source>Custom</source>
+			</trans-unit>
+			<trans-unit id="customTemplate.I.3" xml:space="preserve">
+				<source>Fluid Template</source>
+			</trans-unit>
+			<trans-unit id="resultsPage" xml:space="preserve">
+				<source>Results page</source>
+			</trans-unit>
+			<trans-unit id="pageConfirmation" xml:space="preserve">
+				<source>Insert confirmation</source>
+			</trans-unit>
+			<trans-unit id="detailedPage" xml:space="preserve">
+				<source>Redirect page on update</source>
+			</trans-unit>
+			<trans-unit id="redirectQuery" xml:space="preserve">
+				<source>Redirect parameters</source>
+			</trans-unit>
+			<trans-unit id="deletedPage" xml:space="preserve">
+				<source>Redirect page on delete</source>
+			</trans-unit>
+			<trans-unit id="emptyResult" xml:space="preserve">
+				<source>Text for empty result</source>
+			</trans-unit>
+			<trans-unit id="summary" xml:space="preserve">
+				<source>Summary</source>
+			</trans-unit>
+			<trans-unit id="caption" xml:space="preserve">
+				<source>Caption</source>
+			</trans-unit>
+			<trans-unit id="csvDownload" xml:space="preserve">
+				<source>Provide CSV Download?</source>
+			</trans-unit>
+			<trans-unit id="div_id" xml:space="preserve">
+				<source>ID for the div container</source>
+			</trans-unit>
+			<trans-unit id="clear_cache" xml:space="preserve">
+				<source>Clear cache pages (comma separated uids list)</source>
+			</trans-unit>
+			<trans-unit id="div_search_result_id" xml:space="preserve">
+				<source>ID for the div that contains the results</source>
+			</trans-unit>
+			<trans-unit id="send_email" xml:space="preserve">
+				<source>Send email confirmation to administrator?</source>
+			</trans-unit>
+			<trans-unit id="notify_email" xml:space="preserve">
+				<source>Administrator notify email</source>
+			</trans-unit>
+			<trans-unit id="notify_subject" xml:space="preserve">
+				<source>Subject of the notify email to the administrator</source>
+			</trans-unit>
+			<trans-unit id="send_email_user" xml:space="preserve">
+				<source>Send email confirmation to user?</source>
+			</trans-unit>
+			<trans-unit id="field_email_user" xml:space="preserve">
+				<source>Form field containing email (field number!!!)</source>
+			</trans-unit>
+			<trans-unit id="notify_subject_user" xml:space="preserve">
+				<source>Subject of the notify email to the user</source>
+			</trans-unit>
+			<trans-unit id="mailTemplate" xml:space="preserve">
+				<source>Email template file</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend" xml:space="preserve">
+				<source>Backend management configuration</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.title" xml:space="preserve">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.description" xml:space="preserve">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.listq" xml:space="preserve">
+				<source>List query</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.detailsq" xml:space="preserve">
+				<source>Details queries</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.searchq" xml:space="preserve">
+				<source>Search query</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.insertq" xml:space="preserve">
+				<source>Insert query</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.typoscript" xml:space="preserve">
+				<source>Typoscript configuration</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.recordsforpage" xml:space="preserve">
+				<source>Records for page</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.searchq_position.I.0" xml:space="preserve">
+				<source>Bottom</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.searchq_position.I.1" xml:space="preserve">
+				<source>Top</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode" xml:space="preserve">
+				<source>Export mode</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.0" xml:space="preserve">
+				<source>Disabled</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.1" xml:space="preserve">
+				<source>Csv (comma separated values)</source>
+			</trans-unit>
+			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.2" xml:space="preserve">
+				<source>Xls (excel file)</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

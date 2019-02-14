@@ -93,7 +93,7 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
             $GLOBALS["TSFE"]->setCSS($this->extKey, $css);
         }
 
-        $js = $GLOBALS['TSFE']->tmpl->getFileName('EXT:wfqbe/res/functions.js');
+        $js = $GLOBALS['TSFE']->tmpl->getFileName('EXT:wfqbe/Resources/Public/JavaScript/functions.js');
         $GLOBALS["TSFE"]->setJS($this->extKey, $js);
         unset($css, $js);
 
@@ -182,6 +182,7 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
             if (strpos($this->conf['ff_data']['templateFile'], 'media:') !== false) {
                 $file = explode(':', $this->conf['ff_data']['templateFile']);
                 if (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($file[1])) {
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit QueryController 1','QueryController');exit(1);
                     $resDam = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_dam', 'uid=' . $file[1] . $this->cObj->enableFields('tx_dam'));
                     if ($resDam !== false && $GLOBALS['TYPO3_DB']->sql_num_rows($resDam) == 1) {
                         $rowDam = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resDam);
@@ -300,9 +301,9 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
             $this->cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer::class);
         }
 
-
         if ($this->piVars['wfqbe_add_new'] != '' && intval($this->piVars['wfqbe_add_new']) > 0) {
             $where = 'tx_wfqbe_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit QueryController 2','QueryController');exit(1);
             $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
             while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
                 $this->original_row = $row;
@@ -311,9 +312,10 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
         } elseif (isset($this->piVars['wfqbe_add_new'])) {
             unset($this->piVars['wfqbe_add_new']);
         }
-        //if ($this->piVars['wfqbe_select_wizard']!='' && intval($this->piVars['wfqbe_select_wizard'])>0)	{
+
         if ($this->piVars['wfqbe_select_wizard'] != '' && intval($this->piVars['wfqbe_select_wizard']) >= 0) {
             $where = 'tx_wfqbe_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit QueryController 3','QueryController');exit(1);
             $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
             while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
                 $this->original_row = $row;
@@ -327,26 +329,27 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
             unset($this->piVars['wfqbe_select_wizard']);
         }
 
-        $where = '';
+	$uid=-1;
         if ($this->piVars['wfqbe_results_query'] != '') {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->piVars['wfqbe_results_query']) . ' AND ';
+            $uid = intval($this->piVars['wfqbe_results_query']);
         } elseif ($this->piVars['wfqbe_add_new'] != '') {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->insertBlocks['fields'][$this->piVars['wfqbe_add_new']]['form']['add_new']) . ' AND ';
+            $uid = intval($this->insertBlocks['fields'][$this->piVars['wfqbe_add_new']]['form']['add_new']);
         } elseif (\TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($this->piVars['wfqbe_select_wizard'])) {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->insertBlocks['fields'][$this->piVars['wfqbe_select_wizard']]['form']['select_wizard']) . ' AND ';
+            $uid = intval($this->insertBlocks['fields'][$this->piVars['wfqbe_select_wizard']]['form']['select_wizard']);
         } else {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
+            $uid = intval($this->conf['ff_data']['queryObject']);
         }
 
-        // Create the connection to the remote DB
-        $CONN = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_connect");
-        $connection_obj = $CONN->connect($where);
+        // find uid in repository
+	$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+	$queryRepository = $objectManager->get('RedSeadog\\Wfqbe\\Domain\\Repository\\QueryRepository');
+        $res = $queryRepository->findByUid($uid);
 
-        if ($connection_obj !== false) {
+        if (!empty($res)) {
             if ($to_function == 'do_sGetForm')
-                $content .= $this->do_sGetForm($connection_obj["row"], $connection_obj["conn"], $form_built);
+                $content .= $this->do_sGetForm($res, $form_built);
             else
-                $content .= $this->do_sGetFormResult($connection_obj["row"], $connection_obj["conn"]);
+                $content .= $this->do_sGetFormResult($res);
         } else {
             $content .= '<div id="' . $this->conf['ff_data']['div_id'] . '">';
             $content .= "Connection failed. Please check your credentials and the dbname.";
@@ -373,20 +376,17 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     }
 
 
-    function do_sGetForm($row, $h, &$form_built)
+    function do_sGetForm($row, &$form_built)
     {
-        if ($row['type'] == 'search') {
+	$rowType = $row->getType();
+        if ($rowType == 'search') {
             // SEARCH
             $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_search");
             $SEARCH->main($this->conf, $this->cObj, $this);
-            $content = $SEARCH->do_sGetForm($row, $h, $form_built);
+            $content = $SEARCH->do_sGetForm($row, $form_built);
 
-        } elseif ($row['type'] == 'insert') {
+        } elseif ($rowType == 'insert') {
             // INSERT
-            /*$INSERT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_insert");
-            $INSERT->main($this->conf, $this->cObj, $this);
-            $content = $INSERT->do_sGetForm($row, $h);
-            */
         } else {
             return '';
         }
@@ -395,27 +395,29 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     }
 
 
-    function do_sGetFormResult($row, $h)
+    function do_sGetFormResult($row)
     {
-        if ($row['type'] == "insert") {
+	$rowType = $row->getType();
+        if ($rowType == "insert") {
             // INSERT
             $INSERT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_insert");
             $INSERT->main($this->conf, $this->cObj, $this);
-            $content = $INSERT->do_sGetFormResult($row, $h);
+            $content = $INSERT->do_sGetFormResult($row);
 
-        } elseif ($row['type'] == "search") {
+        } elseif ($rowType == "search") {
             // SEARCH
             $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_search");
             $SEARCH->main($this->conf, $this->cObj, $this);
-            $content = $SEARCH->do_sGetFormResult($row, $h);
+            $content = $SEARCH->do_sGetFormResult($row);
 
         } else {
             // SELECT
             $SELECT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_results");
             $SELECT->main($this->conf, $this->cObj, $this);
-            $content = $SELECT->do_sGetFormResult($row, $h);
+            $content = $SELECT->do_sGetFormResult($row);
         }
 
+//RW \TYPO3\CMS\Core\Utility\DebugUtility::debug($content,'do_sGetFormResult content');exit(1);
         return $content;
     }
 

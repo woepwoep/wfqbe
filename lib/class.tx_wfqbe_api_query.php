@@ -61,6 +61,7 @@ class tx_wfqbe_api_query
             $this->piVars = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_pi1');
 
         // Finding the query record into the database
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-api 1','queryformgen');exit(1);
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', 'uid=' . $query);
         if ($res !== false && $GLOBALS['TYPO3_DB']->sql_num_rows($res) == 1) {
             $this->query = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
@@ -79,6 +80,7 @@ class tx_wfqbe_api_query
     private function connect()
     {
         $where = 'tx_wfqbe_query.uid=' . intval($this->query['uid']) . ' AND ';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-api 2','queryformgen');exit(1);
 
         // Create the connection to the remote DB
         $CONN = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_connect");
@@ -142,6 +144,8 @@ class tx_wfqbe_api_query
         // Generates the constants/config and hierarchy info for the template.
         $template->runThroughTemplates($rootline, 0);
         $template->generateConfig();
+
+\TYPO3\CMS\Core\Utility\DebugUtility::debug($template,'template');exit(1);
 
         if (isset($template->setup['plugin.']['tx_wfqbe_pi1.'])) {
             $result = $template->setup['plugin.']['tx_wfqbe_pi1.'];

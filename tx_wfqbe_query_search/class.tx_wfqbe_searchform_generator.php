@@ -17,7 +17,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_search/locallang.xml');
+$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/search_locallang.xml');
 
 
 class tx_wfqbe_searchform_generator
@@ -251,11 +251,12 @@ class tx_wfqbe_searchform_generator
     {
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');
         // There are problems with the JOIN if using DBAL
-        //$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('q.query', 'tx_wfqbe_query AS s JOIN tx_wfqbe_query AS q ON s.searchinquery=q.uid', 's.uid="'.$var['uid'].'" AND s.deleted=0 AND q.deleted=0', '', '','');
-        $resS = $GLOBALS['TYPO3_DB']->exec_SELECTquery('searchinquery', 'tx_wfqbe_query', 'uid=' . intval($var['uid']) . ' AND deleted=0', '', '', '');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit searchformgen 1','searchformgen');exit(1);
+        $resS = $GLOBALS['TYPO3_DB']->exec_SELECTquery('searchinquery', 'tx_wfqbe_domain_model_query', 'uid=' . intval($var['uid']) . ' AND deleted=0', '', '', '');
         if ($GLOBALS['TYPO3_DB']->sql_num_rows($resS) == 1) {
             $rowS = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($resS);
-            $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('query', 'tx_wfqbe_query', 'uid=' . intval($rowS['searchinquery']) . ' AND deleted=0', '', '', '');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit searchformgen 2','searchformgen');exit(1);
+            $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('query', 'tx_wfqbe_domain_model_query', 'uid=' . intval($rowS['searchinquery']) . ' AND deleted=0', '', '', '');
             if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) == 1)
                 $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
         }
@@ -323,6 +324,7 @@ class tx_wfqbe_searchform_generator
         }
         // $html = 'Label: <input type="text" name="wfqbe[fields]['.$key.'][form][label][def]" value="'.$label['def'].'" />';
         $html = $GLOBALS['LANG']->getLL('label') . ' (default): <input type="text" name="wfqbe[fields][' . $key . '][form][label][def]" value="' . $label['def'] . '" />';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit searchformgen 3,'searchformgen');exit(1);
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'sys_language', 'hidden=0', '', 'title ASC');
         while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
             $html .= '<br />&nbsp;&nbsp;&nbsp;' . $GLOBALS['LANG']->getLL('label') . ' (' . $row['title'] . '): <input type="text" name="wfqbe[fields][' . $key . '][form][label][' . $row['uid'] . ']" value="' . $label[$row['uid']] . '" />';
@@ -660,7 +662,8 @@ class tx_wfqbe_searchform_generator
 
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');
         //estraggo la query salvata dal database (modalità xml) e la converto in array
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('search', 'tx_wfqbe_query', 'tx_wfqbe_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_query.deleted!=1', '', '', '');
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit searchformgen 4','searchformgen');exit(1);
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('search', 'tx_wfqbe_domain_model_query', 'tx_wfqbe_domain_model_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_domain_model_query.deleted!=1', '', '', '');
         $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
         $saveXml = $API->xml2array($row["search"]);
         //siccome per rispettare la sintassi xml aggiungo dei tag contenitori quando salvo(vedi funzione saveQuery) adesso estraggo solo

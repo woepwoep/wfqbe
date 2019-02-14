@@ -266,6 +266,7 @@ class tx_wfqbe_search
             if ($value['form']['where'] != "") {
                 $where = "WHERE " . $this->substituteSearchMarkers($value['form']['where']) . " ";
             }
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-search 1,'searchformgen');exit(1);
             $query = 'SELECT DISTINCT ' . $value['form']['field_view'] . ', ' . $value['form']['field_insert'] . ' FROM ' . $value['form']['table'] . ' ' . $where . 'ORDER BY ' . $value['form']['field_view'];
             $ris = $h->Execute($query);
 
@@ -341,6 +342,7 @@ class tx_wfqbe_search
             if ($value['form']['where'] != "") {
                 $where = "WHERE " . $this->substituteSearchMarkers($value['form']['where']) . " ";
             }
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-search 2,'searchformgen');exit(1);
             $query = 'SELECT DISTINCT ' . $value['form']['field_view'] . ', ' . $value['form']['field_insert'] . ' FROM ' . $value['form']['table'] . ' ' . $where . 'ORDER BY ' . $value['form']['field_view'];
             $ris = $h->Execute($query);
 
@@ -427,6 +429,7 @@ class tx_wfqbe_search
                 }
                 if ($value['form']['field_orderby'] != '' && $value['form']['field_orderby_mode'] != '')
                     $orderby = ' ORDER BY ' . $value['form']['field_orderby'] . ' ' . $value['form']['field_orderby_mode'];
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit pi1-search 3,'searchformgen');exit(1);
                 $query = 'SELECT DISTINCT ' . $value['form']['field_view'] . ', ' . $value['form']['field_insert'] . ' FROM ' . $value['form']['table'] . ' ' . $where . $orderby;
             }
 
@@ -652,7 +655,7 @@ class tx_wfqbe_search
         $content = "";
 
         if ($this->pibase->piVars['wfqbe_this_query'] != "") {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->pibase->piVars['wfqbe_this_query']) . ' AND ';
+            $where = 'tx_wfqbe_domain_model_query.uid=' . intval($this->pibase->piVars['wfqbe_this_query']) . ' AND ';
 
             // Creates the connection to the remote DB
             $CONN = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_connect");

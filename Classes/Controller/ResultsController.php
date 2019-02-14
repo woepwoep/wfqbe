@@ -1,4 +1,5 @@
 <?php
+
 /*
  *  Copyright notice
  *
@@ -16,6 +17,10 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Service\MarkerBasedTemplateService;
 
 /**
  * Search results class for the 'wfqbe' extension.
@@ -58,30 +63,33 @@ class tx_wfqbe_results
     /**
      * This function is used to show the results
      */
-    function do_sGetFormResult($row, $h)
+    function do_sGetFormResult($row)
     {
-        $ris = $this->getResultQuery($row, $h);
+	$templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
+
+        $ris = $this->getResultQuery($row);
         $mA = array();
 
-        if ($this->conf['debugQuery'] || $this->conf['customProcess.'][$row['uid'] . '.']['debugQuery'])
+	$rowUid = $row->getUid();
+        if ($this->conf['debugQuery'] || $this->conf['customProcess.'][$rowUid . '.']['debugQuery'])
             $content .= '<br /><strong>Query constructed:</strong><br />' . $this->query . '<br /><strong>Execution time:</strong>' . $this->executionTime . '<br /><br />';
 
         if ($ris === false) {
-            if ($this->conf['debugQuery'] || $this->conf['customProcess.'][$row['uid'] . '.']['debugQuery'])
-                $content .= "Query failed (uid=" . $row['uid'] . ")<br />" . $h->ErrorMsg();
+            if ($this->conf['debugQuery'] || $this->conf['customProcess.'][$rowUid . '.']['debugQuery'])
+                $content .= "Query failed (uid=" . $rowUid . ")<br />" . $h->ErrorMsg();
 
             $content = $this->pibase->pi_getLL('no_data');
             return $content;
         }
 
-        if ($ris->RecordCount() == 0) {
+        if (sizeof($ris) == 0) {
             // if the resultset is empty, it shows the empty results template
             $content .= $this->emptyLayout($row);
         } else {
-            if ($this->conf['customProcess.'][$row['uid'] . '.']['template'] != '')
-                $this->conf['template'] = $this->conf['customProcess.'][$row['uid'] . '.']['template'];
-            if ($this->conf['customProcess.'][$row['uid'] . '.']['defLayout'] != '')
-                $this->conf['defLayout'] = $this->conf['customProcess.'][$row['uid'] . '.']['defLayout'];
+            if ($this->conf['customProcess.'][$rowUid . '.']['template'] != '')
+                $this->conf['template'] = $this->conf['customProcess.'][$rowUid . '.']['template'];
+            if ($this->conf['customProcess.'][$rowUid . '.']['defLayout'] != '')
+                $this->conf['defLayout'] = $this->conf['customProcess.'][$rowUid . '.']['defLayout'];
 
             // This checks if the user has set a template. If yes it uses the template set, else it uses the default one
             if ($this->conf["defLayout"] == 0 || $this->conf["defLayout"] == "" || \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('type') == 181) {
@@ -95,12 +103,12 @@ class tx_wfqbe_results
             if ($this->conf['exportAll'] == 1)
                 $this->pibase->piVars['showpage'] = 'all';
 
-            if ($this->conf['customProcess.'][$row['uid'] . '.']['CSVquery'] != '')
-                $csv_query = $this->conf['customProcess.'][$row['uid'] . '.']['CSVquery'];
+            if ($this->conf['customProcess.'][$rowUid . '.']['CSVquery'] != '')
+                $csv_query = $this->conf['customProcess.'][$rowUid . '.']['CSVquery'];
             if ($this->conf['globalCustomProcess.']['CSVquery'] != '')
                 $csv_query = $this->conf['globalCustomProcess.']['CSVquery'];
             else
-                $csv_query = $row['uid'];
+                $csv_query = $rowUid;
 
             if ($this->conf['ff_data']['csvDownload'] == 1) {
                 $mA["###CONF_CSV###"] = htmlentities($this->pibase->pi_linkTP_keepPIvars_url() . '&type=181&tx_wfqbe_pi1[wfqbe_results_query]=' . $csv_query);
@@ -110,20 +118,22 @@ class tx_wfqbe_results
             $mA['###CONF_DIVID###'] = $this->conf['ff_data']['div_id'];
         }
 
-        $content = $this->cObj->substituteMarkerArray($content, $mA);
+        $content = $templateService->substituteMarkerArray($content, $mA);
         return $content;
     }
 
 
-    function getResultQuery($row, $h)
+    function getResultQuery($row)
     {
         // SELECT
         $API = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_api_xml2array");
         $API2 = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_queryform_generator");
-        $loadValue = $API->xml2array($row["query"]);//converto la stringa che rappresenta la query creata tramite wizard in array
+	$rowQuery = $row->getQuery();
+	$rowUid = $row->getUid();
+        $loadValue = $API->xml2array($rowQuery);//converto la stringa che rappresenta la query creata tramite wizard in array
         $wfqbe = $loadValue['contentwfqbe']["wfqbe"];//selezione solo una parte e cio� elimino in tag radice <wfqbe>
         $rawwfqbe = $loadValue['contentwfqbe']["rawwfqbe"];
-        $query = $API2->createQuery($wfqbe, $rawwfqbe, $this->pibase->piVars, $row['uid'], $this);//This function creates the SQL query
+        $query = $API2->createQuery($wfqbe, $rawwfqbe, $this->pibase->piVars, $rowUid, $this);//This function creates the SQL query
         $mA = array();
 
         // Gestione parametri query
@@ -133,18 +143,7 @@ class tx_wfqbe_results
 
         if (is_array($parametri)) {
             $markerParametri = $this->parametersToMarkers($h, $parametri, $markerParametri);
-            /*
-            // Hook that can be used to pre-process a parameter (from a search form) before makeing the query
-            if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['wfqbe']['processSubstituteSearchParametersClass']))    {
-                foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['wfqbe']['processSubstituteSearchParametersClass'] as $_classRef)    {
-                    $_procObj = &\TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($_classRef);
-                    $markerParametri = $_procObj->parse_search_markers($markerParametri, $parametri, $this);
-                }
-            }
-
-            $query = $this->cObj->substituteMarkerArray($query, $markerParametri); */
         }
-        //unset($markerParametri);
 
 
         // If TYPO3_MODE = BE then it will be possible to provide addition parameters through the User TSConfig field
@@ -214,7 +213,6 @@ class tx_wfqbe_results
                     $markerParametri["###" . $marker . "###"] = floatval($markerParametri["###" . $marker . "###"]);
                 }
             }
-            //$query = $this->cObj->substituteMarkerArray($query, $markerParametri);
         }
 
         if (sizeof($markerParametri) > 0) {
@@ -233,7 +231,10 @@ class tx_wfqbe_results
         $this->query = preg_replace("/(###)+[a-z,A-Z,0-9,@,!,_]+(###)/", "", $query);
 
         $start = microtime(true);
-        $ris = $h->Execute($this->query);//eseguo la query definita dall'utente e cio� quello che voglio visualizzare a frontend
+
+	$queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('be_users');
+	$ris = $queryBuilder->executeQuery($this->query);
+
         $stop = microtime(true);
         $this->executionTime = ($stop - $start) . ' sec';
 
@@ -428,16 +429,16 @@ class tx_wfqbe_results
 
         $flag = 0;
         $colspan = 0;
-        while ($flag < $this->conf['ff_data']['recordsForPage'] && $array = $ris->FetchRow()) {
+        while ($flag < $this->conf['ff_data']['recordsForPage'] && $nextRow = $ris->FetchRow()) {
             if ($flag == 0) {
-                $keys = array_keys($array);
+                $keys = array_keys($nextRow);
             }
             $wfqbeArray = array();
             $mA = array();
-            foreach ($array as $key => $value)
+            foreach ($nextRow as $key => $value)
                 $wfqbeArray['###WFQBE_FIELD_' . $key . '###'] = $value;
             $listaColonne = "";
-            for ($i = 0; $i < sizeof($array); $i++) {
+            for ($i = 0; $i < sizeof($nextRow); $i++) {
                 if (is_int($keys[$i]) && !\TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->conf["customProcess."][$row['uid'] . "."]['excludeColumns'], $keys[$i])) {
                     $mA["###TD_ATTRIBUTES###"] = $this->conf['globalCustomProcess.'][$keys[$i] . '.']["td_attribs"] != '' ? $this->conf['globalCustomProcess.'][$keys[$i] . '.']["td_attribs"] : $this->conf["customProcess."][$row['uid'] . "."][$keys[$i] . "."]["td_attribs"];
                     if (
@@ -446,14 +447,14 @@ class tx_wfqbe_results
                             ||
                             ($this->conf["customProcess."][$row['uid'] . "."]['excludeDuplicatedValuesInColumns'] != '' && \TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->conf["customProcess."][$row['uid'] . "."]['excludeDuplicatedValuesInColumns'], $keys[$i])
                             )
-                        ) && $array[$keys[$i]] == $excludeDuplicatedValuesInColumns[$keys[$i]]
+                        ) && $nextRow[$keys[$i]] == $excludeDuplicatedValuesInColumns[$keys[$i]]
                     ) {
                         $mA["###COLUMN_DATA###"] = '';
                         $mA["###TD_ATTRIBUTES###"] = $this->conf['globalCustomProcess.'][$keys[$i] . '.']["td_attribs_emptyDuplicate"] != '' ? $this->conf['globalCustomProcess.'][$keys[$i] . '.']["td_attribs_emptyDuplicate"] : $this->conf["customProcess."][$row['uid'] . "."][$keys[$i] . "."]["td_attribs_emptyDuplicate"];
                     } else {
 
 
-                        $excludeDuplicatedValuesInColumns[$keys[$i]] = $array[$keys[$i]];
+                        $excludeDuplicatedValuesInColumns[$keys[$i]] = $nextRow[$keys[$i]];
                         if (
                         (
                             ($this->conf["globalCustomProcess."]['excludeDuplicatedValuesInColumns'] != '' && \TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->conf["globalCustomProcess."]['excludeDuplicatedValuesInColumns'], $keys[$i]))
@@ -483,12 +484,12 @@ class tx_wfqbe_results
 
                             $mA["###COLUMN_DATA###"] = "{$this->cObj->cObjGetSingle($confFunc,$confArray)}";
                         } else {
-                            $mA["###COLUMN_DATA###"] = $array[$keys[$i]];
+                            $mA["###COLUMN_DATA###"] = $nextRow[$keys[$i]];
                         }
                     }
                     if (is_array($this->pibase->insertBlocks)) {
-                        $mA['###INSERT_FIELD###'] = $array[$this->pibase->insertBlocks['fields'][$this->pibase->piVars['wfqbe_select_wizard']]['form']['field_insert']];
-                        if (is_array($selected_values) && in_array($array[$this->pibase->insertBlocks['fields'][$this->pibase->piVars['wfqbe_select_wizard']]['form']['field_insert']], $selected_values)) {
+                        $mA['###INSERT_FIELD###'] = $nextRow[$this->pibase->insertBlocks['fields'][$this->pibase->piVars['wfqbe_select_wizard']]['form']['field_insert']];
+                        if (is_array($selected_values) && in_array($nextRow[$this->pibase->insertBlocks['fields'][$this->pibase->piVars['wfqbe_select_wizard']]['form']['field_insert']], $selected_values)) {
                             $mA['###WFQBE_SELECT_WIZARD_SELECTED###'] = ' checked="checked"';
                         } else {
                             $mA['###WFQBE_SELECT_WIZARD_SELECTED###'] = '';
@@ -680,57 +681,60 @@ class tx_wfqbe_results
      */
     function userLayout($ris, $row)
     {
+	$rowUid = $row->getUid();
 
-        if ($this->pibase->beMode != ''){
-            $file = @file_get_contents(PATH_site . $GLOBALS['TSFE']->tmpl->getFileName($this->conf['template']));
-        }else{
-            $fileOrFolderObject = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->retrieveFileOrFolderObject($this->conf['template']);
-            $file = $fileOrFolderObject->getContents();
-        }
+	$filename = GeneralUtility::getFileAbsFileName($this->conf['template']);
+        $file = file_get_contents($filename);
+	if (empty($file)) {
+	    $content .= 'file '.$filename.' not found.';
+	    \TYPO3\CMS\Core\Utility\DebugUtility::debug($content,'content');exit(1);
+	}
 
-        $template = trim($this->cObj->getSubpart($file, '###RESULT_TEMPLATE###'));
-        $templateLista = trim($this->cObj->getSubpart($template, "DATA_TEMPLATE"));
+	$templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class);
+
+        $template = trim($templateService->getSubpart($file, '###RESULT_TEMPLATE###'));
+        $templateLista = trim($templateService->getSubpart($template, "DATA_TEMPLATE"));
         $listaRighe = "";
 
-        $numRows = $ris->RecordCount();
+        $numRows = sizeof($ris);
         $this->conf['wf_data']['queryNumRows'] = $numRows;
 
-        $actualPage = $this->pibase->piVars['showpage'][$row['uid']] != "" ? $this->pibase->piVars['showpage'][$row['uid']] : 1;
+        $actualPage = $this->pibase->piVars['showpage'][$rowUid] != "" ? $this->pibase->piVars['showpage'][$rowUid] : 1;
         if ($this->conf['ff_data']['recordsForPage'] == '' || $this->conf['ff_data']['recordsForPage'] == 0 || $actualPage == 'all')
             $this->conf['ff_data']['recordsForPage'] = $numRows;
 
         $numPages = ceil($numRows / $this->conf['ff_data']['recordsForPage']);
 
         for ($i = 0; $i < ($actualPage - 1) * $this->conf['ff_data']['recordsForPage']; $i++)
-            $ris->FetchRow();
+            $ris->fetch();
 
         $flag = 0;
-        while ($flag < $this->conf['ff_data']['recordsForPage'] && $array = $ris->FetchRow()) {
+        while ($flag < $this->conf['ff_data']['recordsForPage'] && $nextRow = $ris->fetch()) {
             if ($flag == 0)
-                $keys = array_keys($array);
+                $keys = array_keys($nextRow);
 
             $wfqbeArray = array();
             $mA = array();
-            foreach ($array as $key => $value)
+            foreach ($nextRow as $key => $value)
                 $wfqbeArray['###WFQBE_FIELD_' . $key . '###'] = $value;
 
-            for ($i = 0; $i < sizeof($array); $i++) {
+            for ($i = 0; $i < sizeof($nextRow); $i++) {
 
                 if (
                     (
                         ($this->conf["globalCustomProcess."]['excludeDuplicatedValuesInColumns'] != '' && \TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->conf["globalCustomProcess."]['excludeDuplicatedValuesInColumns'], $keys[$i]))
                         ||
-                        ($this->conf["customProcess."][$row['uid'] . "."]['excludeDuplicatedValuesInColumns'] != '' && \TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->conf["customProcess."][$row['uid'] . "."]['excludeDuplicatedValuesInColumns'], $keys[$i])
+                        ($this->conf["customProcess."][$rowUid . "."]['excludeDuplicatedValuesInColumns'] != '' && \TYPO3\CMS\Core\Utility\GeneralUtility::inList($this->conf["customProcess."][$rowUid . "."]['excludeDuplicatedValuesInColumns'], $keys[$i])
                         )
-                    ) && $array[$keys[$i]] == $excludeDuplicatedValuesInColumns[$keys[$i]]
+                    ) && $nextRow[$keys[$i]] == $excludeDuplicatedValuesInColumns[$keys[$i]]
                 ) {
                     $mA["###FIELD_" . $keys[$i] . "###"] = '';
                 } else {
-                    $excludeDuplicatedValuesInColumns[$keys[$i]] = $array[$keys[$i]];
+                    $excludeDuplicatedValuesInColumns[$keys[$i]] = $nextRow[$keys[$i]];
 
 
-                    if ($this->conf["customProcess."][$row['uid'] . "."][$keys[$i]] != "") {
-                        $mergedConf = $this->manageTyposcriptAlternatives($flag, 'customProcess', $row['uid'], $keys[$i]);
+                    if ($this->conf["customProcess."][$rowUid . "."][$keys[$i]] != "") {
+                        $mergedConf = $this->manageTyposcriptAlternatives($flag, 'customProcess', $rowUid, $keys[$i]);
 
                         $confArray = $mergedConf['config'];
                         $confFunc = $mergedConf['func'];
@@ -743,7 +747,7 @@ class tx_wfqbe_results
 
                     } elseif ($this->conf['globalCustomProcess.'][$keys[$i]]) {
                         $mergedConf = $this->manageTyposcriptAlternatives($flag, '
-                        ', $row['uid'], $keys[$i]);
+                        ', $rowUid, $keys[$i]);
                         $confArray = $mergedConf['config'];
                         $confFunc = $mergedConf['func'];
                         $confArray = $this->parseTypoScriptConfiguration($confArray, $wfqbeArray, $flag);
@@ -753,7 +757,7 @@ class tx_wfqbe_results
                         }
                         $mA["###FIELD_" . $keys[$i] . "###"] = "{$this->cObj->cObjGetSingle($confFunc,$confArray)}";
                     } else {
-                        $mA["###FIELD_" . $keys[$i] . "###"] = $array[$keys[$i]];
+                        $mA["###FIELD_" . $keys[$i] . "###"] = $nextRow[$keys[$i]];
                     }
                 }
             }
@@ -764,12 +768,14 @@ class tx_wfqbe_results
                 $mA["###WFQBE_CLASS###"] = $this->conf['classes.']['odd'];
             $flag++;
 
-            if (!($this->conf["customProcess."][$row['uid'] . "."]['excludeDuplicatedValuesInColumns'] != '' && $this->conf["customProcess."][$row['uid'] . "."]['emptyRowForExcludeDuplicatedValuesInColumns'] == 1 && $this->isEmptyRowForExcludeDuplicatedValuesInColumns($row, $mA))) {
-                $listaRighe .= $this->cObj->substituteMarkerArray($templateLista, $mA);
+            if (!($this->conf["customProcess."][$rowUid . "."]['excludeDuplicatedValuesInColumns'] != '' &&
+		$this->conf["customProcess."][$rowUid . "."]['emptyRowForExcludeDuplicatedValuesInColumns'] == 1 &&
+		$this->isEmptyRowForExcludeDuplicatedValuesInColumns($nextRow, $mA))) {
+                $listaRighe .= $templateService->substituteMarkerArray($templateLista, $mA);
             }
         }
 
-        $listaRighe = $this->cObj->substituteSubpart($template, "###DATA_TEMPLATE###", $listaRighe, $recursive = 0, $keepMarker = 0);
+        $listaRighe = $templateService->substituteSubpart($template, "###DATA_TEMPLATE###", $listaRighe, $recursive = 0, $keepMarker = 0);
 
 
         // headers management
@@ -783,13 +789,13 @@ class tx_wfqbe_results
 
                 //siccome $key identifica una posizione con l'indice o in modo associativo utilizzo la funzione is_int() per non visualizzare
                 //l'intestazione in forma numerica(ha pi� senso visualizzare quella associativa che � il nome della colonna della tabella).
-                if ($this->conf["customHeader."][$row['uid'] . "."][$i] != "" || $this->conf["customHeader."][$row['uid'] . "."][$col] != "") {
-                    if ($this->conf["customHeader."][$row['uid'] . "."][$col] != "") {
-                        $confCustomHeader = $this->conf["customHeader."][$row['uid'] . "."][$col . '.'];
-                        $confCustomHeaderObj = $this->conf["customHeader."][$row['uid'] . "."][$col];
+                if ($this->conf["customHeader."][$rowUid . "."][$i] != "" || $this->conf["customHeader."][$rowUid . "."][$col] != "") {
+                    if ($this->conf["customHeader."][$rowUid . "."][$col] != "") {
+                        $confCustomHeader = $this->conf["customHeader."][$rowUid . "."][$col . '.'];
+                        $confCustomHeaderObj = $this->conf["customHeader."][$rowUid . "."][$col];
                     } else {
-                        $confCustomHeader = $this->conf["customHeader."][$row['uid'] . "."][$i . '.'];
-                        $confCustomHeaderObj = $this->conf["customHeader."][$row['uid'] . "."][$i];
+                        $confCustomHeader = $this->conf["customHeader."][$rowUid . "."][$i . '.'];
+                        $confCustomHeaderObj = $this->conf["customHeader."][$rowUid . "."][$i];
                     }
                     $wfqbeArray = array();
                     $wfqbeArray['###WFQBE_NAME_' . $key . '###'] = $col;
@@ -804,7 +810,7 @@ class tx_wfqbe_results
                 }
                 if ($enableOrderByHeaders && \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('type') != 181) {
                     $mode = 'ASC';
-                    if ($this->pibase->piVars['orderby'][$row['uid']]['field'] == $col && $this->pibase->piVars['orderby'][$row['uid']]['mode'] == 'ASC')
+                    if ($this->pibase->piVars['orderby'][$rowUid]['field'] == $col && $this->pibase->piVars['orderby'][$rowUid]['mode'] == 'ASC')
                         $mode = 'DESC';
                     $orderLink = array();
                     if ($this->pibase->beMode == 1)
@@ -814,7 +820,7 @@ class tx_wfqbe_results
                     $orderLink['addQueryString'] = 1;
                     $orderLink['addQueryString.']['method'] = 'POST,GET';
                     $orderLink['addQueryString.']['exclude'] = 'id';
-                    $orderLink['additionalParams'] = '&tx_wfqbe_pi1[orderby][' . $row['uid'] . '][mode]=' . $mode . '&tx_wfqbe_pi1[orderby][' . $row['uid'] . '][field]=' . $col;
+                    $orderLink['additionalParams'] = '&tx_wfqbe_pi1[orderby][' . $rowUid . '][mode]=' . $mode . '&tx_wfqbe_pi1[orderby][' . $rowUid . '][field]=' . $col;
                     if ($this->pibase->beMode == 1) {
                         $backend = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_backend');
                         $orderLink['additionalParams'] .= '&tx_wfqbe_backend[uid]=' . $backend['uid'] . '&tx_wfqbe_backend[mode]=' . $backend['mode'];
@@ -835,9 +841,9 @@ class tx_wfqbe_results
         $mA['###TOTAL_RECORDS###'] = $numRows;
 
         if ($numPages < 2)
-            $listaRighe = $this->cObj->substituteSubpart($listaRighe, '###BROWSE_TEMPLATE###', '', 1, 0);
+            $listaRighe = $templateService->substituteSubpart($listaRighe, '###BROWSE_TEMPLATE###', '', 1, 0);
         else {
-            $listaRighe = $this->showBrowser($listaRighe, $mA, $numPages, $numRows, $actualPage, $row['uid']);
+            $listaRighe = $this->showBrowser($listaRighe, $mA, $numPages, $numRows, $actualPage, $rowUid);
         }
 
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['wfqbe']['processMarkerArrayUserLayoutResults'])) {
@@ -848,7 +854,7 @@ class tx_wfqbe_results
             }
         }
 
-        $listaRighe = $this->cObj->substituteMarkerArray($listaRighe, $mA);
+        $listaRighe = $templateService->substituteMarkerArray($listaRighe, $mA);
         $content .= $listaRighe;
 
         return $content;

@@ -20,7 +20,7 @@
 
 $MCONF['name'] = 'xMOD_tx_wfqbe_tx_wfqbe_query_querywiz';
 
-$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/tx_wfqbe_query_query/locallang.xml');
+$GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/query_locallang.xml');
 
 class tx_wfqbe_tx_wfqbe_query_querywiz extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 {
@@ -73,12 +73,6 @@ class tx_wfqbe_tx_wfqbe_query_querywiz extends \TYPO3\CMS\Backend\Module\BaseScr
         $this->doc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
         $this->doc->backPath = $BACK_PATH;
         $this->doc->form = '<form action="" id="insQuery" method="POST" style="width:113%;">';
-        //$this->doc->styleSheetFile =$BACK_PATH.'typo3/stylesheet.css';
-        // JavaScript
-
-        //$this->doc->loadJavascriptLib('contrib/prototype/prototype.js');
-        //$this->doc->loadJavascriptLib('js/common.js');
-
         $this->doc->getPageRenderer()->loadExtJS();
 
         $this->doc->JScode = '
@@ -181,7 +175,6 @@ class tx_wfqbe_tx_wfqbe_query_querywiz extends \TYPO3\CMS\Backend\Module\BaseScr
                 $this->pageinfo = array('title' => '[root-level]', 'uid' => 0, 'pid' => 0);
             }
 
-            //$headerSection = $this->doc->getHeader('pages',$this->pageinfo,$this->pageinfo['_thePath']).'<br>'.$LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path').': '.\TYPO3\CMS\Core\Utility\GeneralUtility::fixed_lgd_pre($this->pageinfo['_thePath'],50);
             $headerSection = "";
             $this->content .= "<div id=\"tx_wfqbe_queryform\">";
             $this->content .= $this->doc->startPage($LANG->getLL('title'));
@@ -241,10 +234,9 @@ class tx_wfqbe_tx_wfqbe_query_querywiz extends \TYPO3\CMS\Backend\Module\BaseScr
         $content = '';
 
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');//P � l'array che contiene tutte le info passate dal plugin al wizard
-        //t3lib_utility_Debug::debug($this->P);
         $this->P = $var;
-        //t3lib_utility_Debug::debug($var);
-        $where = 'tx_wfqbe_query.uid=' . $var['uid'] . ' AND tx_wfqbe_query.deleted!=1 AND ';
+\TYPO3\CMS\Core\Utility\DebugUtility::debug('exit query index 1','query index');exit(1);
+        $where = 'tx_wfqbe_domain_model_query.uid=' . $var['uid'] . ' AND tx_wfqbe_domain_model_query.deleted!=1 AND ';
         $CONN = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_connect");
         $connection_obj = $CONN->connect($where);
 
