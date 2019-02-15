@@ -28,7 +28,6 @@ $pluginName = $extensionKey.'_pi1';
     "DB Integration"
 );
 
-
 if (TYPO3_MODE === 'BE') {
 
     $TBE_MODULES_EXT["xMOD_db_new_content_el"]["addElClasses"]["tx_wfqbe_pi1_wizicon"] =

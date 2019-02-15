@@ -1,21 +1,14 @@
 <?php
 
+/**
+ * Include FlexForm of plugin _pi1 of extension EXT:wfqbe
+ */
 $extensionKey = 'wfqbe';
 $pluginName = $extensionKey.'_pi1';
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$pluginName] = 'layout,select_key,pages,recursive';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginName] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginName] = 'layout,select_key,pages,recursive';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginName] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     $pluginName,
-    'FILE:EXT:'.$extensionKey.'/Configuration/FlexForms/flexform_ds.xml'
-);
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'RedSeadog.Wfqbe',
-    'Pi1',
-    [
-	'controller' => 'index,list,...'
-    ],
-    [],,
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+    'FILE:EXT:'.$extensionKey.'/Configuration/FlexForms/Flexform_pi1.xml'
 );
