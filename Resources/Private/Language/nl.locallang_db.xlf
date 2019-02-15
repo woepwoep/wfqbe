@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
+	<file source-language="en" target_language="nl" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
 		<header/>
 		<body>
 			<trans-unit id="tx_wfqbe_domain_model_credentials">
@@ -98,9 +98,11 @@
 			</trans-unit>
 			<trans-unit id="tx_wfqbe_domain_model_query.dbname">
 				<source>Database name</source>
+				<target state="translated">Database naam</target>
 			</trans-unit>
 			<trans-unit id="tt_content.list_type_pi1">
 				<source>DB Integration</source>
+				<target state="translated">WFQBE op orange v9</target>
 			</trans-unit>
 			<trans-unit id="tx_wfqbe_domain_model_query.type">
 				<source>Type</source>
@@ -110,12 +112,15 @@
 			</trans-unit>
 			<trans-unit id="tx_wfqbe_domain_model_query.type.I.0">
 				<source>Select</source>
+				<target state="translated">Selecteer</target>
 			</trans-unit>
 			<trans-unit id="tx_wfqbe_domain_model_query.type.I.1">
 				<source>Insert / Edit</source>
+				<target state="translated">Voeg toe / Bewerk</target>
 			</trans-unit>
 			<trans-unit id="tx_wfqbe_domain_model_query.type.I.2">
 				<source>Search</source>
+				<target state="translated">Zoek</target>
 			</trans-unit>
 			<trans-unit id="tx_wfqbe_domain_model_query.searchinquery">
 				<source>Results query</source>

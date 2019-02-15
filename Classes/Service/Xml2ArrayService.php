@@ -1,4 +1,7 @@
 <?php
+
+namespace RedSeadog\Wfqbe\Service;
+
 /*
  *  Copyright notice
  *
@@ -16,7 +19,7 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-class tx_wfqbe_api_xml2array
+class Xml2ArrayService
 {
     var $extKey = 'tx_wfqbe_api';    // The extension key.
 

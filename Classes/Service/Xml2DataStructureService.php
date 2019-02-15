@@ -1,5 +1,7 @@
 <?php
 
+namespace RedSeadog\Wfqbe\Service;
+
 /*
  *  Copyright notice
  *
@@ -19,7 +21,7 @@
  */
 
 
-class tx_wfqbe_api_xml2data_structure
+class Xml2DataStructureService
 {
     var $extKey = 'tx_wfqbe_api';    // The extension key.
 

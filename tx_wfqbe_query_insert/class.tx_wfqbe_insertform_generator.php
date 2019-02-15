@@ -1063,7 +1063,7 @@ class tx_wfqbe_insertform_generator
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');
         //estraggo la query salvata dal database (modalità xml) e la converto in array
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit insert_formgen 4','insert_formgen');exit(1);
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('insertq', 'tx_wfqbe_domain_model_query', 'tx_wfqbe_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_query.deleted!=1', '', '', '');
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('insertq', 'tx_wfqbe_domain_model_query', 'tx_wfqbe_domain_model_query.uid=' . intval($var['uid']) . ' AND tx_wfqbe_domain_model_query.deleted!=1', '', '', '');
         $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
         $this->blocks = $API->xml2array($row["insertq"]);
     }

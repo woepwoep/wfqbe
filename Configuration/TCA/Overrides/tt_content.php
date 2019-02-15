@@ -10,3 +10,12 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginName] = 'pi_flexf
     'FILE:EXT:'.$extensionKey.'/Configuration/FlexForms/flexform_ds.xml'
 );
 
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'RedSeadog.Wfqbe',
+    'Pi1',
+    [
+	'controller' => 'index,list,...'
+    ],
+    [],,
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+);

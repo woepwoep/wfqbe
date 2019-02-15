@@ -1,4 +1,7 @@
 <?php
+
+namespace RedSeadog\Wfqbe\Service;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -26,7 +29,7 @@
  *
  * @author    Mauro Lorenzutti <mauro.lorenzutti@webformat.com>
  */
-class tx_wfqbe_api_query
+class QueryService
 {
     var $extKey = 'wfqbe';    // The extension key.
 
@@ -62,7 +65,7 @@ class tx_wfqbe_api_query
 
         // Finding the query record into the database
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-api 1','queryformgen');exit(1);
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', 'uid=' . $query);
+        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_domain_model_query', 'uid=' . $query);
         if ($res !== false && $GLOBALS['TYPO3_DB']->sql_num_rows($res) == 1) {
             $this->query = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
             $this->loadTSConfig($this->query['pid']);
@@ -79,7 +82,7 @@ class tx_wfqbe_api_query
      */
     private function connect()
     {
-        $where = 'tx_wfqbe_query.uid=' . intval($this->query['uid']) . ' AND ';
+        $where = 'tx_wfqbe_domain_model_query.uid=' . intval($this->query['uid']) . ' AND ';
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-api 2','queryformgen');exit(1);
 
         // Create the connection to the remote DB

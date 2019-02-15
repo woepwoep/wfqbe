@@ -20,7 +20,7 @@
 /**
  * Insert class for the 'wfqbe' extension.
  */
-class tx_wfqbe_insert
+class InsertController
 {
 
     var $conf;

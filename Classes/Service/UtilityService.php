@@ -1,4 +1,7 @@
 <?php
+
+namespace RedSeadog\Wfqbe\Service;
+
 /*
  *  Copyright notice
  *
@@ -18,7 +21,7 @@
  */
 
 
-class tx_wfqbe_utils
+class UtilityService
 {
     var $extKey = 'wfqbe';    // The extension key.
 

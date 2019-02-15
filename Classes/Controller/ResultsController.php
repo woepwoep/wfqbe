@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Service\MarkerBasedTemplateService;
  * Search results class for the 'wfqbe' extension.
  *
  */
-class tx_wfqbe_results
+class ResultsController
 {
 
     var $conf;

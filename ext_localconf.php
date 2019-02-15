@@ -21,7 +21,7 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
     'Classes/Controller/QueryController.php',
     '_pi1',
     'list_type',
-    0
+    false
 );
 
 
@@ -30,4 +30,12 @@ $TYPO3_CONF_VARS['BE']['AJAX']['tx_wfqbe_mod1_ajax::fieldTypeHelp'] = 'typo3conf
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
     '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:wfqbe/Configuration/PageTS/NewContentElementWizard.ts">'
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'RedSeadog.Wfqbe',
+    'Pi1',
+    [
+	'controller' => 'index,list,...'
+    ]
 );

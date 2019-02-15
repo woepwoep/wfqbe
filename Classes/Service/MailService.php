@@ -1,5 +1,7 @@
 <?php
 
+namespace RedSeadog\Wfqbe\Service;
+
 /*
  *  Copyright notice
  *
@@ -18,7 +20,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-class tx_wfqbe_mail
+class MailService
 {
 
     var $cObj;

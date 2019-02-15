@@ -21,7 +21,7 @@
  *
  */
 
-class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
+class QueryController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 {
     var $prefixId = 'tx_wfqbe_pi1';        // Same as class name
     var $scriptRelPath = 'pi1/class.tx_wfqbe_pi1.php';    // Path to this script relative to the extension dir.
@@ -245,7 +245,7 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     {
         $this->piVars = $data[$this->prefixId];
 
-        $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_search");
+        $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("SearchController");
         $SEARCH->main($this->conf, $this->cObj, $this);
         $content = $SEARCH->sGetSearchForm_Ajax();
 
@@ -262,7 +262,7 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
     {
         $this->piVars = $data[$this->prefixId];
 
-        $INSERT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_insert");
+        $INSERT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("InsertController");
         $INSERT->main($this->conf, $this->cObj, $this);
         $content = $INSERT->sGetInsertForm_Ajax();
 
@@ -302,9 +302,9 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
         }
 
         if ($this->piVars['wfqbe_add_new'] != '' && intval($this->piVars['wfqbe_add_new']) > 0) {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
+            $where = 'tx_wfqbe_domain_model_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit QueryController 2','QueryController');exit(1);
-            $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
+            $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_domain_model_query', $where . 'tx_wfqbe_domain_model_query.hidden!=1 AND tx_wfqbe_domain_model_query.deleted!=1');
             while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
                 $this->original_row = $row;
                 $this->insertBlocks = $this->getInsertBlocks($row);
@@ -314,9 +314,9 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
         }
 
         if ($this->piVars['wfqbe_select_wizard'] != '' && intval($this->piVars['wfqbe_select_wizard']) >= 0) {
-            $where = 'tx_wfqbe_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
+            $where = 'tx_wfqbe_domain_model_query.uid=' . intval($this->conf['ff_data']['queryObject']) . ' AND ';
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit QueryController 3','QueryController');exit(1);
-            $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
+            $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tx_wfqbe_domain_model_query', $where . 'tx_wfqbe_domain_model_query.hidden!=1 AND tx_wfqbe_domain_model_query.deleted!=1');
             while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
                 $this->original_row = $row;
                 $this->insertBlocks = $this->getInsertBlocks($row);
@@ -381,7 +381,7 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 	$rowType = $row->getType();
         if ($rowType == 'search') {
             // SEARCH
-            $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_search");
+            $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("SearchController");
             $SEARCH->main($this->conf, $this->cObj, $this);
             $content = $SEARCH->do_sGetForm($row, $form_built);
 
@@ -400,13 +400,13 @@ class tx_wfqbe_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 	$rowType = $row->getType();
         if ($rowType == "insert") {
             // INSERT
-            $INSERT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_insert");
+            $INSERT = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("InsertController");
             $INSERT->main($this->conf, $this->cObj, $this);
             $content = $INSERT->do_sGetFormResult($row);
 
         } elseif ($rowType == "search") {
             // SEARCH
-            $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_search");
+            $SEARCH = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("SearchController");
             $SEARCH->main($this->conf, $this->cObj, $this);
             $content = $SEARCH->do_sGetFormResult($row);
 

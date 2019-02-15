@@ -136,7 +136,7 @@ class tx_wfqbe_module1 extends \TYPO3\CMS\Backend\Module\BaseScriptClass
                                         </script>
                                     ';
 
-            $headerSection = $this->doc->getHeader('pages', $this->pageinfo, $this->pageinfo['_thePath']) . '<br />' . $LANG->sL('LLL:EXT:lang/locallang_core.xml:labels.path') . ': ' . \TYPO3\CMS\Core\Utility\GeneralUtility:: fixed_lgd_cs($this->pageinfo['_thePath'], 50);
+            $headerSection = $this->doc->getHeader('pages', $this->pageinfo, $this->pageinfo['_thePath']) . '<br />' . $LANG->sL('LLL:EXT:wfqbe/Resources/Private/Language/locallang_core.xml:labels.path') . ': ' . \TYPO3\CMS\Core\Utility\GeneralUtility:: fixed_lgd_cs($this->pageinfo['_thePath'], 50);
 
             $this->content .= $this->doc->startPage($LANG->getLL('title'));
             $this->content .= $this->doc->sectionHeader($LANG->getLL('title'), false, 'style="margin-left:24px"');

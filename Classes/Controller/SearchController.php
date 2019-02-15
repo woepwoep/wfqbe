@@ -21,7 +21,7 @@
  * Search class for the 'wfqbe' extension.
  *
  */
-class tx_wfqbe_search
+class SearchController
 {
 
     var $conf;

@@ -1,4 +1,7 @@
 <?php
+
+namespace RedSeadog\Wfqbe\Service;
+
 /*
  *  Copyright notice
  *
@@ -23,7 +26,7 @@ use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
-class tx_wfqbe_connect
+class ConnectService
 {
     /**
      * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
@@ -47,7 +50,7 @@ class tx_wfqbe_connect
 	->where($where);
 \TYPO3\CMS\Core\Utility\DebugUtility::debug($queryBuilder->getSQL(),'sql');exit(1);
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-connect 1','queryformgen');exit(1);
-        $res = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_wfqbe_query', $where . 'tx_wfqbe_query.hidden!=1 AND tx_wfqbe_query.deleted!=1');
+        $res = $GLOBALS['TYPO3_DB']->SELECTquery('*', 'tx_wfqbe_domain_model_query', $where . 'tx_wfqbe_domain_model_query.hidden!=1 AND tx_wfqbe_domain_model_query.deleted!=1');
         if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
             $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
             if (!isset($GLOBALS['WFQBE'][$row['credentials']])) {

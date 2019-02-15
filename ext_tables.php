@@ -29,45 +29,40 @@ $pluginName = $extensionKey.'_pi1';
 );
 
 
-if (TYPO3_MODE == 'BE') {
+if (TYPO3_MODE === 'BE') {
 
     $TBE_MODULES_EXT["xMOD_db_new_content_el"]["addElClasses"]["tx_wfqbe_pi1_wizicon"] =
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extensionKey) . 'Configuration/TypoScript/class.tx_wfqbe_pi1_wizicon.php';
 
+}
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
+if (TYPO3_MODE === 'BE') {
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+        'Wfqbe',
         'web',
-        'txwfqbeM1',
+        'web_txfwqbeM1',
         '',
-        '',
-        array(
-            'routeTarget' => tx_wfqbe_module1::class . '::mainAction',
+        [
+	     'controller' => 'index'
+        ],
+        [
             'access' => 'user,group',
-            'name' => 'web_txwfqbeM1',
-            'labels' => array(
-                'tabs_images' => array(
-                    'tab' => 'EXT:wfqbe/Resources/Public/Icons/mod1_moduleicon.gif',
-                ),
-                'll_ref' => 'LLL:EXT:lang/mod1_locallang_mod.xml',
-            ),
-        )
+            'icon' => 'EXT:rx_extkey/Resources/Public/Icons/mod1_moduleicon.gif',
+            'labels' => 'Resources/Private/Language/mod1_locallang_mod.xlf',
+        ]
     );
-
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+        'Wfqbe',
         'web',
-        'txwfqbeM2',
+        'web_txfwqbeM2',
         '',
-        '',
-        array(
-            'routeTarget' => tx_wfqbe_module2::class . '::mainAction',
+        [
+	     'controller' => 'index'
+        ],
+        [
             'access' => 'user,group',
-            'name' => 'web_txwfqbeM2',
-            'labels' => array(
-                'tabs_images' => array(
-                    'tab' => 'EXT:wfqbe/Resources/Public/Icons/mod2_moduleicon.gif',
-                ),
-                'll_ref' => 'LLL:EXT:lang/mod2_locallang_mod.xml',
-            ),
-        )
+            'icon' => 'EXT:rx_extkey/Resources/Public/Icons/mod2_moduleicon.gif',
+            'labels' => 'Resources/Private/Language/mod2_locallang_mod.xlf',
+        ]
     );
 }

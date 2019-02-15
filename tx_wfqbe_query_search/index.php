@@ -234,7 +234,7 @@ class tx_wfqbe_tx_wfqbe_query_searchwiz extends \TYPO3\CMS\Backend\Module\BaseSc
         $var = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('P');//P � l'array che contiene tutte le info passate dal plugin al wizard
         $this->P = $var;
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit search index 1','search index');exit(1);
-        $where = 'tx_wfqbe_domain_model_query.uid=' . $var['uid'] . ' AND tx_wfqbe_query.deleted!=1 AND ';
+        $where = 'tx_wfqbe_domain_model_query.uid=' . $var['uid'] . ' AND tx_wfqbe_domain_model_query.deleted!=1 AND ';
         $CONN = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_wfqbe_connect");
         $connection_obj = $CONN->connect($where);
 
