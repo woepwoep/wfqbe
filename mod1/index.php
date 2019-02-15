@@ -18,7 +18,7 @@
  */
 
 
-$MCONF['name'] = 'web_txwfqbeM1';
+$MCONF['name'] = 'mod1';
 
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/mod1_locallang.xml');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
@@ -413,7 +413,7 @@ class tx_wfqbe_module1 extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 
 
     function mainAction(){
-        $MCONF['name'] = 'web_txwfqbeM1';
+        $MCONF['name'] = 'mod1';
         $this->initModule($MCONF);
         $this->main();
         $this->printContent();

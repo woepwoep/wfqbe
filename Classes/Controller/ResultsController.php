@@ -340,8 +340,8 @@ class ResultsController
     private function adjustBeParams(&$confArray)
     {
         if ($this->pibase->beMode) {
-            $token = \TYPO3\CMS\Core\FormProtection\FormProtectionFactory::get('backend')->generateToken('moduleCall', web_txwfqbeM2);
-            $confArray['additionalParams'] .= "&M=web_txwfqbeM2&moduleToken=$token";
+            $token = \TYPO3\CMS\Core\FormProtection\FormProtectionFactory::get('backend')->generateToken('moduleCall', mod2);
+            $confArray['additionalParams'] .= "&M=mod2&moduleToken=$token";
         }
     }
 
@@ -1011,7 +1011,7 @@ class ResultsController
             $this->pibase->piVars['showpage'][$uid] = $actualPage - 1 > 0 ? $actualPage - 1 : 1;
             if ($this->pibase->beMode == 1) {
                 $beParams['tx_wfqbe_pi1[showpage]'][$uid] = $this->pibase->piVars['showpage'][$uid];
-                $mA['###PAGE_PREV###'] = \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('web_txwfqbeM2', $beParams);
+                $mA['###PAGE_PREV###'] = \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('mod2', $beParams);
             } else {
                 $mA['###PAGE_PREV###'] = htmlentities($this->pibase->pi_linkTP_keepPIvars_url(array(), 0, 0, $altPageId) . $backendParams);
             }
@@ -1024,7 +1024,7 @@ class ResultsController
             $this->pibase->piVars['showpage'][$uid] = $actualPage + 1 < $numPages ? $actualPage + 1 : $numPages;
             if ($this->pibase->beMode == 1) {
                 $beParams['tx_wfqbe_pi1[showpage]'][$uid] = $this->pibase->piVars['showpage'][$uid];
-                $mA['###PAGE_NEXT###'] = \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('web_txwfqbeM2', $beParams);
+                $mA['###PAGE_NEXT###'] = \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('mod2', $beParams);
             } else {
                 $mA['###PAGE_NEXT###'] = htmlentities($this->pibase->pi_linkTP_keepPIvars_url(array(), 0, 0, $altPageId) . $backendParams);
             }
@@ -1045,7 +1045,7 @@ class ResultsController
                 $this->pibase->piVars['showpage'][$uid] = $i;
                 if ($this->pibase->beMode == 1) {
                     $beParams['tx_wfqbe_pi1[showpage]'][$uid] = $this->pibase->piVars['showpage'][$uid];
-                    $mA['###PAGE_LIST###'] .= ' <a href="' . \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('web_txwfqbeM2', $beParams) . '" title="' . $this->pibase->pi_getLL('go_to_page') . ' ' . $i . '">' . $i . '</a>' . $this->pibase->pi_getLL('page_separator');
+                    $mA['###PAGE_LIST###'] .= ' <a href="' . \TYPO3\CMS\Backend\Utility\BackendUtility::getModuleUrl('mod2', $beParams) . '" title="' . $this->pibase->pi_getLL('go_to_page') . ' ' . $i . '">' . $i . '</a>' . $this->pibase->pi_getLL('page_separator');
                 } else {
                     $mA['###PAGE_LIST###'] .= ' <a href="' . htmlentities($this->pibase->pi_linkTP_keepPIvars_url(array(), 0, 0, $altPageId) . $backendParams) . '" title="' . $this->pibase->pi_getLL('go_to_page') . ' ' . $i . '">' . $i . '</a>' . $this->pibase->pi_getLL('page_separator');
                 }

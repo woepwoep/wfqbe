@@ -127,7 +127,7 @@ class tx_wfqbe_belib
                 'id' => $this->page_id,
                 'tx_wfqbe_backend[uid]' => $row['uid']
             );
-            $aHref = $this->getModuleUrl('web_txwfqbeM2', $urlParameters);
+            $aHref = $this->getModuleUrl('mod2', $urlParameters);
 
             $content .= '
             <tr class="db_list_normal">
@@ -174,7 +174,7 @@ class tx_wfqbe_belib
             'id' => $this->page_id,
             'tx_wfqbe_backend[uid]' => $backend['uid']
         );
-        $aHref = $this->getModuleUrl('web_txwfqbeM2', $urlParameters);
+        $aHref = $this->getModuleUrl('mod2', $urlParameters);
         if (($query > 0 && $query == $backend['insertq']) || $this->piVars['wfqbe_editing_mode'] == 1 || $this->piVars['wfqbe_deleting_mode'] == 1) {
             // EDIT MODE
 
@@ -260,7 +260,7 @@ class tx_wfqbe_belib
         $urlParameters = array(
             'id' => \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('id')
         );
-        $backurl = $this->getModuleUrl('web_txwfqbeM2', $urlParameters);
+        $backurl = $this->getModuleUrl('mod2', $urlParameters);
         $searchParams = '';
         $wfqbeParams = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_pi1');
         if (is_array($wfqbeParams)) {

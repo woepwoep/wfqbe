@@ -37,31 +37,31 @@ if (TYPO3_MODE === 'BE') {
 
 if (TYPO3_MODE === 'BE') {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'Wfqbe',
-        'web',
-        'web_txfwqbeM1',
-        '',
-        [
-	     'controller' => 'index'
+        'RedSeadog.Wfqbe',
+        'web',		// Main area
+        'mod1',		// Name of the module
+        '',		// Position of the module
+        [               // Allowed controller action combinations
+	     'Query' => 'show'
         ],
-        [
+        [               // Additional configuration
             'access' => 'user,group',
-            'icon' => 'EXT:rx_extkey/Resources/Public/Icons/mod1_moduleicon.gif',
-            'labels' => 'Resources/Private/Language/mod1_locallang_mod.xlf',
+            'icon'   => 'EXT:wfqbe/Resources/Public/Icons/mod1_moduleicon.gif',
+            'labels' => 'LLL:EXT:wfqbe/Resources/Private/Language/mod1_locallang_mod.xlf',
         ]
     );
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'Wfqbe',
-        'web',
-        'web_txfwqbeM2',
-        '',
-        [
-	     'controller' => 'index'
+        'RedSeadog.Wfqbe',
+        'web',		// Main area
+        'mod2',		// Name of the module
+        '',		// Position of the module
+        [               // Allowed controller action combinations
+	     'Query' => 'show'
         ],
-        [
+        [               // Additional configuration
             'access' => 'user,group',
-            'icon' => 'EXT:rx_extkey/Resources/Public/Icons/mod2_moduleicon.gif',
-            'labels' => 'Resources/Private/Language/mod2_locallang_mod.xlf',
+            'icon'   => 'EXT:wfqbe/Resources/Public/Icons/mod2_moduleicon.gif',
+            'labels' => 'LLL:EXT:wfqbe/Resources/Private/Language/mod2_locallang_mod.xlf',
         ]
     );
 }

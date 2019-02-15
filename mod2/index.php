@@ -17,7 +17,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-$MCONF['name'] = 'web_txwfqbeM2';
+$MCONF['name'] = 'mod2';
 
 $GLOBALS['LANG']->includeLLFile('EXT:wfqbe/Resources/Private/Language/mod2_locallang.xml');
 $GLOBALS['BE_USER']->modAccess($MCONF, 1);
@@ -151,7 +151,7 @@ class  tx_wfqbe_module2 extends \TYPO3\CMS\Backend\Module\BaseScriptClass
 
 
     function mainAction(){
-        $MCONF['name'] = 'web_txwfqbeM2';
+        $MCONF['name'] = 'mod2';
         $this->initModule($MCONF);
         $this->main();
         $this->printContent();
