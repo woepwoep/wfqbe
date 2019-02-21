@@ -1,67 +1,67 @@
-plugin.tx_wfqbe_pi1 {
-	template = EXT:wfqbe/Resources/Private/Templates/wfqbe_template.html
-	style = EXT:wfqbe/Resources/Public/Css/stile.css
-	defLayout = 0
-	debugQuery = 0
-	wrapInBaseClass = 1
-	enableXAJAX = 0
-	pageLimit = -1
-	
-	results	{
-		enableOrderByHeaders = 1
-		doNotRemoveQuotes = 0
-	}
-	
-	subinsert	{
-		pageConfirmation = 0
-	}
-	
-	insert	{
-		pageConfirmation = 1
-		requiredSymbol = *
-		add_new	{
-			icon = EXT:wfqbe/Resources/Public/Icons/add.gif
-		}
-		select_wizard	{
-			icon = EXT:wfqbe/Resources/Public/Icons/open.gif
-		}
-		edit_wizard	{
-			icon = EXT:wfqbe/Resources/Public/Icons/edit.gif
-		}
-		delete_wizard	{
-			icon = EXT:wfqbe/Resources/Public/Icons/delete.gif
-		}
-		
-		help_link = ?
-		help_link.wrap = (|)
-	}
-	
-	classes {
-		even = wfqbe_even
-		odd = wfqbe_odd
-	}
-	
-	email	{
-		debug = 0
-		from_email = wfqbe@domain.com
-		from = DB Integration module
-		bcc = wfqbe@domain.com
-		notify_email = 
-		notify_subject = 
-		template = EXT:wfqbe/Resources/Public/Templates/mail_template.html
-		send_email = 0
-		
-		send_email_user = 0
-		field_email_user = 
-		notify_subject_user = 
-	}
-	
-	
-	backend {
-		template = EXT:wfqbe/Resources/Public/Templates/backend_default_template.html
-	}
-	
-	
+plugin.tx_wfqbe_query {
+  template = EXT:wfqbe/Resources/Private/Templates/wfqbe_template.html
+  style = EXT:wfqbe/Resources/Public/Css/stile.css
+  defLayout = 0
+  debugQuery = 0
+  wrapInBaseClass = 1
+  enableXAJAX = 0
+  pageLimit = -1
+  
+  results  {
+    enableOrderByHeaders = 1
+    doNotRemoveQuotes = 0
+  }
+  
+  subinsert  {
+    pageConfirmation = 0
+  }
+  
+  insert  {
+    pageConfirmation = 1
+    requiredSymbol = *
+    add_new  {
+      icon = EXT:wfqbe/Resources/Public/Icons/add.gif
+    }
+    select_wizard  {
+      icon = EXT:wfqbe/Resources/Public/Icons/open.gif
+    }
+    edit_wizard  {
+      icon = EXT:wfqbe/Resources/Public/Icons/edit.gif
+    }
+    delete_wizard  {
+      icon = EXT:wfqbe/Resources/Public/Icons/delete.gif
+    }
+    
+    help_link = ?
+    help_link.wrap = (|)
+  }
+  
+  classes {
+    even = wfqbe_even
+    odd = wfqbe_odd
+  }
+  
+  email  {
+    debug = 0
+    from_email = wfqbe@domain.com
+    from = DB Integration module
+    bcc = wfqbe@domain.com
+    notify_email = 
+    notify_subject = 
+    template = EXT:wfqbe/Resources/Public/Templates/mail_template.html
+    send_email = 0
+    
+    send_email_user = 0
+    field_email_user = 
+    notify_subject_user = 
+  }
+  
+  
+  backend {
+    template = EXT:wfqbe/Resources/Public/Templates/backend_default_template.html
+  }
+  
+  
 }
 
 
@@ -71,7 +71,7 @@ csv_wfqbe = PAGE
 csv_wfqbe {
   typeNum = 181
 
-  10 =< plugin.tx_wfqbe_pi1
+  10 =< plugin.tx_wfqbe_query
   10.template = EXT:wfqbe/Resources/Public/Templates/wfqbe_csv_template.html
   10.defLayout = 0
   10.export_mode = csv

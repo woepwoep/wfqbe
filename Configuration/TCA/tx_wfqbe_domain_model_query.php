@@ -1,7 +1,7 @@
 <?php
 $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
     "ctrl" => Array(
-        'title' => 'LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query',
+        'title' => 'LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:tableName',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -13,7 +13,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
             "disabled" => "hidden",
             "fe_group" => "fe_group",
         ),
-        "iconfile" => 'EXT:wfqbe/Resources/Public/Icons/icon_tx_wfqbe_domain_model_query.gif',
+        "iconfile" => 'EXT:wfqbe/Resources/Public/Icons/icon_Query.gif',
     ),
     "interface" => Array(
         "showRecordFieldList" => "hidden,fe_group,type,title,description,query,search,insertq,credentials,dbname,searchinquery"
@@ -43,13 +43,13 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
             )
         ),
         'type' => Array(
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.type",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.type",
             'config' => Array(
                 'type' => 'select',
                 'items' => Array(
-                    Array('LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.type.I.0', 'select'),
-                    Array('LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.type.I.1', 'insert'),
-                    Array('LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.type.I.2', 'search'),
+                    Array('LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.type.I.0', 'select'),
+                    Array('LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.type.I.1', 'insert'),
+                    Array('LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.type.I.2', 'search'),
                 ),
                 "renderType" => "selectSingle",
                 'default' => 'select',
@@ -59,7 +59,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "title" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.title",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.title",
             "config" => Array(
                 "type" => "input",
                 "size" => "30",
@@ -67,7 +67,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "description" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.description",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.description",
             "config" => Array(
                 "type" => "text",
                 "cols" => "30",
@@ -76,7 +76,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "query" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.query",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.query",
             "config" => Array(
                 "type" => "text",
                 "cols" => "30",
@@ -97,7 +97,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "search" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.search",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.search",
             "config" => Array(
                 "type" => "text",
                 "cols" => "30",
@@ -118,7 +118,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "insertq" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.insertq",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.insertq",
             "config" => Array(
                 "type" => "text",
                 "cols" => "30",
@@ -139,11 +139,11 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "credentials" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.credentials",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.credentials",
             "config" => Array(
                 "type" => "select",
                 "items" => Array(
-                    Array("LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.credentials.I.0", 0),
+                    Array("LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.credentials.I.0", 0),
                 ),
                 "foreign_table" => "tx_wfqbe_domain_model_credentials",
                 "foreign_table_where" => "ORDER BY tx_wfqbe_domain_model_credentials.uid",
@@ -155,7 +155,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "dbname" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.dbname",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.dbname",
             "config" => Array(
                 "type" => "input",
                 "size" => "30",
@@ -163,11 +163,11 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
         "searchinquery" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/locallang_db.xml:tx_wfqbe_domain_model_query.searchinquery",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.searchinquery",
             "config" => Array(
                 "type" => "group",
                 "internal_type" => "db",
-                "allowed" => "tx_wfqbe_domain_model_query",
+                "allowed" => "Query",
                 "size" => 1,
                 "minitems" => 0,
                 "maxitems" => 1,

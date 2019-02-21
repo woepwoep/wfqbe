@@ -1,170 +1,56 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
-		<header/>
-		<body>
-			<trans-unit id="tx_wfqbe_domain_model_credentials">
-				<source>User credentials</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.host">
-				<source>Host</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.connection_uri">
-				<source>Connection URI (ex. mysql://$user:$pwd@$server/$dbname?persist)</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.type">
-				<source>Connection mode</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.type.I.0">
-				<source>Standard</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.type.I.1">
-				<source>Alternative URI</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.type.I.2">
-				<source>Connection specified in LocalConfiguration.php</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.0">
-				<source>MySql</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.1">
-				<source>PostgreSQL</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.2">
-				<source>MSSQL Server</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.3">
-				<source>Oracle (oci8)</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.4">
-				<source>MS Access</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms.I.5">
-				<source>Sybase</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbms">
-				<source>DBMS type</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.dbname">
-				<source>DB name</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.username">
-				<source>Username</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.passw">
-				<source>Password</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type.I.0">
-				<source>Connect</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type.I.1">
-				<source>PConnect</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type.I.2">
-				<source>NConnect</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.conn_type">
-				<source>Connection type</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.setdbinit">
-				<source>Connection SQL configuration</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_credentials.connection_localconf">
-				<source>Select connection (if empty, please configure it in typo3conf/localconf.php)</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query">
-				<source>Query table</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.description">
-				<source>Description</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.query">
-				<source>Query</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.search">
-				<source>Search module</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.credentials">
-				<source>User credentials</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.credentials.I.0">
-				<source>Local TYPO3 DB</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.dbname">
-				<source>Database name</source>
-			</trans-unit>
-			<trans-unit id="tt_content.list_type_pi1">
-				<source>DB Integration</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.type">
-				<source>Type</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.insertq">
-				<source>Insert form</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.type.I.0">
-				<source>Select</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.type.I.1">
-				<source>Insert / Edit</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.type.I.2">
-				<source>Search</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_query.searchinquery">
-				<source>Results query</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend">
-				<source>Backend management configuration</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.description">
-				<source>Description</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.listq">
-				<source>List query</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.detailsq">
-				<source>Details queries</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.searchq">
-				<source>Search query</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.insertq">
-				<source>Insert query</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.typoscript">
-				<source>Typoscript configuration</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.recordsforpage">
-				<source>Records for page</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.searchq_position.I.0">
-				<source>Bottom</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.searchq_position.I.1">
-				<source>Top</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode">
-				<source>Export mode</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.0">
-				<source>Disabled</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.1">
-				<source>Csv (comma separated values)</source>
-			</trans-unit>
-			<trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.2">
-				<source>Xls (excel file)</source>
-			</trans-unit>
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
+    <header/>
+    <body>
+      <trans-unit id="tt_content.list_type_pi1">
+        <source>DB Integration</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend">
+        <source>Backend management configuration</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.title">
+        <source>Title</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.description">
+        <source>Description</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.listq">
+        <source>List query</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.detailsq">
+        <source>Details queries</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.searchq">
+        <source>Search query</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.insertq">
+        <source>Insert query</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.typoscript">
+        <source>Typoscript configuration</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.recordsforpage">
+        <source>Records for page</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.searchq_position.I.0">
+        <source>Bottom</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.searchq_position.I.1">
+        <source>Top</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.export_mode">
+        <source>Export mode</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.0">
+        <source>Disabled</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.1">
+        <source>Csv (comma separated values)</source>
+      </trans-unit>
+      <trans-unit id="tx_wfqbe_domain_model_backend.export_mode.I.2">
+        <source>Xls (excel file)</source>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

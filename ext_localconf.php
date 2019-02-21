@@ -32,10 +32,15 @@ $TYPO3_CONF_VARS['BE']['AJAX']['tx_wfqbe_mod1_ajax::fieldTypeHelp'] = 'typo3conf
     '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:wfqbe/Configuration/PageTS/NewContentElementWizard.ts">'
 );
 
+// Configure plugin
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'RedSeadog.Wfqbe',
-    'Pi1',
-    [
-	'controller' => 'index,list,...'
-    ]
+    'Piquery',
+        [
+                'Query' => 'show'
+        ],
+        // non-cacheable actions
+        [
+                'Query' => 'show'
+        ]
 );
