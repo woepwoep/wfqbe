@@ -6,8 +6,8 @@ defined('TYPO3_MODE') or die();
  */
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'wfqbe',
-    'Pievent',
-    'LLL:EXT:sf_event_mgt/Resources/Private/Language/Plugin.xlf:plugin.title'
+    'Piquery',
+    'LLL:EXT:wfqbe/Resources/Private/Language/Plugin.xlf:title'
 );
 
 /**

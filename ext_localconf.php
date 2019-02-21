@@ -1,5 +1,5 @@
 <?php
-if (!defined('TYPO3_MODE')) die ('Access denied.');
+defined('TYPO3_MODE') or die('Access denied.');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('
     options.saveDocNew.tx_wfqbe_credentials=1
@@ -12,16 +12,20 @@ if (!defined('TYPO3_MODE')) die ('Access denied.');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
     'wfqbe',
     'setup',
-    'tt_content.CSS_editor.ch.tx_wfqbe_pi1 = < plugin.tx_wfqbe_pi1.CSS_editor',
+    'tt_content.CSS_editor.ch.tx_wfqbe_query = < plugin.tx_wfqbe_query.CSS_editor',
     43
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43(
-    'wfqbe',
-    'Classes/Controller/QueryController.php',
-    '_pi1',
-    'list_type',
-    false
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'RedSeadog.Wfqbe',
+    'Piquery',
+    [
+        'Query' => 'show',
+    ],
+    // non-cacheable actions
+    [
+        'Query' => 'show',
+    ]
 );
 
 

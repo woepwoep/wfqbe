@@ -52,7 +52,7 @@ class tx_wfqbe_belib
 
         $this->page_id = intval(\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('id'));
         $beVars = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_backend');
-        $this->piVars = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_pi1');
+        $this->piVars = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_query');
         $query_id = intval($beVars['query']);
         $backend_id = intval($beVars['uid']);
         $this->mode = $beVars['mode'];
@@ -163,7 +163,7 @@ class tx_wfqbe_belib
         $this->initConfig($backend['typoscript']);
         $sessionData = $GLOBALS['BE_USER']->getSessionData('tx_wfqbe_backend_sessiondata');
 
-        $PI1 = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_pi1');
+        $PI1 = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_wfqbe_query');
         $PI1->conf = $this->conf;
         $PI1->beMode = true;
 
@@ -262,13 +262,13 @@ class tx_wfqbe_belib
         );
         $backurl = $this->getModuleUrl('mod2', $urlParameters);
         $searchParams = '';
-        $wfqbeParams = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_pi1');
+        $wfqbeParams = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_query');
         if (is_array($wfqbeParams)) {
             foreach ($wfqbeParams as $key => $value)
                 if (is_array($value))
-                    $searchParams .= '&tx_wfqbe_pi1[' . $key . ']=' . implode(',', $value);
+                    $searchParams .= '&tx_wfqbe_query[' . $key . ']=' . implode(',', $value);
                 else
-                    $searchParams .= '&tx_wfqbe_pi1[' . $key . ']=' . $value;
+                    $searchParams .= '&tx_wfqbe_query[' . $key . ']=' . $value;
         }
         $sessionData['backurl'] = $backurl . $searchParams;
         $GLOBALS['BE_USER']->setAndSaveSessionData('tx_wfqbe_backend_sessiondata', $sessionData);
@@ -337,8 +337,8 @@ class tx_wfqbe_belib
 
 \TYPO3\CMS\Core\Utility\DebugUtility::debug($GLOBALS['TSFE']->tmpl,'tmpl');exit(1);
 
-        if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_wfqbe_pi1.'])) {
-            $result = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_wfqbe_pi1.'];
+        if (isset($GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_wfqbe_query.'])) {
+            $result = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_wfqbe_query.'];
         } else {
             $result = array();
         }

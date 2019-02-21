@@ -9,7 +9,7 @@
 # writing. "version" and "dependencies" must not be touched!
 ########################################################################
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF['wfqbe'] = array(
     'title' => 'DB Integration',
     'description' => 'This extension allows to generate queries (with a little sql knowledge), search forms and insert forms to generic databases through a wizard. The results visualization is template-based and fully configurable via TS.',
     'category' => 'plugin',

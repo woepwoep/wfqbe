@@ -61,7 +61,7 @@ class QueryService
         if (is_array($piVars))
             $this->piVars = $piVars;
         else
-            $this->piVars = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_pi1');
+            $this->piVars = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_wfqbe_query');
 
         // Finding the query record into the database
 \TYPO3\CMS\Core\Utility\DebugUtility::debug('exit lib-api 1','queryformgen');exit(1);
@@ -150,8 +150,8 @@ class QueryService
 
 \TYPO3\CMS\Core\Utility\DebugUtility::debug($template,'template');exit(1);
 
-        if (isset($template->setup['plugin.']['tx_wfqbe_pi1.'])) {
-            $result = $template->setup['plugin.']['tx_wfqbe_pi1.'];
+        if (isset($template->setup['plugin.']['tx_wfqbe_query.'])) {
+            $result = $template->setup['plugin.']['tx_wfqbe_query.'];
         } else {
             $result = array();
         }
