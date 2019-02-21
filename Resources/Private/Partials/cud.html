@@ -1,0 +1,22 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:comment>
+  <f:debug>{_all}</f:debug>
+</f:comment>  
+
+
+
+<f:link.typolink parameter='{CUD}'
+  additionalParams="&tx_wfqbe_pi1[uid]={uid}&tx_wfqbe_pi1[wfqbe_editing_mode]=1&queryUid={queryUid}"
+  additionalAttributes="{queryUid: '{queryUid}' }">
+  <f:image src="fileadmin/wfqbe/css/images/edit.gif" title="record wijzigen" alt="edit" width="17"/>
+</f:link.typolink>
+
+  &nbsp;-&nbsp;
+
+<f:link.typolink parameter='{CUD}'
+  additionalParams="&tx_wfqbe_pi1[uid]={uid}&tx_wfqbe_pi1[wfqbe_deleting_mode]=1" >
+  <f:image src="fileadmin/wfqbe/css/images/delete.gif" title="record verwijderen" alt="delete" width="17"/>
+</f:link.typolink>
+
+
