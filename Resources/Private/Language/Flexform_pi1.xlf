@@ -13,7 +13,7 @@
         <source>Query record</source>
       </trans-unit>
       <trans-unit id="parameterCheck">
-        <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_pi1|submit means tx_wfqbe_pi1[submit])</source>
+        <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>
       </trans-unit>
       <trans-unit id="templateFile">
         <source>Template</source>

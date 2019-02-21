@@ -35,7 +35,7 @@
         <source>Database name</source>
         <target>Nome del Database</target>
       </trans-unit>
-      <trans-unit id="tt_content.list_type_pi1" xml:space="preserve" approved="yes">
+      <trans-unit id="tt_content.list_type_query" xml:space="preserve" approved="yes">
         <source>DB Integration</source>
         <target>DB Integration</target>
       </trans-unit>
@@ -92,7 +92,7 @@
         <target>Attiva debug</target>
       </trans-unit>
       <trans-unit id="parameterCheck" xml:space="preserve" approved="yes">
-        <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_pi1|submit means tx_wfqbe_pi1[submit])</source>
+        <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>
         <target></target>
       </trans-unit>
       <trans-unit id="templateFile" xml:space="preserve" approved="yes">

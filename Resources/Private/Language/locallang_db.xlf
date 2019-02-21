@@ -3,7 +3,7 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
     <header/>
     <body>
-      <trans-unit id="tt_content.list_type_pi1">
+      <trans-unit id="tt_content.list_type_query">
         <source>DB Integration</source>
       </trans-unit>
       <trans-unit id="tx_wfqbe_domain_model_backend">

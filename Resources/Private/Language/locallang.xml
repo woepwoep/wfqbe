@@ -6,16 +6,16 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="pi1_title">DB Integration</label>
-      <label index="pi1_plus_wiz_description">Visual DB management</label>
+      <label index="query_title">DB Interrrgration</label>
+      <label index="query_plus_wiz_description">Visual DB management</label>
     </languageKey>
     <languageKey index="it" type="array">
-      <label index="pi1_title">DB Integration</label>
-      <label index="pi1_plus_wiz_description">Gestione visuale di DB generici</label>
+      <label index="query_title">DB Integration</label>
+      <label index="query_plus_wiz_description">Gestione visuale di DB generici</label>
     </languageKey>
     <languageKey index="gr" type="array">
-      <label index="pi1_title">Ενσωμάτωση βάσης δεδομένων</label>
-      <label index="pi1_plus_wiz_description">Οπτική διαχείριση βάσης δεδομένων</label>
+      <label index="query_title">Ενσωμάτωση βάσης δεδομένων</label>
+      <label index="query_plus_wiz_description">Οπτική διαχείριση βάσης δεδομένων</label>
     </languageKey>
   </data>
 </T3locallang>
