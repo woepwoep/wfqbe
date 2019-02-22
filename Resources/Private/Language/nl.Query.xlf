@@ -38,15 +38,9 @@
       <trans-unit id="Query.insertq">
         <source>Insert form</source>
       </trans-unit>
-      <trans-unit id="Query.credentials">
-        <source>User credentials</source>
-      </trans-unit>
-      <trans-unit id="Query.credentials.I.0">
-        <source>Local TYPO3 DB</source>
-      </trans-unit>
-      <trans-unit id="Query.dbname">
-        <source>Database name</source>
-        <target>Database naam</target>
+      <trans-unit id="Query.connectionname">
+        <source>Connection name from LocalConfiguration.php</source>
+        <target>Naam van de DB connection uit LocalConfiguration.php</target>
       </trans-unit>
       <trans-unit id="Query.searchinquery">
         <source>Results query</source>

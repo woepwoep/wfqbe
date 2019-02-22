@@ -2,9 +2,6 @@
 defined('TYPO3_MODE') or die('Access denied.');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('
-    options.saveDocNew.tx_wfqbe_credentials=1
-');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addUserTSConfig('
     options.saveDocNew.tx_wfqbe_query=1
 ');
 

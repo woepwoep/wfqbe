@@ -23,17 +23,8 @@
         <source>Search module</source>
         <target>Modulo di ricerca</target>
       </trans-unit>
-      <trans-unit id="tx_wfqbe_domain_model_query.credentials" xml:space="preserve" approved="yes">
-        <source>User credentials</source>
-        <target>Credenziali Utente</target>
-      </trans-unit>
-      <trans-unit id="tx_wfqbe_domain_model_query.credentials.I.0" xml:space="preserve" approved="yes">
-        <source>Local TYPO3 DB</source>
-        <target>DB locale di TYPO3</target>
-      </trans-unit>
-      <trans-unit id="tx_wfqbe_domain_model_query.dbname" xml:space="preserve" approved="yes">
-        <source>Database name</source>
-        <target>Nome del Database</target>
+      <trans-unit id="tx_wfqbe_domain_model_query.connectionname" xml:space="preserve" approved="yes">
+        <source>Connection name from LocalConfiguration.php</source>
       </trans-unit>
       <trans-unit id="tt_content.list_type_query" xml:space="preserve" approved="yes">
         <source>DB Integration</source>

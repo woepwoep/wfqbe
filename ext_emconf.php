@@ -11,7 +11,7 @@
 
 $EM_CONF['wfqbe'] = array(
     'title' => 'DB Integration',
-    'description' => 'This extension allows to generate queries (with a little sql knowledge), search forms and insert forms to generic databases through a wizard. The results visualization is template-based and fully configurable via TS.',
+    'description' => 'This extension is based on the DB Integration (wfqbe) extension. It uses raw queries only, with Fluid for templating.'
     'category' => 'plugin',
     'version' => '9.5.4',
     'state' => 'alpha',

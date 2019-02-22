@@ -27,10 +27,7 @@ class Query extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $query = '';
 
     /** @var string */
-    protected $credentials = '';
-
-    /** @var string */
-    protected $dbname = '';
+    protected $connection = '';
 
     /** @var string */
     protected $search = '';
@@ -90,34 +87,19 @@ class Query extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->query = $query;
     }
 
-    /** @return string $credentials */
-    public function getCredentials()
+    /** @return string $connectionname */
+    public function getConnectionname()
     {
-        return $this->credentials;
+        return $this->connectionname;
     }
 
     /**
-     * @param string $credentials
+     * @param string $connectionname
      * @return void
      */
-    public function setCredentials($credentials)
+    public function setConnectionname($connectionname)
     {
-        $this->credentials = $credentials;
-    }
-
-    /** @return string $dbname */
-    public function getDbname()
-    {
-        return $this->dbname;
-    }
-
-    /**
-     * @param string $dbname
-     * @return void
-     */
-    public function setDbname($dbname)
-    {
-        $this->dbname = $dbname;
+        $this->connectionname = $connectionname;
     }
 
     /** @return string $search */

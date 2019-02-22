@@ -16,7 +16,7 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         "iconfile" => 'EXT:wfqbe/Resources/Public/Icons/icon_Query.gif',
     ),
     "interface" => Array(
-        "showRecordFieldList" => "hidden,fe_group,type,title,description,query,search,insertq,credentials,dbname,searchinquery"
+        "showRecordFieldList" => "hidden,fe_group,type,title,description,query,search,insertq,connectionname,searchinquery"
     ),
     "columns" => Array(
         "hidden" => Array(
@@ -137,25 +137,9 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
                 ),
             )
         ),
-        "credentials" => Array(
+        "connectionname" => Array(
             "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.credentials",
-            "config" => Array(
-                "type" => "select",
-                "items" => Array(
-                    Array("LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.credentials.I.0", 0),
-                ),
-                "foreign_table" => "tx_wfqbe_domain_model_credentials",
-                "foreign_table_where" => "ORDER BY tx_wfqbe_domain_model_credentials.uid",
-                "size" => 1,
-                "minitems" => 0,
-                "maxitems" => 1,
-                "renderType" => "selectSingle",
-            )
-        ),
-        "dbname" => Array(
-            "exclude" => 1,
-            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.dbname",
+            "label" => "LLL:EXT:wfqbe/Resources/Private/Language/Query.xlf:Query.connectionname",
             "config" => Array(
                 "type" => "input",
                 "size" => "30",
@@ -175,10 +159,10 @@ $GLOBALS['TCA']['tx_wfqbe_domain_model_query'] = array(
         ),
     ),
     "types" => array(
-        "0" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, credentials, dbname, query"),
-        "select" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, credentials, dbname, query"),
-        "insert" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, credentials, dbname, insertq"),
-        "search" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, credentials, dbname, searchinquery, search"),
+        "0" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, connectionname, query"),
+        "select" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, connectionname, query"),
+        "insert" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, connectionname, insertq"),
+        "search" => array("showitem" => "hidden, --palette--;;1, type, title;;, description;;, connectionname, searchinquery, search"),
     ),
     "palettes" => array(
         "1" => array("showitem" => "fe_group"),

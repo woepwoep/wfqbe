@@ -44,7 +44,7 @@ class QueryController extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin
 
     /* Questa funzione ha i seguenti compiti :
         -Estrarre i parametri host,tipo di DBMS,username,password, nome del database e la query(che si vuole fare) dalle deue tabelle create
-       (credentials e query).
+       (query).
        -Creare un tipo di connessione diversa in base al tipo di DBMS al quale ci si vuole connettere.
        -Eseguire la query , estrarre i risultati e visualizzare a frontend la tabella risultante.
        -Viene utilizzato un template (template.html) per poter visualizzare la tabella in formato html a frontend.
