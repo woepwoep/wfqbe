@@ -11,7 +11,7 @@
 
 $EM_CONF['wfqbe'] = array(
     'title' => 'DB Integration',
-    'description' => 'This extension is based on the DB Integration (wfqbe) extension. It uses raw queries only, with Fluid for templating.'
+    'description' => 'This extension is based on the DB Integration (wfqbe) extension. It uses raw queries only, with Fluid for templating.',
     'category' => 'plugin',
     'version' => '9.5.4',
     'state' => 'alpha',

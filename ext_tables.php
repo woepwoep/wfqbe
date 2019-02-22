@@ -24,26 +24,12 @@ if (TYPO3_MODE === 'BE') {
         'tx_wfqbe_m1',	// Name of the module
         '',		// Position of the module
         [               // Allowed controller action combinations
-	     'AdministrationM1' => 'list'
+	     'Backend' => 'list'
         ],
         [               // Additional configuration
             'access' => 'user,group',
             'icon'   => 'EXT:wfqbe/Resources/Public/Icons/mod1_moduleicon.gif',
-            'labels' => 'LLL:EXT:wfqbe/Resources/Private/Language/locallang_modadministration.xlf',
-        ]
-    );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'RedSeadog.wfqbe',
-        'web',		// Main area
-        'tx_wfqbe_m2',	// Name of the module
-        '',		// Position of the module
-        [               // Allowed controller action combinations
-	     'AdministrationM2' => 'list'
-        ],
-        [               // Additional configuration
-            'access' => 'user,group',
-            'icon'   => 'EXT:wfqbe/Resources/Public/Icons/mod2_moduleicon.gif',
-            'labels' => 'LLL:EXT:wfqbe/Resources/Private/Language/locallang_modadministration.xlf',
+            'labels' => 'LLL:EXT:wfqbe/Resources/Private/Language/Backend.xlf',
         ]
     );
 }
