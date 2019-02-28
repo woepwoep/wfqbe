@@ -32,7 +32,7 @@ class PluginService implements \TYPO3\CMS\Core\SingletonInterface
         $this->pluginSettings = $this->fullTsArray['plugin'][$extName];
         if (!is_array($this->pluginSettings)) {
             \TYPO3\CMS\Core\Utility\DebugUtility::debug('PluginService: no such extension plugin found: '.$extName);
-            exit(1);
+            //exit(1);
         }
     }
 
