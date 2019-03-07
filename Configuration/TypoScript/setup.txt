@@ -1,4 +1,4 @@
-plugin.tx_wfqbe_query {
+plugin.tx_wfqbe {
     backend {
         template = EXT:wfqbe/Resources/Public/Templates/backend_default_template.html
     }

@@ -102,6 +102,13 @@
       <trans-unit id="mailTemplate">
         <source>Email template file</source>
       </trans-unit>
+
+      <trans-unit id="sheet_cud">
+        <source>Cud</source>
+      </trans-unit>
+      <trans-unit id="cudPage">
+        <source>CUD page</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

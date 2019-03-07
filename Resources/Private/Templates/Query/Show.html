@@ -1,81 +1,56 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
-<v:variable.set name="fe_group" value='<f:cObject typoscriptObjectPath="lib.fe_group" />' />
-<v:variable.set name="CUD" value='<f:cObject typoscriptObjectPath="lib.CUD" />' />
-<v:variable.set name="CUD2" value="{v:variable.typoscript(path: 'lib.CUD.value')}" />
-
 <f:debug>{_all}</f:debug>
+<f:comment>
+  
+  redirectQuery is: {conf.ff_data.redirectQuery} <br /><br />
+  queryUid:'{pagination.queryUid}' <br /><br />
+  showpage: {pagination.actualPage} <br /><br />
+</f:comment>  
 
+<h3>EXT:wfqbe/Resources/Private/Templates/Query/Show.html</h3>
 
+<v:variable.set name="CUD" value='7' />
+<v:variable.set name="wfqbe_description" value='wfqbe_description' />
+<v:variable.set name="wfqbe_title" value='wfqbe_title' />
+<v:variable.set name="wfqbe_add_image" value='fileadmin/wfqbe/css/images/add.png' />
+<v:variable.set name="wfqbe_title" value='wfqbe_title' />
+<v:variable.set name="wfqbe_title" value='wfqbe_title' />
+<v:variable.set name="wfqbe_title" value='wfqbe_title' />
+
+<h1>
+  Dit is de Default Result Template
+</h1>
+
+<f:comment>
+<f:render partial="pagination" arguments="{pagination}" />  
+</f:comment>
 
 <div class="container">
   <div id="Listing">
-  <div class="wfqbe_description">
-    Overzicht Klanten   
-    <f:link.typolink parameter='{CUD}'
-       additionalParams='&tx_wfqbe_pi1[fe_group]={fe_group}' 
-       title="Nieuwe klant toevoegen" >
-       <f:image src="fileadmin/wfqbe/css/images/toevoegen.png" alt="Klant toevoegen" width="17"/>
-    </f:link.typolink>
+    <div class="wfqbe_description">
+      {wfqbe_description}
+      <f:link.typolink parameter='{CUD}' title="{wfqbe_title}" >
+        <f:image src="{wfqbe_add_image}" alt="Add record" width="17"/>
+      </f:link.typolink>
+    </div>
+  
+    <div class="table-responsive"> 
+      <table class="table table-bordered table-hover table-condensed">
+        <thead class="wfqbe_table_header">
+          <tr>
+            <f:for each="{columnNames}" as="columnName">
+              <th>{columnName}</th>
+            </f:for>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <f:for each="{rows}" as="row">
+            <f:render partial="Query/Cud.html" arguments="{row: '{row}', columnTypes: '{columnTypes}', queryUid: '{pagination.queryUid}' }" />
+          </f:for>  
+        </tbody>
+      </table>
+    </div>
   </div>
-    
-  <div class="table-responsive">
-    
-  <table class="table table-bordered table-hover table-condensed">
-  
-    <thead class="wfqbe_table_header">
-      <tr > 
-        <th>uid</th>
-        <th>KlantNR</th>
-        <th>
-            <f:link.typolink parameter='655'
-            additionalParams="&tx_wfqbe_pi1[orderby][35][mode]={sortMode}&tx_wfqbe_pi1[orderby][35][field]=Klant"
-            title="Sorteer op Klant" >
-            Klant
-            </f:link.typolink>
-        </th>
-        <th>
-            <f:link.typolink parameter='655'
-            additionalParams="&tx_wfqbe_pi1[orderby][35][mode]={sortMode}&tx_wfqbe_pi1[orderby][35][field]=Voornaam"
-            title="Sorteer op Voornaam" >
-            Voornaam
-            </f:link.typolink>
-        </th>
-        <th>Achternaam</th>
-        <th>Telefoon</th>
-        <th>Email</th>
-        <th>Act.</th>
-        <th></th> 
-      </tr>
-    </thead>
-       
-    <tbody>
-      <f:for each="{rows}" as="row">
-      <tr>
-          <td>{row.uid}</td>
-          <td><f:link.typolink parameter='<f:cObject typoscriptObjectPath="lib.KlantDetail" />'
-            additionalParams="&tx_wfqbe_pi1[KlantenUID]={row.KlantenUID}"
-            title="Ga naar de KlantDetails van deze klant" >
-            {row.KlantNR}
-            </f:link.typolink></td>
-          <td width="30">
-            <f:link.typolink parameter='<f:cObject typoscriptObjectPath="lib.KlantDossiers" />'
-            additionalParams="&tx_wfqbe_pi1[KlantenUID]={row.KlantenUID}"
-            title="Ga naar de Dossiers van deze klant" >
-            {row.Klant}
-            </f:link.typolink></td>
-          <td>{row.Voornaam}</td>
-          <td>{row.Achternaam}</td>
-          <td>{row.Telefoon}</td>
-          <td width="30"><a href="mailto:{row.Email}">{row.Email}</a></td>
-          <td>{row.hidden}</td>
-          <td> <f:render partial="cud" arguments="{_all}" /> </td>
-        </tr>
-      </f:for>
-    </tbody>   
-  </table>
- </div>
 </div>
-</div>
-
-  

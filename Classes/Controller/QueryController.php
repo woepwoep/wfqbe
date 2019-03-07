@@ -62,7 +62,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     public function __construct()
     {
-        $this->pluginSettings = new PluginService('RedSeadog.Wfqbe');
+        $this->pluginSettings = new PluginService('tx_wfqbe');
         $this->flexformSettings = new FlexformService();
     }
 

@@ -5,6 +5,7 @@
     </meta>
     <sheets>
         <sDEF>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetGeneral.xml</sDEF>
+        <cud>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetCud.xml</cud>
         <results>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetResults.xml</results>
         <search>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetSearch.xml</search>
         <insert>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetInsert.xml</insert>
