@@ -6,6 +6,9 @@
             <trans-unit id="piquery.title">
                 <source>DB Integration query results for TYPO3 v9</source>
             </trans-unit>
+            <trans-unit id="picud.title">
+                <source>DB Integration cud for TYPO3 v9</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

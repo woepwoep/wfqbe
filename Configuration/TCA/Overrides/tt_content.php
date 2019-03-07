@@ -9,6 +9,11 @@ defined('TYPO3_MODE') or die();
     'Piquery',
     'LLL:EXT:wfqbe/Resources/Private/Language/Plugin.xlf:piquery.title'
 );
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'RedSeadog.Wfqbe',
+    'Picud',
+    'LLL:EXT:wfqbe/Resources/Private/Language/Plugin.xlf:picud.title'
+);
 
 /**
  * Remove unused fields
