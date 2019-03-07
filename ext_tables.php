@@ -1,15 +1,25 @@
 <?php
 defined('TYPO3_MODE') or die('Access denied.');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_wfqbe_domain_model_query',
-    'EXT:wfqbe/Resources/Private/Language/locallang_csh_tx_wfqbe_domain_model_query.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_wfqbe_domain_model_query');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+    'tx_wfqbe_domain_model_query',
+    'EXT:wfqbe/Resources/Private/Language/locallang_csh_tx_wfqbe_domain_model_query.xlf'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(
+    'tx_wfqbe_domain_model_query'
+);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_wfqbe_domain_model_backend',
-    'EXT:wfqbe/Resources/Private/Language/locallang_csh_tx_wfqbe_domain_model_backend.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_wfqbe_domain_model_backend');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+    'tx_wfqbe_domain_model_backend',
+    'EXT:wfqbe/Resources/Private/Language/locallang_csh_tx_wfqbe_domain_model_backend.xlf'
+);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(
+    'tx_wfqbe_domain_model_backend'
+);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToInsertRecords("tx_wfqbe_domain_model_query");
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToInsertRecords(
+    "tx_wfqbe_domain_model_query"
+);
 
 
 
