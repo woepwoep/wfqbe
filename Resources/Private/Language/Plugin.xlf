@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xliff version="1.0">
-  <file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
-    <header/>
-    <body>
-      <trans-unit id="title">
-        <source>DB Intettrrrgration</source>
-      </trans-unit>
-    </body>
-  </file>
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
+        <header/>
+        <body>
+            <trans-unit id="title">
+                <source>DB Intettrrrgration</source>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>
