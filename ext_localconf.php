@@ -17,11 +17,23 @@ defined('TYPO3_MODE') or die('Access denied.');
     'RedSeadog.Wfqbe',
     'Piquery',
     [
-        'Query' => 'show,detail',
+        'Query' => 'show',
     ],
     // non-cacheable actions
     [
-        'Query' => 'show,detail',
+        'Query' => 'show',
+    ]
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'RedSeadog.Wfqbe',
+    'Picud',
+    [
+        'Cud' => 'detail,edit',
+    ],
+    // non-cacheable actions
+    [
+        'Cud' => 'detail,edit',
     ]
 );
 

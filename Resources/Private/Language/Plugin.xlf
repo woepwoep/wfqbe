@@ -3,8 +3,8 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2019-02-14T12:30:13Z" product-name="wfqbe">
         <header/>
         <body>
-            <trans-unit id="title">
-                <source>DB Integration for TYPO3 v9</source>
+            <trans-unit id="piquery.title">
+                <source>DB Integration query results for TYPO3 v9</source>
             </trans-unit>
         </body>
     </file>
