@@ -4,7 +4,7 @@
         <header/>
         <body>
             <trans-unit id="title">
-                <source>DB Intettrrrgration</source>
+                <source>DB Integration for TYPO3 v9</source>
             </trans-unit>
         </body>
     </file>

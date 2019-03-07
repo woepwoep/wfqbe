@@ -13,7 +13,7 @@ class FlexformService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
 
         // Get the data object (contains the tt_content fields)
-        $cObj = $configurationManager->getContentObjectRenderer();
+        $cObj = $configurationManager->getContentObject();
 
         // Retrieve flexform values
         $cObj->readFlexformIntoConf($cObj->data['pi_flexform'], $values);

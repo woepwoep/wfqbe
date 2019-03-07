@@ -5,7 +5,7 @@ defined('TYPO3_MODE') or die();
  * Plugins
  */
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'wfqbe',
+    'RedSeadog.Wfqbe',
     'Piquery',
     'LLL:EXT:wfqbe/Resources/Private/Language/Plugin.xlf:title'
 );

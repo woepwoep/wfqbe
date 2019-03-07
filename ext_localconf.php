@@ -29,16 +29,3 @@ defined('TYPO3_MODE') or die('Access denied.');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
     '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:wfqbe/Configuration/PageTS/NewContentElementWizard.ts">'
 );
-
-// Configure plugin
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'RedSeadog.Wfqbe',
-    'Piquery',
-    [
-        'Query' => 'show'
-    ],
-    // non-cacheable actions
-    [
-        'Query' => 'show'
-    ]
-);
