@@ -12,6 +12,12 @@
       <trans-unit id="query">
         <source>Query record</source>
       </trans-unit>
+      <trans-unit id="detailPage">
+        <source>Detail page</source>
+      </trans-unit>
+      <trans-unit id="cudPage">
+        <source>CUD page</source>
+      </trans-unit>
       <trans-unit id="parameterCheck">
         <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>
       </trans-unit>
@@ -101,13 +107,6 @@
       </trans-unit>
       <trans-unit id="mailTemplate">
         <source>Email template file</source>
-      </trans-unit>
-
-      <trans-unit id="sheet_cud">
-        <source>Cud</source>
-      </trans-unit>
-      <trans-unit id="cudPage">
-        <source>CUD page</source>
       </trans-unit>
     </body>
   </file>

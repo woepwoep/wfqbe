@@ -17,11 +17,11 @@ defined('TYPO3_MODE') or die('Access denied.');
     'RedSeadog.Wfqbe',
     'Piquery',
     [
-        'Query' => 'show',
+        'Query' => 'show,detail',
     ],
     // non-cacheable actions
     [
-        'Query' => 'show',
+        'Query' => 'show,detail',
     ]
 );
 

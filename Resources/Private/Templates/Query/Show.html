@@ -10,7 +10,6 @@
 
 <h3>EXT:wfqbe/Resources/Private/Templates/Query/Show.html</h3>
 
-<v:variable.set name="CUD" value='7' />
 <v:variable.set name="wfqbe_description" value='wfqbe_description' />
 <v:variable.set name="wfqbe_title" value='wfqbe_title' />
 <v:variable.set name="wfqbe_add_image" value='fileadmin/wfqbe/css/images/add.png' />
@@ -30,7 +29,7 @@
   <div id="Listing">
     <div class="wfqbe_description">
       {wfqbe_description}
-      <f:link.typolink parameter='{CUD}' title="{wfqbe_title}" >
+      <f:link.typolink parameter='{flexform.cud}' title="{wfqbe_title}" >
         <f:image src="{wfqbe_add_image}" alt="Add record" width="17"/>
       </f:link.typolink>
     </div>
@@ -42,12 +41,13 @@
             <f:for each="{columnNames}" as="columnName">
               <th>{columnName}</th>
             </f:for>
+            <th>Edit / Delete</th>
           </tr>
         </thead>
   
         <tbody>
           <f:for each="{rows}" as="row">
-            <f:render partial="Query/Cud.html" arguments="{row: '{row}', columnTypes: '{columnTypes}', queryUid: '{pagination.queryUid}' }" />
+            <f:render partial="Query/Cud.html" arguments="{row: '{row}', columnTypes: '{columnTypes}', queryUid: '{pagination.queryUid}' flexformData: '{flexformdata}' }" />
           </f:for>  
         </tbody>
       </table>
