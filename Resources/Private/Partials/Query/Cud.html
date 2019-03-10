@@ -2,11 +2,9 @@
 
 <tr>
     <f:for each="{row}" as="value">
-        <f:link.typolink parameter='{flexformData.detailPage}'
-                additionalParams="&tx_wfqbe_pi1[uid]={uid}&queryUid={queryUid}"
-                additionalAttributes="{queryUid: '{queryUid}' }">
-            <td>{value}</td>
-        </f:link.typolink>
+        <td>
+            {value}
+        </td>
     </f:for>  
 
     <td>
@@ -18,14 +16,15 @@
 
         &nbsp;-&nbsp;
 
-        <f:link.typolink parameter='{flexformData.detailPage}'
-                additionalParams="&tx_wfqbe_pi1[uid]={uid}&tx_wfqbe_pi1[wfqbe_deleting_mode]=1" >
+<f:link.action action="detail" pageUid="{flexformData.detailPage}">
             <f:image src="fileadmin/wfqbe/css/images/delete.gif" title="record verwijderen" alt="delete" width="17"/>
-        </f:link.typolink>
+</f:link.action>
     </td>
 </tr>
 <f:comment>
               <f:for each="{columnNames}" as="columnName">
                 <td>{row.uid}</td>
               </f:for>
+<f:link.action action="detail" arguments="{event : event}" pageUid="{settings.detailPid}">{event.title}</f:link.action>
+
 </f:comment>

@@ -71,7 +71,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
      */
-    public function showAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
+    public function listAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
     {
         // retrieve the query from the flexform
         $ffdata = $this->flexformSettings->getData();
@@ -79,7 +79,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // is query filled out in FlexForm?
         if (!$query) {
-            DebugUtility::debug('Query ID is empty in FlexForm!');
+            DebugUtility::debug('QueryController/listAction: Query ID is empty in FlexForm!');
             exit(1);
         }
 
@@ -97,34 +97,4 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         ]);
     }
 
-    /**
-     * Detail query
-     *
-     * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
-     */
-    public function detailAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
-    {
-        // retrieve the query from the flexform
-        $ffdata = $this->flexformSettings->getData();
-        $query = $this->queryRepository->findByUid($ffdata['queryObject']);
-
-        // is query filled out in FlexForm?
-        if (!$query) {
-            DebugUtility::debug('Query ID is empty in FlexForm!');
-            exit(1);
-        }
-
-        // execute the query
-        $sqlService = new SqlService($query->getQuery());
-
-        // assign the results in a view for fluid Query/Show.html
-        $this->view->assignMultiple([
-            'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $ffdata,
-            'query' => $query,
-            'columnNames' => $sqlService->getColumnNames(),
-            'columnTypes' => $sqlService->getColumnTypes(),
-            'rows' => $sqlService->getRows(),
-        ]);
-    }
 }
