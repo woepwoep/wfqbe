@@ -25,6 +25,6 @@
               <f:for each="{columnNames}" as="columnName">
                 <td>{row.uid}</td>
               </f:for>
-<f:link.action action="detail" arguments="{event : event}" pageUid="{settings.detailPid}">{event.title}</f:link.action>
+<f:link.action controller="cud" action="detail" arguments="{event : event}" pageUid="{settings.detailPid}">{event.title}</f:link.action>
 
 </f:comment>
