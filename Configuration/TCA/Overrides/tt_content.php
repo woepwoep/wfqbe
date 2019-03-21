@@ -5,12 +5,13 @@ defined('TYPO3_MODE') or die();
  * Plugins
  */
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'RedSeadog.Wfqbe',
+    'wfqbe',
     'Piquery',
     'LLL:EXT:wfqbe/Resources/Private/Language/Plugin.xlf:piquery.title'
 );
+
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'RedSeadog.Wfqbe',
+    'wfqbe',
     'Picud',
     'LLL:EXT:wfqbe/Resources/Private/Language/Plugin.xlf:picud.title'
 );
@@ -19,6 +20,8 @@ defined('TYPO3_MODE') or die();
  * Remove unused fields
  */
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['wfqbe_piquery'] = 'layout,select_key,pages,recursive';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['wfqbe_picud'] = 'layout,select_key,pages,recursive';
+
 
 /**
  * Add Flexform for query plugin
@@ -28,6 +31,7 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_piquer
     'wfqbe_piquery',
     'FILE:EXT:wfqbe/Configuration/FlexForms/Flexform_query.xml'
 );
+
 
 /**
  * Add Flexform for cud plugin

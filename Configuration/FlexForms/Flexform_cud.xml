@@ -5,5 +5,7 @@
     </meta>
     <sheets>
         <sDEF>EXT:wfqbe/Configuration/FlexForms/FFcud/SheetGeneral.xml</sDEF>
+        <database>EXT:wfqbe/Configuration/FlexForms/FFcud/SheetDatabase.xml</database>
+        <template>EXT:wfqbe/Configuration/FlexForms/FFcud/SheetTemplate.xml</template>
     </sheets>
 </T3DataStructure>

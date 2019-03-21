@@ -1,4 +1,8 @@
 plugin.tx_wfqbe {
+    settings {
+        templateFile = {$plugin.tx_wfqbe.settings.templateFile}
+    }
+
     backend {
         template = EXT:wfqbe/Resources/Public/Templates/backend_default_template.html
     }

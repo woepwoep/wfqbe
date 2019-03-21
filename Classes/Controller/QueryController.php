@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\PluginService;
-use \RedSeadog\Wfqbe\Service\FlexformService;
+use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\SqlService;
 
 
@@ -43,7 +43,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $pluginSettings;
 
     /**
-     * @var \RedSeadog\Wfqbe\Service\FlexformService
+     * @var \RedSeadog\Wfqbe\Service\FlexformInfoService
      */
     protected $flexformSettings;
 
@@ -63,11 +63,11 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function __construct()
     {
         $this->pluginSettings = new PluginService('tx_wfqbe');
-        $this->flexformSettings = new FlexformService();
+        $this->flexformSettings = new FlexformInfoService();
     }
 
     /**
-     * Show query
+     * List the results of a query
      *
      * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
      */
@@ -86,7 +86,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // execute the query
         $sqlService = new SqlService($query->getQuery());
 
-        // assign the results in a view for fluid Query/Show.html
+        // use the template from the Flexform if there is one
+        if (!empty($ffdata['templateFile'])) {
+            $templateFile = GeneralUtility::getFileAbsFilename($ffdata['templateFile']);
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
+
+        // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
             'flexformdata' => $ffdata,
@@ -95,6 +102,8 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'columnTypes' => $sqlService->getColumnTypes(),
             'rows' => $sqlService->getRows(),
         ]);
+
+            //DebugUtility::debug($joop);exit(1);
     }
 
 }

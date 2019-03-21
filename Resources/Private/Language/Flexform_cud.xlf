@@ -21,9 +21,6 @@
       <trans-unit id="parameterCheck">
         <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>
       </trans-unit>
-      <trans-unit id="templateFile">
-        <source>Template</source>
-      </trans-unit>
       <trans-unit id="customTemplate">
         <source>Template type</source>
       </trans-unit>
@@ -41,6 +38,21 @@
       </trans-unit>
       <trans-unit id="debugQuery">
         <source>Debug query</source>
+      </trans-unit>
+      <trans-unit id="sheet_database">
+        <source>Database</source>
+      </trans-unit>
+      <trans-unit id="targetTable">
+        <source>Target table</source>
+      </trans-unit>
+      <trans-unit id="identifiers">
+        <source>Primary key(s)</source>
+      </trans-unit>
+      <trans-unit id="sheet_template">
+        <source>Template</source>
+      </trans-unit>
+      <trans-unit id="templateFile">
+        <source>Template</source>
       </trans-unit>
       <trans-unit id="sheet_results">
         <source>Results</source>

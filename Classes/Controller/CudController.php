@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\PluginService;
-use \RedSeadog\Wfqbe\Service\FlexformService;
+use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\SqlService;
 
 
@@ -43,11 +43,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $pluginSettings;
 
     /**
-     * @var \RedSeadog\Wfqbe\Service\FlexformService
-     */
-    protected $flexformSettings;
-
-    /**
      * QueryRepository
      *
      * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
@@ -63,34 +58,42 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function __construct()
     {
         $this->pluginSettings = new PluginService('tx_wfqbe');
-        $this->flexformSettings = new FlexformService();
     }
 
     /**
      * Detail query
      *
-     * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
      */
-    public function detailAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
+    public function detailAction()
     {
-        // retrieve the query from the flexform
-        $ffdata = $this->flexformSettings->getData();
-        $query = $this->queryRepository->findByUid($ffdata['queryObject']);
-
-        // is query filled out in FlexForm?
-        if (!$query) {
-            DebugUtility::debug('CudController/detailAction: Query ID is empty in FlexForm!');
+        // retrieve the {uid : uid} from Fluid
+        $parameter = 'uid';
+        if (!$this->request->hasArgument($parameter)) {
+            DebugUtility::debug('Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
             exit(1);
         }
+	$uid = $this->request->getArgument($parameter);
+
+        // retrieve the tablename and the keyfield(s) from the flexform
+        $flexformInfoService = new FlexformInfoService();
+        $ffdata = $flexformInfoService->getData();
+        $targetTable = $ffdata['targetTable'];
+        $identifiers = $ffdata['identifiers'];
+
+            DebugUtility::debug($ffdata);
+            DebugUtility::debug($tableName);
+            DebugUtility::debug($uid);
+//exit(1);
 
         // execute the query
-        $sqlService = new SqlService($query->getQuery());
+        $statement = 'select * from '.$targetTable.' whEre '.$parameter.'='.$uid;
+        $sqlService = new SqlService($statement);
 
         // assign the results in a view for fluid Query/Detail.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
             'flexformdata' => $ffdata,
-            'query' => $query,
+            'statement' => $statement,
             'columnNames' => $sqlService->getColumnNames(),
             'columnTypes' => $sqlService->getColumnTypes(),
             'rows' => $sqlService->getRows(),
@@ -105,7 +108,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function editAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
     {
         // retrieve the query from the flexform
-        $ffdata = $this->flexformSettings->getData();
+        $ffdata = $flexformInfoService->getData();
         $query = $this->queryRepository->findByUid($ffdata['queryObject']);
 
         // is query filled out in FlexForm?
@@ -136,7 +139,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function deleteAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
     {
         // retrieve the query from the flexform
-        $ffdata = $this->flexformSettings->getData();
+        $ffdata = $flexformInfoService->getData();
         $query = $this->queryRepository->findByUid($ffdata['queryObject']);
 
         // is query filled out in FlexForm?

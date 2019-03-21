@@ -70,35 +70,6 @@
                     </config>
                 </TCEforms>
             </parameterCheck>
-            <templateFile>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:templateFile</label>
-                    <config>
-                        <type>input</type>
-                        <eval>trim</eval>
-                        <default>EXT:wfqbe/Resources/Private/Templates/wfqbe_template.html</default>
-                        <wizards type="array">
-                            <_PADDING>2</_PADDING>
-                            <link type="array">
-                                <type>popup</type>
-                                <title>Link</title>
-                                <icon>link_popup.gif</icon>
-                                <module type="array">
-                                    <name>wizard_element_browser</name>
-                                    <urlParameters type="array">
-                                        <mode>wizard</mode>
-                                        <act>file</act>
-                                    </urlParameters>
-                                </module>
-                                <params type="array">
-                                    <blindLinkOptions>page,url,mail,spec</blindLinkOptions>
-                                </params>
-                                <JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
-                            </link>
-                        </wizards>
-                    </config>
-                </TCEforms>
-            </templateFile>
             <customTemplate>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:customTemplate</label>
