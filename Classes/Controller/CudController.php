@@ -65,19 +65,19 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function detailAction()
     {
-        // retrieve the {uid : uid} from Fluid
-        $parameter = 'uid';
-        if (!$this->request->hasArgument($parameter)) {
-            DebugUtility::debug('Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
-            exit(1);
-        }
-	$uid = $this->request->getArgument($parameter);
-
         // retrieve the tablename and the keyfield(s) from the flexform
         $flexformInfoService = new FlexformInfoService();
         $ffdata = $flexformInfoService->getData();
         $targetTable = $ffdata['targetTable'];
-        $identifiers = $ffdata['identifiers'];
+        $keyField = $ffdata['identifiers'];
+
+        // retrieve the {keyValue} from Fluid
+        $parameter = 'keyValue';
+        if (!$this->request->hasArgument($parameter)) {
+            DebugUtility::debug('detailAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
+            exit(1);
+        }
+	$keyValue = $this->request->getArgument($parameter);
 
         // use the template from the Flexform if there is one
         if (!empty($ffdata['templateFile'])) {
@@ -86,7 +86,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // execute the query
-        $statement = 'select * from '.$targetTable.' whEre '.$parameter.'='.$uid;
+        $statement = "select * from ".$targetTable." whEre ".$keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
         // assign the results in a view for fluid Query/Detail.html
@@ -105,7 +105,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addAction()
     {
-        return detailAction();
+        return $this->detailAction();
     }
 
     /**
@@ -113,7 +113,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function insertAction()
     {
-        return detailAction();
+        return $this->detailAction();
     }
 
     /**
@@ -121,7 +121,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function editAction()
     {
-        return detailAction();
+        return $this->detailAction();
     }
 
     /**
@@ -129,7 +129,71 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function updateAction()
     {
-        return detailAction();
+        // retrieve the tablename and the keyfield(s) from the flexform
+        $flexformInfoService = new FlexformInfoService();
+        $ffdata = $flexformInfoService->getData();
+        $targetTable = $ffdata['targetTable'];
+        $keyField = $ffdata['identifiers'];
+
+        // retrieve the {keyField : keyValue} from Fluid
+        $parameter = 'keyValue';
+        if (!$this->request->hasArgument($parameter)) {
+            DebugUtility::debug('updateAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
+            exit(1);
+        }
+	$keyValue = $this->request->getArgument($parameter);
+
+        // retrieve the new values for this row
+        $argList = $this->request->getArguments();
+        //DebugUtility::debug($argList,'Argument list for updateAction'); exit(1);
+
+        // retrieve the row to see what columns have changed
+        $statement = 'select * from '.$targetTable.' whEre '.$keyField.'='.$keyValue;
+        $sqlService = new SqlService($statement);
+
+        $columnNames = $sqlService->getColumnNames();
+        $columnTypes = $sqlService->getColumnTypes();
+        $rows = $sqlService->getRows();
+        if(sizeof($rows) <> 1) {
+            DebugUtility::debug($parameter.' value '.$uid.' is NIET uniek.');
+            exit(1);
+        }
+        foreach($rows[0] as $key => $value) {
+            $oldValues[$key] = $value;
+        }
+
+        // build an update statement where only changed column values are updated
+        $newValues = $this->request->getArguments();
+        $updateList = array();
+        foreach($columnNames as $columnName) {
+            // skip column if it is the keyField since we need it unchanged in the where clause
+            if (!strcmp($columnName,$parameter)) {
+                continue;
+            }
+            // add to update fieldlist if value has changed
+            if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
+                $updateList[$columnName] = $newValues[$columnName];
+            }
+        }
+
+        // nothing to be done if there are no changed column values
+        if (empty($updateList)) {
+            DebugUtility::debug('nothing changed in the row - updateAction');
+            exit(1);
+        }
+
+        // execute the query
+        $statement = "update ".$targetTable. " set";
+        foreach($updateList as $key => $value) {
+            $statement .= " ".$key."='".$value."',";
+        }
+        // remove last comma
+        $statement = rtrim($statement,',');
+        $statement .= ' wHeRe '.$parameter.'='.$uid;
+        DebugUtility::debug($statement,'statement for updateAction'); exit(1);
+
+        $sqlService = new SqlService($statement);
+
     }
 
     /**
@@ -137,6 +201,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function deleteAction()
     {
-	return detailAction();
+	return $this->detailAction();
     }
 }

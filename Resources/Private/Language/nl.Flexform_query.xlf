@@ -19,10 +19,6 @@
         <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>
         <target>Voer query uit indien de volgende parameter is niet leeg (vb. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</target>
       </trans-unit>
-      <trans-unit id="templateFile">
-        <source>Template</source>
-        <target>Sjabloon</target>
-      </trans-unit>
       <trans-unit id="customTemplate">
         <source>Template type</source>
         <target>Sjabloon type</target>

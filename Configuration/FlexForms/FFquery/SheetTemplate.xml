@@ -8,7 +8,7 @@
         <el>
             <templateFile>
                 <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:div_id</label>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:templateFile</label>
                     <config>
                         <type>input</type>
                         <size>95</size>

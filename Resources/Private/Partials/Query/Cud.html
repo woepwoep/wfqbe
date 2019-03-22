@@ -8,23 +8,14 @@
     </f:for>  
 
     <td>
-        <f:link.typolink parameter='{flexformData.cudPage}'
-                additionalParams="&tx_wfqbe_pi1[uid]={uid}&tx_wfqbe_pi1[wfqbe_editing_mode]=1&queryUid={queryUid}"
-                additionalAttributes="{queryUid: '{queryUid}' }">
-            <f:image src="fileadmin/wfqbe/css/images/edit.gif" title="record wijzigen" alt="edit" width="17"/>
-        </f:link.typolink>
+        <f:link.action controller="Cud" pluginName="Picud" action="edit" pageUid="{flexformData.cudPage}" arguments="{uid: '{row.uid}'}">
+            <f:image src="{wfqbe_edit_image}" title="record wijzigen" alt="edit" width="17"/>
+        </f:link.action>
 
         &nbsp;-&nbsp;
 
-<f:link.action action="detail" pageUid="{flexformData.detailPage}">
-            <f:image src="fileadmin/wfqbe/css/images/delete.gif" title="record verwijderen" alt="delete" width="17"/>
-</f:link.action>
+        <f:link.action controller="Cud" pluginName="Picud" action="delete" pageUid="{flexformData.detailPage}" arguments="{uid: '{row.uid}'}">
+            <f:image src="{wfqbe_delete_image}" title="record verwijderen" alt="delete" width="17"/>
+        </f:link.action>
     </td>
 </tr>
-<f:comment>
-              <f:for each="{columnNames}" as="columnName">
-                <td>{row.uid}</td>
-              </f:for>
-<f:link.action controller="cud" action="detail" arguments="{event : event}" pageUid="{settings.detailPid}">{event.title}</f:link.action>
-
-</f:comment>
