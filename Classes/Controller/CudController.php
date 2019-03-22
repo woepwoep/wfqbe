@@ -61,8 +61,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * Detail query
-     *
+     * Detail view of the chosen query result row.
      */
     public function detailAction()
     {
@@ -102,64 +101,42 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * Edit query
-     *
-     * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
+     * Request the values for a new row in the targettable
      */
-    public function editAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
+    public function addAction()
     {
-        // retrieve the query from the flexform
-        $ffdata = $flexformInfoService->getData();
-        $query = $this->queryRepository->findByUid($ffdata['queryObject']);
-
-        // is query filled out in FlexForm?
-        if (!$query) {
-            DebugUtility::debug('CudController/editAction: Query ID is empty in FlexForm!');
-            exit(1);
-        }
-
-        // execute the query
-        $sqlService = new SqlService($query->getQuery());
-
-        // assign the results in a view for fluid Query/Edit.html
-        $this->view->assignMultiple([
-            'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $ffdata,
-            'query' => $query,
-            'columnNames' => $sqlService->getColumnNames(),
-            'columnTypes' => $sqlService->getColumnTypes(),
-            'rows' => $sqlService->getRows(),
-        ]);
+        return detailAction();
     }
 
     /**
-     * Delete query
-     *
-     * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
+     * Insert a new row into the targettable
      */
-    public function deleteAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
+    public function insertAction()
     {
-        // retrieve the query from the flexform
-        $ffdata = $flexformInfoService->getData();
-        $query = $this->queryRepository->findByUid($ffdata['queryObject']);
+        return detailAction();
+    }
 
-        // is query filled out in FlexForm?
-        if (!$query) {
-            DebugUtility::debug('CudController/deleteAction: Query ID is empty in FlexForm!');
-            exit(1);
-        }
+    /**
+     * Edit the chosen query result row.
+     */
+    public function editAction()
+    {
+        return detailAction();
+    }
 
-        // execute the query
-        $sqlService = new SqlService($query->getQuery());
+    /**
+     * Update the chosen query result row.
+     */
+    public function updateAction()
+    {
+        return detailAction();
+    }
 
-        // assign the results in a view for fluid Query/Delete.html
-        $this->view->assignMultiple([
-            'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $ffdata,
-            'query' => $query,
-            'columnNames' => $sqlService->getColumnNames(),
-            'columnTypes' => $sqlService->getColumnTypes(),
-            'rows' => $sqlService->getRows(),
-        ]);
+    /**
+     * Delete the chosen query result row.
+     */
+    public function deleteAction()
+    {
+	return detailAction();
     }
 }
