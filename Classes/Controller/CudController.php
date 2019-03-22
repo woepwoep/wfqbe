@@ -80,10 +80,11 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $targetTable = $ffdata['targetTable'];
         $identifiers = $ffdata['identifiers'];
 
-            DebugUtility::debug($ffdata);
-            DebugUtility::debug($tableName);
-            DebugUtility::debug($uid);
-//exit(1);
+        // use the template from the Flexform if there is one
+        if (!empty($ffdata['templateFile'])) {
+            $templateFile = GeneralUtility::getFileAbsFilename($ffdata['templateFile']);
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
 
         // execute the query
         $statement = 'select * from '.$targetTable.' whEre '.$parameter.'='.$uid;

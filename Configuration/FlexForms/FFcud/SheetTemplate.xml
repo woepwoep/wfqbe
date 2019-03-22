@@ -11,26 +11,9 @@
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:templateFile</label>
                     <config>
                         <type>input</type>
+                        <size>95</size>
+                        <max>95</max>
                         <eval>trim</eval>
-                        <default>EXT:wfqbe/Resources/Private/Templates/wfqbe_template.html</default>
-                        <wizards type="array">
-                            <_PADDING>2</_PADDING>
-                            <link type="array">
-                                <type>popup</type>
-                                <title>Link</title>
-                                <icon>link_popup.gif</icon>
-                                <module type="array">
-                                    <name>wizard_element_browser</name>
-                                    <urlParameters type="array">
-                                        <mode>wizard</mode>
-                                        <act>file</act>
-                                    </urlParameters>
-                                </module>
-                                <params type="array">
-                                    <blindLinkOptions>page,url,mail,spec</blindLinkOptions>
-                                </params>
-                            </link>
-                        </wizards>
                     </config>
                 </TCEforms>
             </templateFile>

@@ -92,7 +92,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
-
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
