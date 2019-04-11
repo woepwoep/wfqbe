@@ -29,7 +29,6 @@ use \RedSeadog\Wfqbe\Service\SqlService;
  */
 class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
     /**
      * Configuration Manager
      *
@@ -98,11 +97,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'flexformdata' => $ffdata,
             'query' => $query,
             'columnNames' => $sqlService->getColumnNames(),
-            'columnTypes' => $sqlService->getColumnTypes(),
             'rows' => $sqlService->getRows(),
         ]);
-
-            //DebugUtility::debug($joop);exit(1);
     }
-
 }

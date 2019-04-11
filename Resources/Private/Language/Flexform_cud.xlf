@@ -48,6 +48,12 @@
       <trans-unit id="identifiers">
         <source>Primary key(s)</source>
       </trans-unit>
+      <trans-unit id="sheet_fields">
+        <source>Fields</source>
+      </trans-unit>
+      <trans-unit id="fieldlist">
+        <source>Fieldlist</source>
+      </trans-unit>
       <trans-unit id="sheet_template">
         <source>Template</source>
       </trans-unit>

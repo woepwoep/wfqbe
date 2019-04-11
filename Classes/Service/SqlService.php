@@ -1,6 +1,7 @@
 <?php
 namespace RedSeadog\Wfqbe\Service;
 
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
@@ -20,16 +21,11 @@ class SqlService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // now execute the query
         $this->rows = $connection
             ->executeQuery($query)
-            ->fetchAll();
+            ->fetchAll()
+        ;
     }
 
     public function getColumnNames()
-    {
-        // Return the values
-        return array_keys($this->rows[0]);
-    }
-
-    public function getColumnTypes()
     {
         // Return the values
         return array_keys($this->rows[0]);
@@ -40,5 +36,4 @@ class SqlService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // Return the values
         return $this->rows;
     }
-
 }

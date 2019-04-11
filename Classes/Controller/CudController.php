@@ -49,6 +49,11 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $queryRepository = null;
 
+    /**
+     * $ffdata
+     */
+    protected $ffdata;
+
 
     public function injectQueryRepository(QueryRepository $queryRepository)
     {
@@ -58,6 +63,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function __construct()
     {
         $this->pluginSettings = new PluginService('tx_wfqbe');
+        $flexformInfoService = new FlexformInfoService();
+        $this->ffdata = $flexformInfoService->getData();
     }
 
     /**
@@ -66,10 +73,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function detailAction()
     {
         // retrieve the tablename and the keyfield(s) from the flexform
-        $flexformInfoService = new FlexformInfoService();
-        $ffdata = $flexformInfoService->getData();
-        $targetTable = $ffdata['targetTable'];
-        $keyField = $ffdata['identifiers'];
+        $targetTable = $this->ffdata['targetTable'];
+        $keyField = $this->ffdata['identifiers'];
 
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
@@ -80,8 +85,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	$keyValue = $this->request->getArgument($parameter);
 
         // use the template from the Flexform if there is one
-        if (!empty($ffdata['templateFile'])) {
-            $templateFile = GeneralUtility::getFileAbsFilename($ffdata['templateFile']);
+        if (!empty($this->ffdata['templateFile'])) {
+            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
@@ -92,10 +97,10 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // assign the results in a view for fluid Query/Detail.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $ffdata,
+            'flexformdata' => $this->ffdata,
+            'keyValue' => $keyValue,
             'statement' => $statement,
             'columnNames' => $sqlService->getColumnNames(),
-            'columnTypes' => $sqlService->getColumnTypes(),
             'rows' => $sqlService->getRows(),
         ]);
     }
@@ -130,10 +135,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateAction()
     {
         // retrieve the tablename and the keyfield(s) from the flexform
-        $flexformInfoService = new FlexformInfoService();
-        $ffdata = $flexformInfoService->getData();
-        $targetTable = $ffdata['targetTable'];
-        $keyField = $ffdata['identifiers'];
+        $targetTable = $this->ffdata['targetTable'];
+        $keyField = $this->ffdata['identifiers'];
 
         // retrieve the {keyField : keyValue} from Fluid
         $parameter = 'keyValue';
@@ -152,10 +155,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $sqlService = new SqlService($statement);
 
         $columnNames = $sqlService->getColumnNames();
-        $columnTypes = $sqlService->getColumnTypes();
         $rows = $sqlService->getRows();
         if(sizeof($rows) <> 1) {
-            DebugUtility::debug($parameter.' value '.$uid.' is NIET uniek.');
+            DebugUtility::debug($parameter.' value '.$keyValue.' is NIET uniek.');
             exit(1);
         }
         foreach($rows[0] as $key => $value) {
@@ -167,7 +169,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $updateList = array();
         foreach($columnNames as $columnName) {
             // skip column if it is the keyField since we need it unchanged in the where clause
-            if (!strcmp($columnName,$parameter)) {
+            if (!strcmp($columnName,$keyField)) {
                 continue;
             }
             // add to update fieldlist if value has changed
@@ -189,8 +191,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
         // remove last comma
         $statement = rtrim($statement,',');
-        $statement .= ' wHeRe '.$parameter.'='.$uid;
-        DebugUtility::debug($statement,'statement for updateAction'); exit(1);
+        $statement .= " wHeRe ".$keyField."='".$keyValue."'";
+        //DebugUtility::debug($statement,'statement for updateAction'); exit(1);
 
         $sqlService = new SqlService($statement);
 
