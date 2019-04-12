@@ -75,6 +75,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // retrieve the tablename and the keyfield(s) from the flexform
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
+        $fieldList = $this->ffdata['fieldlist'];
 
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
@@ -91,9 +92,10 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // execute the query
-        $statement = "select * from ".$targetTable." whEre ".$keyField."='".$keyValue."'";
+        $statement = "select ".$fieldList." from ".$targetTable." whEre ".$keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
+            //DebugUtility::debug($statement,'detailAction statement');exit(1);
         // assign the results in a view for fluid Query/Detail.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
@@ -137,6 +139,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // retrieve the tablename and the keyfield(s) from the flexform
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
+        $fieldList = $this->ffdata['fieldlist'];
 
         // retrieve the {keyField : keyValue} from Fluid
         $parameter = 'keyValue';
@@ -151,7 +154,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         //DebugUtility::debug($argList,'Argument list for updateAction'); exit(1);
 
         // retrieve the row to see what columns have changed
-        $statement = 'select * from '.$targetTable.' whEre '.$keyField.'='.$keyValue;
+        $statement = "select ".$fieldList." from ".$targetTable." whEre ".$keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
         $columnNames = $sqlService->getColumnNames();
@@ -192,7 +195,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // remove last comma
         $statement = rtrim($statement,',');
         $statement .= " wHeRe ".$keyField."='".$keyValue."'";
-        //DebugUtility::debug($statement,'statement for updateAction'); exit(1);
+        DebugUtility::debug($statement,'statement for updateAction'); exit(1);
 
         $sqlService = new SqlService($statement);
 

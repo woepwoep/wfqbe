@@ -16,6 +16,7 @@ namespace RedSeadog\Wfqbe\UserFunc;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
+use \RedSeadog\Wfqbe\Service\SqlService;
 
 
 /**
@@ -33,9 +34,16 @@ class Field
      */
     public function getColumnNames(array &$config, &$parentObject)
     {
+        $targetTable = $config['row']['targetTable'];
+        $statement = "SELECT * FROM ".$targetTable." LIMIT 1";
+        $sqlService = new SqlService($statement);
+        $fieldList=$sqlService->getColumnNames();
         $options = [];
-        $options[] = ['label1','joop'];
-        $options[] = ['label2','henk'];
+        foreach($fieldList AS $name => $value)
+        {
+            $options[] = [$value,$value];
+        }
+        //DebugUtility::debug($options);exit(1);
 	$config['items'] = $options;
     }
 }
