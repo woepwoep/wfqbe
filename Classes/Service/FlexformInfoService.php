@@ -10,7 +10,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    public function getData() {
+    protected $ffdata;
+
+    public function __construct()
+    {
         $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
         $configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
 
@@ -19,9 +22,27 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
         // Retrieve flexform values
         $flexformService = new FlexformService();
-	$values = $flexformService->convertFlexFormContentToArray($cObj->data['pi_flexform']);
+	$this->ffdata = $flexformService->convertFlexFormContentToArray($cObj->data['pi_flexform']);
+    }
 
+    public function getData()
+    {
         // Return the values
-        return $values;
+        return $this->ffdata;
+    }
+
+    public function getTargetTable()
+    {
+        return $this->ffdata['targetTable'];
+    }
+
+    public function getKeyField()
+    {
+        return $this->ffdata['identifiers'];
+    }
+
+    public function getFieldList()
+    {
+        return $this->ffdata['fieldlist'];
     }
 }

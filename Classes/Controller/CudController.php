@@ -76,6 +76,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
         $fieldList = $this->ffdata['fieldlist'];
+        if (empty($fieldList)) $fieldList = '*';
 
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
@@ -92,7 +93,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // execute the query
-        $statement = "select ".$fieldList." from ".$targetTable." whEre ".$keyField."='".$keyValue."'";
+        $statement = "select ".$fieldList." from ".$targetTable." wHEre ".$keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
             //DebugUtility::debug($statement,'detailAction statement');exit(1);
@@ -140,6 +141,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
         $fieldList = $this->ffdata['fieldlist'];
+        if (empty($fieldList)) $fieldList = '*';
 
         // retrieve the {keyField : keyValue} from Fluid
         $parameter = 'keyValue';
@@ -195,7 +197,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // remove last comma
         $statement = rtrim($statement,',');
         $statement .= " wHeRe ".$keyField."='".$keyValue."'";
-        DebugUtility::debug($statement,'statement for updateAction'); exit(1);
+        //DebugUtility::debug($statement,'statement for updateAction'); exit(1);
 
         $sqlService = new SqlService($statement);
 

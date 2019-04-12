@@ -5,11 +5,11 @@ defined('TYPO3_MODE') or die('Access denied.');
     'RedSeadog.wfqbe',
     'Piquery',
     [
-        'Query' => 'list',
+        'Query' => 'list,sort',
     ],
     // non-cacheable actions
     [
-        'Query' => 'list',
+        'Query' => 'list,sort',
     ]
 );
 
@@ -21,7 +21,7 @@ defined('TYPO3_MODE') or die('Access denied.');
     ],
     // non-cacheable actions
     [
-        'Cud' => 'detail,add,edit,delete',
+        'Cud' => 'detail,add,insert,edit,update,delete',
     ]
 );
 

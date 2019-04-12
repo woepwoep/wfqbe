@@ -1,56 +1,41 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
 <f:debug>{_all}</f:debug>
-<f:comment>
+<h3>
+   EXT:wfqbe/Resources/Private/Templates/Cud/Edit.html
+</h3>
+
+<div class="container">  
+	<div id="CUD">
+		<f:form id="CUD_form" object="{rows}" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
+    		<div class="wfqbe_description">Een Default Edit Scherm</div>
+    		<div class="wfqbe_block">
+            	<div class="table-responsive"> 
+      				<table class="table table-bordered table-hover table-condensed">
+                      <tbody> 
+              			<f:for each="{columnNames}" as="columnName" iteration="i">
+                          <tr>
+                            <td>
+      							<span class="label">
+        							<label for="{columnName}">{columnName}:</label>
+      							</span>
+                            </td>
+                            <td>
+     							<div class="field">
+        							<f:form.textfield class="edit" name="{columnName}" value="{rows.0.{columnName}}" />
+      							</div>
+                            </td>
+                          </tr>
+                         </f:for> 
+                      </tbody>
+                   </table>
+    			</div>
+          	</div>
+          		<f:form.hidden name="uid" value="{rows.0.uid}" />
+    			<div class="wfqbe_block">    
+      				<f:form.submit class="btn btn-primary" value="Update" />
+    			</div>
+      	</f:form>
+  	</div>
   
-  redirectQuery is: {conf.ff_data.redirectQuery} <br /><br />
-  queryUid:'{pagination.queryUid}' <br /><br />
-  showpage: {pagination.actualPage} <br /><br />
-</f:comment>  
-
-<h3>EXT:wfqbe/Resources/Private/Templates/Cud/Edit.html</h3>
-
-<v:variable.set name="wfqbe_description" value='wfqbe_description' />
-<v:variable.set name="wfqbe_title" value='wfqbe_title' />
-<v:variable.set name="wfqbe_add_image" value='fileadmin/wfqbe/css/images/add.png' />
-<v:variable.set name="wfqbe_title" value='wfqbe_title' />
-<v:variable.set name="wfqbe_title" value='wfqbe_title' />
-<v:variable.set name="wfqbe_title" value='wfqbe_title' />
-
-<h1>
-  Dit is de Default Result Template
-</h1>
-
-<f:comment>
-<f:render partial="pagination" arguments="{pagination}" />  
-</f:comment>
-
-<div class="container">
-  <div id="Listing">
-    <div class="wfqbe_description">
-      {wfqbe_description}
-      <f:link.typolink parameter='{flexform.cud}' title="{wfqbe_title}" >
-        <f:image src="{wfqbe_add_image}" alt="Add record" width="17"/>
-      </f:link.typolink>
-    </div>
-  
-    <div class="table-responsive"> 
-      <table class="table table-bordered table-hover table-condensed">
-        <thead class="wfqbe_table_header">
-          <tr>
-            <f:for each="{columnNames}" as="columnName">
-              <th>{columnName}</th>
-            </f:for>
-            <th>Edit / Delete</th>
-          </tr>
-        </thead>
-  
-        <tbody>
-          <f:for each="{rows}" as="row">
-            <f:render partial="Query/Cud.html" arguments="{row: '{row}', columnTypes: '{columnTypes}', queryUid: '{pagination.queryUid}' flexformData: '{flexformdata}' }" />
-          </f:for>  
-        </tbody>
-      </table>
-    </div>
-  </div>
 </div>

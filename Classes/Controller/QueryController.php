@@ -47,11 +47,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $flexformSettings;
 
     /**
-     * QueryRepository
-     *
      * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
      */
     protected $queryRepository = null;
+
+    /**
+     * @var array $rows
+     */
+    protected $rows = null;
 
 
     public function injectQueryRepository(QueryRepository $queryRepository)
@@ -67,10 +70,8 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * List the results of a query
-     *
-     * @param \RedSeadog\Wfqbe\Domain\Model\Query $query
      */
-    public function listAction(\RedSeadog\Wfqbe\Domain\Model\Query $query = null)
+    public function listAction()
     {
         // retrieve the query from the flexform
         $ffdata = $this->flexformSettings->getData();
@@ -82,8 +83,16 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             exit(1);
         }
 
+        // retrieve the {keyValue} from Fluid
+        $parameter = 'koppelveld';
+        if ($this->request->hasArgument($parameter)) {
+	    $koppelveldWaarde = $this->request->getArgument($parameter);
+        }
+	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$query->getQuery());
+
         // execute the query
-        $sqlService = new SqlService($query->getQuery());
+        $sqlService = new SqlService($nieuw);
+        $this->rows = $sqlService->getRows();
 
         // use the template from the Flexform if there is one
         if (!empty($ffdata['templateFile'])) {
@@ -97,7 +106,46 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'flexformdata' => $ffdata,
             'query' => $query,
             'columnNames' => $sqlService->getColumnNames(),
-            'rows' => $sqlService->getRows(),
+            'rows' => $this->rows,
         ]);
     }
+
+    /**
+     * param string $orderby
+     */
+    public function sortAction(string $orderby)
+    {
+$joop = 'Achternaam';
+        $this->rows = $this->array_msort($this->rows, array($joop=>SORT_DESC));
+        $this->redirect(
+            'list',
+            null,
+            null,
+            []
+        );
+    }
+
+function array_msort($array, $cols)
+{
+    $colarr = array();
+    foreach ($cols as $col => $order) {
+        $colarr[$col] = array();
+        foreach ($array as $k => $row) { $colarr[$col]['_'.$k] = strtolower($row[$col]); }
+    }
+    $eval = 'array_multisort(';
+    foreach ($cols as $col => $order) {
+        $eval .= '$colarr[\''.$col.'\'],'.$order.',';
+    }
+    $eval = substr($eval,0,-1).');';
+    eval($eval);
+    $ret = array();
+    foreach ($colarr as $col => $arr) {
+        foreach ($arr as $k => $v) {
+            $k = substr($k,1);
+            if (!isset($ret[$k])) $ret[$k] = $array[$k];
+            $ret[$k][$col] = $array[$k][$col];
+        }
+    }
+    return $ret;
+}
 }

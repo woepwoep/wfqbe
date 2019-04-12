@@ -11,7 +11,7 @@
 
 $EM_CONF['wfqbe'] = [
     'title' => 'DB Integration for TYPO3 v9',
-    'description' => 'This extension is based on the DB Integration (wfqbe) extension. It uses raw queries only, with Fluid for templating.',
+    'description' => 'This extension is based on the DB Integration (wfqbe) extension using TYPO3 v9 standards.',
     'category' => 'plugin',
     'version' => '9.5.5',
     'state' => 'alpha',
