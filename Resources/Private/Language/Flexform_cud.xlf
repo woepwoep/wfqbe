@@ -51,6 +51,12 @@
       <trans-unit id="fieldlist">
         <source>Fieldlist</source>
       </trans-unit>
+      <trans-unit id="sheet_actions">
+        <source>Actions</source>
+      </trans-unit>
+      <trans-unit id="redirectPage">
+        <source>redirectPage</source>
+      </trans-unit>
       <trans-unit id="sheet_template">
         <source>Template</source>
       </trans-unit>

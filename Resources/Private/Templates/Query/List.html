@@ -6,8 +6,6 @@
 
 <h3>EXT:wfqbe/Resources/Private/Templates/Query/List.html</h3>
 
-<v:variable.set name="wfqbe_description" value='List' />
-<v:variable.set name="wfqbe_title" value='wfqbe_title' />
 <v:variable.set name="wfqbe_add_image" value='fileadmin/wfqbe/css/images/add.png' />
 <v:variable.set name="wfqbe_edit_image" value='fileadmin/wfqbe/css/images/edit.gif' />
 <v:variable.set name="wfqbe_delete_image" value='fileadmin/wfqbe/css/images/delete.gif' />
@@ -16,41 +14,51 @@
   Dit is de Default Result Template
 </h1>
 
-De CUD page is: {flexformdata.cudPage}
-
 <f:debug>{_all}</f:debug>
 
 <div class="container">
-	<div id="Listing">
-  		<div class="wfqbe_description">
-    		{wfqbe_description}
-    		<f:link.typolink parameter='16'
-       			title="{wfqbe_title}" >
-       			<f:image src="{wfqbe_add_image}" alt="Add record" width="17"/>
-    		</f:link.typolink>
-  		</div>
+  <div id="Listing">
+    <div class="wfqbe_description">
+      {flexformdata.caption}
+      <f:link.action controller="Cud" pluginName="Picud" action="add" pageUid="16" >
+        <f:image src="{wfqbe_add_image}" alt="Add record" width="17"/>
+      </f:link.action>
+    </div>
   
-  	<div class="table-responsive"> 
-  		<table class="table table-bordered table-hover table-condensed">
-  			<thead class="wfqbe_table_header">
-				<tr>
-					<f:for each="{columnNames}" as="columnName">
-						<th>{columnName}</th>
-					</f:for>
-					<f:if condition="{flexformdata.cudPage}">
-						<th>
-							Edit - Delete
-						</th>
-					</f:if>
-				</tr>
-  			</thead>
-    
-  			<tbody>
-       			<f:for each="{rows}" as="row" >
+    <div class="table-responsive"> 
+      <table class="table table-bordered table-hover table-condensed">
+        <thead class="wfqbe_table_header">
+          <tr>
+            <f:for each="{columnNames}" as="columnName">
+            		<th>
+                        	<f:link.action action="sort" arguments="{orderby: '{columnName} {volgorde}'}" title="Sorteer op {columnName} ">
+            				{columnName}
+							</f:link.action>
+                    	</th>
+              		 
+			</f:for>
+			<f:if condition="{flexformdata.cudPage}">
+				<th> Edit - Delete </th>
+			</f:if>
+          </tr>
+        </thead>
+  
+        <tbody>
+       		<f:for each="{rows}" as="row" >
         			<tr>
-						<f:for each="{row}" as="veld" >
-							<td>{veld}</td>
-						</f:for>
+                      
+                      <f:for each="{row}" as="veld" iteration="i" >
+                      	<f:if condition="{columnNames.{i.index}}=={flexformdata.linkField}">
+                          <f:then><td><f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.uid}'}"> 
+									{row.{columnNames.{i.index}}}
+									</f:link.action>
+                            </td>
+                          </f:then>
+                          <f:else><td>{row.{columnNames.{i.index}}}</td></f:else>
+                        </f:if>
+                        </f:for>
+                     
+                     
 						<f:if condition="{flexformdata.cudPage}">
 							<td>
 								<f:link.action controller="Cud" pluginName="Picud" action="edit" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{row.uid}'}" >
@@ -64,8 +72,9 @@ De CUD page is: {flexformdata.cudPage}
 						</f:if>
          			</tr>
        			</f:for>   
-  			</tbody>
- 		</table>
-	</div>
+  			</tbody>		
+  		</tbody>
+      </table>
+    </div>
   </div>
 </div>

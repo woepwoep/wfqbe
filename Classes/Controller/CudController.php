@@ -189,7 +189,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             exit(1);
         }
 
-        // execute the query
         $statement = "update ".$targetTable. " set";
         foreach($updateList as $key => $value) {
             $statement .= " ".$key."='".$value."',";
@@ -199,8 +198,19 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $statement .= " wHeRe ".$keyField."='".$keyValue."'";
         //DebugUtility::debug($statement,'statement for updateAction'); exit(1);
 
+        // execute the query
         $sqlService = new SqlService($statement);
+        $rowsAffected = $sqlService->updateRow();
+        DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
 
+        // redirect to redirectPage
+	$pageUid = $this->ffdata['redirectPage'];
+
+	$uriBuilder = $this->uriBuilder;
+	$uri = $uriBuilder
+	   ->setTargetPageUid($pageUid)
+	   ->build();
+	$this->redirectToURI($uri);
     }
 
     /**

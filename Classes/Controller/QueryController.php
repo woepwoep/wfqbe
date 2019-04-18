@@ -17,9 +17,9 @@ namespace RedSeadog\Wfqbe\Controller;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
-use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
-use \RedSeadog\Wfqbe\Service\SqlService;
+use \RedSeadog\Wfqbe\Service\PluginService;
+use \RedSeadog\Wfqbe\Service\RowsService;
 
 
 /**
@@ -30,31 +30,31 @@ use \RedSeadog\Wfqbe\Service\SqlService;
 class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     /**
-     * Configuration Manager
-     *
-     * @var ConfigurationManagerInterface
-     */
-    protected $configurationManager;
-
-    /**
-     * @var \RedSeadog\Wfqbe\Service\PluginService
-     */
-    protected $pluginSettings;
-
-    /**
-     * @var \RedSeadog\Wfqbe\Service\FlexformInfoService
-     */
-    protected $flexformSettings;
-
-    /**
      * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
      */
     protected $queryRepository = null;
 
     /**
-     * @var array $rows
+     * @var $ffdata
      */
-    protected $rows = null;
+    protected $ffdata;
+
+    /**
+     * @var \RedSeadog\Wfqbe\Service\PluginService
+     */
+    protected $pluginService;
+
+    /**
+     * @var \RedSeadog\Wfqbe\Domain\Model\Query $query
+     */
+    protected static $query = null;
+
+    /**
+     * RowsService ... the placeholder for the fluid template to work with (the array of rows[] matching the query)
+     *
+     * @var \RedSeadog\Wfqbe\Service\RowsService
+     */
+    protected $rowsService;
 
 
     public function injectQueryRepository(QueryRepository $queryRepository)
@@ -62,10 +62,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->queryRepository = $queryRepository;
     }
 
+    /**
+     * __construct() ... retrieve both the plugin settings and the flexform info
+     */
     public function __construct()
     {
-        $this->pluginSettings = new PluginService('tx_wfqbe');
-        $this->flexformSettings = new FlexformInfoService();
+        $this->pluginService = new PluginService('tx_wfqbe');
+        $flexformInfoService = new FlexformInfoService();
+        $this->ffdata = $flexformInfoService->getData();
     }
 
     /**
@@ -73,13 +77,12 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        // retrieve the query from the flexform
-        $ffdata = $this->flexformSettings->getData();
-        $query = $this->queryRepository->findByUid($ffdata['queryObject']);
+        // retrieve the query from the flexform only the first time
+        $this->query = $this->queryRepository->findByUid($this->ffdata['queryObject']);
 
         // is query filled out in FlexForm?
-        if (!$query) {
-            DebugUtility::debug('QueryController/listAction: Query ID is empty in FlexForm!');
+        if (!$this->query) {
+            DebugUtility::debug($this->ffdata,'QueryController/listAction: Query ID is empty in FlexForm!');
             exit(1);
         }
 
@@ -88,64 +91,59 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if ($this->request->hasArgument($parameter)) {
 	    $koppelveldWaarde = $this->request->getArgument($parameter);
         }
-	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$query->getQuery());
 
-        // execute the query
-        $sqlService = new SqlService($nieuw);
-        $this->rows = $sqlService->getRows();
+        // the {keyValue} is substituted in the raw query
+	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query->getQuery());
+        $this->query->setQuery($nieuw);
+
+        // retrieve the {sortField} from Fluid
+        $parameter = 'orderby';
+        if ($this->request->hasArgument($parameter)) {
+	    $sortField = $this->request->getArgument($parameter);
+            DebugUtility::debug($sortField,'sortField in listAction');
+	    $nieuw.= ' ORDER BY '.$sortField;
+            $this->query->setQuery($nieuw);
+        }
+
+        // execute the query and get the result set (rows)
+        $this->rowsService = new RowsService($this->query);
+        $rows = $this->rowsService->getRows();
 
         // use the template from the Flexform if there is one
-        if (!empty($ffdata['templateFile'])) {
-            $templateFile = GeneralUtility::getFileAbsFilename($ffdata['templateFile']);
+        if (!empty($this->ffdata['templateFile'])) {
+            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
-            'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $ffdata,
-            'query' => $query,
-            'columnNames' => $sqlService->getColumnNames(),
-            'rows' => $this->rows,
+            'settings' => $this->pluginService->getSettings(),
+            'flexformdata' => $this->ffdata,
+            'query' => $this->query,
+            'rowsService' => $this->rowsService,
+            'columnNames' => $this->rowsService->getColumnNames(),
+            'rows' => $rows,
+            'request' => $this->request,
         ]);
     }
 
     /**
      * param string $orderby
      */
-    public function sortAction(string $orderby)
+    public function sortAction()
     {
-$joop = 'Achternaam';
-        $this->rows = $this->array_msort($this->rows, array($joop=>SORT_DESC));
+        // retrieve the {sortField} from Fluid
+        $sortField = '';
+        $parameter = 'orderby';
+        if ($this->request->hasArgument($parameter)) {
+	    $sortField = $this->request->getArgument($parameter);
+        }
+
         $this->redirect(
-            'list',
-            null,
-            null,
-            []
+            'list',	// action
+            null,	// controller
+            null,	// extension
+            [ 'orderby' => $sortField ]		// arguments
         );
     }
-
-function array_msort($array, $cols)
-{
-    $colarr = array();
-    foreach ($cols as $col => $order) {
-        $colarr[$col] = array();
-        foreach ($array as $k => $row) { $colarr[$col]['_'.$k] = strtolower($row[$col]); }
-    }
-    $eval = 'array_multisort(';
-    foreach ($cols as $col => $order) {
-        $eval .= '$colarr[\''.$col.'\'],'.$order.',';
-    }
-    $eval = substr($eval,0,-1).');';
-    eval($eval);
-    $ret = array();
-    foreach ($colarr as $col => $arr) {
-        foreach ($arr as $k => $v) {
-            $k = substr($k,1);
-            if (!isset($ret[$k])) $ret[$k] = $array[$k];
-            $ret[$k][$col] = $array[$k][$col];
-        }
-    }
-    return $ret;
-}
 }

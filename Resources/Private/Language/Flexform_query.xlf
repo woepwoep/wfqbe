@@ -63,6 +63,12 @@
       <trans-unit id="max_items_in_list">
         <source>Records for page</source>
       </trans-unit>
+      <trans-unit id="sortField">
+        <source>sortField</source>
+      </trans-unit>
+      <trans-unit id="linkField">
+        <source>linkField</source>
+      </trans-unit>
       <trans-unit id="emptyResult">
         <source>Text for empty result</source>
       </trans-unit>
