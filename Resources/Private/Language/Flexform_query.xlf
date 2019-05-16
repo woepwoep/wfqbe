@@ -36,6 +36,12 @@
       <trans-unit id="sheet_template">
         <source>Template</source>
       </trans-unit>
+      <trans-unit id="sheet_database">
+        <source>Database</source>
+      </trans-unit>
+      <trans-unit id="fieldtypes">
+        <source>Field Types</source>
+      </trans-unit>
       <trans-unit id="templateFile">
         <source>Fluid template file</source>
       </trans-unit>

@@ -17,6 +17,7 @@ namespace RedSeadog\Wfqbe\Controller;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
@@ -102,35 +103,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $TSparserObject->parse($this->ffdata['fieldtypes']);
         $fieldtypes = $TSparserObject->setup;
 
-        $rows = $sqlService->getRows();
-
         $columnNames = $sqlService->getColumnNames();
-        $newColumns = array();
-        $i=0;
-        foreach ($columnNames as $column) {
-
-            // name is important
-            $newColumns[$i]['name'] = $column;
-
-            // default is TEXT
-            $newColumns[$i]['type'] = 'TEXT';
-
-            // if no rows, then skip this exercise
-            if (!is_array($rows)) continue;
-            
-            // if numeric, default is NUMERIC
-            if (is_numeric($rows[0][$column])) {
-                $newColumns[$i]['type'] = 'NUMERIC';
-            }
-
-            // if user overrules, use the fieldtype provided by the user
-            if ($fieldtypes[$column]) {
-                $newColumns[$i]['type'] = $fieldtypes[$column];
-            }
-            $i++;
-        }
-
-            //DebugUtility::debug($fieldtypes,'fieldtypes');exit(1);
+        $rows = $sqlService->getRows();
+        $newColumns = $sqlService->getNewColumns($columnNames,$rows,$fieldtypes);
 
             //DebugUtility::debug($statement,'detailAction statement');exit(1);
         // assign the results in a view for fluid Query/Detail.html
@@ -202,9 +177,15 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             DebugUtility::debug($parameter.' value '.$keyValue.' is NIET uniek.');
             exit(1);
         }
+
+        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+        $TSparserObject->parse($this->ffdata['fieldtypes']);
+        $fieldtypes = $TSparserObject->setup;
+        $newColumns = $sqlService->getNewColumns($columnNames,$rows,$fieldtypes);
         foreach($rows[0] as $key => $value) {
             $oldValues[$key] = $value;
         }
+        //DebugUtility::debug($oldValues,'oldValues');
 
         // build an update statement where only changed column values are updated
         $newValues = $this->request->getArguments();
@@ -216,9 +197,10 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
             // add to update fieldlist if value has changed
             if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
-                $updateList[$columnName] = $newValues[$columnName];
+                $updateList[$columnName] = $sqlService->convert($newColumns[$columnName]['type'],$newValues[$columnName]);
             }
         }
+        //DebugUtility::debug($updateList,'updateList');
 
         // nothing to be done if there are no changed column values
         if (empty($updateList)) {
@@ -238,7 +220,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // execute the query
         $sqlService = new SqlService($statement);
         $rowsAffected = $sqlService->updateRow();
-        DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
+        //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
 
         // redirect to redirectPage
 	$pageUid = $this->ffdata['redirectPage'];
@@ -258,10 +240,4 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	return $this->detailAction();
     }
 
-    private function getColumnType($fieldtypes, $column)
-    {
-        DebugUtility::debug($fieldtypes,'fieldtypes');
-        DebugUtility::debug($column,'column');
-        exit(1);
-    }
 }

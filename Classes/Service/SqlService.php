@@ -44,6 +44,35 @@ class SqlService
         return $this->rows;
     }
 
+    public function getNewColumns($columnNames,$rows,$fieldtypes)
+    {
+        $newColumns = array();
+        $i=0;
+        foreach ($columnNames as $column) {
+
+            // name is important
+            $newColumns[$column]['name'] = $column;
+
+            // default is TEXT
+            $newColumns[$column]['type'] = 'TEXT';
+
+            // if no rows, then skip this exercise
+            if (!is_array($rows)) continue;
+            
+            // if numeric, default is NUMERIC
+            if (is_numeric($rows[0][$column])) {
+                $newColumns[$column]['type'] = 'NUMERIC';
+            }
+
+            // if user overrules, use the fieldtype provided by the user
+            if ($fieldtypes[$column]) {
+                $newColumns[$column]['type'] = $fieldtypes[$column];
+            }
+            $i++;
+        }
+        return $newColumns;
+    }
+
     public function updateRow()
     {
         // now execute the query
@@ -51,5 +80,19 @@ class SqlService
 
         // Return the updated values
         return $rowsAffected;
+    }
+
+    public function convert($type,$value)
+    {
+        switch($type) {
+        default:
+            $newValue = $value;
+            break;
+        case 'datum':
+        case 'tijd':
+            $newValue = strtotime($value);
+            break;
+        }
+        return $newValue;
     }
 }

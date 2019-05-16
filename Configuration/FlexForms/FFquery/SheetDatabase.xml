@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<T3DataStructure>
+    <ROOT>
+        <TCEforms>
+            <sheetTitle>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sheet_database</sheetTitle>
+        </TCEforms>
+        <type>array</type>
+        <el>
+            <fieldtypes>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:fieldtypes</label>
+                    <config>
+                        <type>text</type>
+                        <cols>45</cols>
+                        <rows>5</rows>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </fieldtypes>
+        </el>
+    </ROOT>
+</T3DataStructure>
