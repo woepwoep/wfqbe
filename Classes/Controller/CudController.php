@@ -16,6 +16,7 @@ namespace RedSeadog\Wfqbe\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
+use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
@@ -96,6 +97,41 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $statement = "select ".$fieldList." from ".$targetTable." wHEre ".$keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
+        // introduce the fieldtype array
+        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+        $TSparserObject->parse($this->ffdata['fieldtypes']);
+        $fieldtypes = $TSparserObject->setup;
+
+        $rows = $sqlService->getRows();
+
+        $columnNames = $sqlService->getColumnNames();
+        $newColumns = array();
+        $i=0;
+        foreach ($columnNames as $column) {
+
+            // name is important
+            $newColumns[$i]['name'] = $column;
+
+            // default is TEXT
+            $newColumns[$i]['type'] = 'TEXT';
+
+            // if no rows, then skip this exercise
+            if (!is_array($rows)) continue;
+            
+            // if numeric, default is NUMERIC
+            if (is_numeric($rows[0][$column])) {
+                $newColumns[$i]['type'] = 'NUMERIC';
+            }
+
+            // if user overrules, use the fieldtype provided by the user
+            if ($fieldtypes[$column]) {
+                $newColumns[$i]['type'] = $fieldtypes[$column];
+            }
+            $i++;
+        }
+
+            //DebugUtility::debug($fieldtypes,'fieldtypes');exit(1);
+
             //DebugUtility::debug($statement,'detailAction statement');exit(1);
         // assign the results in a view for fluid Query/Detail.html
         $this->view->assignMultiple([
@@ -103,8 +139,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'flexformdata' => $this->ffdata,
             'keyValue' => $keyValue,
             'statement' => $statement,
-            'columnNames' => $sqlService->getColumnNames(),
-            'rows' => $sqlService->getRows(),
+            'columnNames' => $newColumns,
+            'rows' => $rows,
+            'fieldtypes' => $fieldtypes,
         ]);
     }
 
@@ -219,5 +256,12 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function deleteAction()
     {
 	return $this->detailAction();
+    }
+
+    private function getColumnType($fieldtypes, $column)
+    {
+        DebugUtility::debug($fieldtypes,'fieldtypes');
+        DebugUtility::debug($column,'column');
+        exit(1);
     }
 }

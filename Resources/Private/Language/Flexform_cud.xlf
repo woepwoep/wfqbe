@@ -51,6 +51,9 @@
       <trans-unit id="fieldlist">
         <source>Fieldlist</source>
       </trans-unit>
+      <trans-unit id="fieldtypes">
+        <source>Field Types</source>
+      </trans-unit>
       <trans-unit id="sheet_actions">
         <source>Actions</source>
       </trans-unit>

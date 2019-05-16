@@ -41,6 +41,17 @@
                     </config>
                 </TCEforms>
             </fieldlist>
+            <fieldtypes>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fieldtypes</label>
+                    <config>
+                        <type>text</type>
+                        <cols>45</cols>
+                        <rows>5</rows>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </fieldtypes>
         </el>
     </ROOT>
 </T3DataStructure>
