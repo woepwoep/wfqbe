@@ -1,0 +1,193 @@
+/* EW */
+
+.wfqbe_actualPage {
+  background: yellow !important;
+  color: blue !important;
+}
+
+.form-group {
+  clear: both;
+}
+
+.delete {
+  background: wheat;
+  border: none;
+}
+
+#datumvan {
+  float: left;
+  margin: -4px 10px;
+  padding: 3px 3px 3px 10px;
+}  
+
+#datumtot {
+  float: left;
+  margin: -4px 10px;
+  padding: 3px 3px 3px 10px;
+}  
+  
+.zoekveld {
+  margin-left: 120px;
+  margin-bottom: 5px;
+}
+
+.field {
+  margin: 4px 5px 0 0 ;
+}
+
+.zoekveld input[type="radio"] {
+  width: 10px;
+}
+
+input[type="button"] {
+  clear: both;
+  float: left;
+}
+
+/******** einde zoekveld **********/
+.totaal {
+    float: right;
+}
+
+.notpaid {
+  background: red;
+}
+
+.paid {
+  color: green;
+}
+
+/* insert block RW */
+.field > input[type="checkbox"] {
+  margin-left: -1px;
+  width: 10px;
+}
+
+
+/* classes van WFQBE_FIELD in custom templates */
+
+.tx-wfqbe-pi1 {
+  
+}
+
+.hidden {
+  display: none;
+}
+
+.wfqbe_block {
+  clear: both;
+}
+
+.wfqbe_block > input {
+  float: right;
+  margin: 14px 0 14px ;  
+}
+
+#wfqbe_id_notset_form {
+  float: left;
+}
+
+
+/* overige css */
+.wfqbe_description {
+  background: none repeat scroll 0 0 lightblue;
+  border-radius: 3px;
+  font-style: italic;
+  margin: -22px 0 15px;
+  padding: 4px 10px;
+  width: 60%;
+  font-size: 1.3em;
+}
+
+#Listing {
+  background: none repeat scroll 0 0 lightyellow;
+  border: 1px solid;
+  border-radius: 5px 5px 5px 5px;
+  margin: 15px 0;
+  padding: 10px;
+  float: left;
+  width: 100%;
+  clear: both; 
+  float: none;
+}
+
+#Show {
+  background: repeat scroll 0 0 lightseagreen;
+  border: 1px solid;
+  border-radius: 5px 5px 5px 5px;
+  margin: 15px 0;
+  padding: 10px;
+  float: left;
+  width: 100%;
+  clear: both;
+  float: none;
+  
+}
+
+.Show_label {
+  float: left;
+  min-width: 7em;
+}
+
+.Show_field {
+  font-weight: 600;
+}
+
+.Show_titel {
+  text-align: center;
+  font-weight: 600;
+  font-size: 2em;
+}
+
+#ZoekListing {
+  background: none repeat scroll 0 0 lightyellow;
+  border: 1px solid;
+  border-radius: 5px 5px 5px 5px;
+  margin: 15px 0;
+  padding: 10px;
+  max-width: 30%;
+  min-width: 450px;
+ 
+}
+
+#CUD {
+  min-width: 50%;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: wheat;
+  padding: 10px;
+  float: left;
+}
+
+#DossierDetails-CUD {
+  width: 685px;
+}
+
+.wfqbe_table_header {
+  background: lightgreen;
+}
+
+
+
+.label {
+  float: left;
+  text-align: right;
+  min-width: 110px;
+  font-size: 1em;
+  color: #333;
+}
+
+.hProduct {
+  width: 150px;
+}
+
+.button_add {
+  margin: 10px 0 0 0;
+  clear: both;
+}
+
+.button_add a {
+  text-decoration: none;
+}
+
+

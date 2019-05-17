@@ -2,11 +2,8 @@
 
 <f:debug>{_all}</f:debug>
 <h3>
-   EXT:.../Cud/Edit.html
+   EXT:wfqbe/Resources/Private/Templates/Cud/Edit.html
 </h3>
-<f:comment>
-	<f:render partial=”title.{person.gender}” /> and the partials “title.male.html”, “title.female.html”, 
-</f:comment>
 
 <div class="container">  
 	<div id="CUD">
@@ -25,29 +22,15 @@
                             </td>
                             <td>
      							<div class="field">
-									<f:switch expression="{columnName.type}">
-										<f:case value="readonly">						
-											{rows.0.{columnName.name}}
-										</f:case>
-										<f:case value="datum">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{rows.0.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
-										</f:case>
-										<f:case value="tijd">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{rows.0.{columnName.name}-> f:format.date(format: 'H:i')}" />
-										</f:case>
-										<f:defaultCase>
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{rows.0.{columnName.name}}" />
-										</f:defaultCase>
-									</f:switch>
+        							<f:form.textfield class="edit" id="datetimepicker" name="{columnName.name}" value="{rows.0.{columnName.name}}" />
+
       							</div>
                             </td>
-							<f:comment>
                             <td>
      							<div class="fieldtype">
         							(veldtype={columnName.type})
       							</div>
                             </td>
-							</f:comment>
                           </tr>
                          </f:for> 
                       </tbody>

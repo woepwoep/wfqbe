@@ -1,3 +1,17 @@
+page {
+ includeCSS {
+	wfqbe = EXT:wfqbe/Resources/Public/Css/wfqbe.css
+    datepicker = EXT:wfqbe/Resources/Public/Css/bootstrap-datepicker3.css
+	timepicker = EXT:wfqbe/Resources/Public/Css/jquery.timepicker.css
+ }
+ 
+ includeJSFooter {
+    timepicker = EXT:wfqbe/Resources/Public/JavaScript/jquery.timepicker.min.js
+    datepicker = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.js
+    datepicker_nl = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.nl.min.js   
+ }
+}
+
 plugin.tx_wfqbe {
     settings {
         templateFile = {$plugin.tx_wfqbe.settings.templateFile}
