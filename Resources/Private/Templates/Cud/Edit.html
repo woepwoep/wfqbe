@@ -20,7 +20,7 @@
                           <tr>
                             <td>
       							<span class="label">
-        							<label for="{columnName}">{columnName.name}:</label>
+        							<label for="{columnName.name}">{columnName.name}:</label>
       							</span>
                             </td>
                             <td>
@@ -56,9 +56,11 @@
           	</div>
           		<f:form.hidden name="uid" value="{rows.0.uid}" />
     			<div class="wfqbe_block">    
-      				<f:form.submit class="btn btn-primary" value="Update" />
+      				<f:form.submit class="btn btn-primary" value="Wijzigen" />
     			</div>
+				
       	</f:form>
+		<button class="btn btn-warning" onclick="goBack()">Terug</button>
   	</div>
-  
+    
 </div>

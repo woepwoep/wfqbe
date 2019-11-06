@@ -131,6 +131,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'rows' => $rows,
             'request' => $this->request,
             'fieldtypes' => $fieldtypes,
+            'user' => $GLOBALS["TSFE"]->fe_user->user,
         ]);
     }
 

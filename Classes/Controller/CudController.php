@@ -125,7 +125,41 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addAction()
     {
-        return $this->detailAction();
+        // retrieve the tablename and the keyfield(s) from the flexform
+        $targetTable = $this->ffdata['targetTable'];
+        $keyField = $this->ffdata['identifiers'];
+        $fieldList = $this->ffdata['fieldlist'];
+        if (empty($fieldList)) $fieldList = '*';
+
+        // use the template from the Flexform if there is one
+        if (!empty($this->ffdata['templateFile'])) {
+            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
+        $statement = "select ".$fieldList." from ".$targetTable." where 1=1 LIMIT 1";
+        $sqlService = new SqlService($statement);
+
+        // introduce the fieldtype array
+        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+        $TSparserObject->parse($this->ffdata['fieldtypes']);
+        $fieldtypes = $TSparserObject->setup;
+
+        $columnNames = $sqlService->getColumnNames();
+        $rows = $sqlService->getRows();
+        $newColumns = $sqlService->getNewColumns($columnNames,$rows,$fieldtypes);
+
+        // assign the results in a view for fluid Query/Detail.html
+    //    DebugUtility::debug($rows,'rows in addAction');exit(1);
+        $this->view->assignMultiple([
+            'settings' => $this->pluginSettings->getSettings(),
+            'flexformdata' => $this->ffdata,
+            'keyValue' => $keyValue,
+            'statement' => $statement,
+            'columnNames' => $newColumns,
+            'rows' => $rows,
+            'fieldtypes' => $fieldtypes,
+        ]);
     }
 
     /**
@@ -133,7 +167,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function insertAction()
     {
-        return $this->detailAction();
+        DebugUtility::debug('in insertAction');exit(1);
+        //return $this->detailAction();
     }
 
     /**

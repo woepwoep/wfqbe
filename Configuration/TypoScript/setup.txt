@@ -77,14 +77,17 @@ plugin.tx_wfqbe {
         templateRootPaths {
             0 = EXT:tx_wfqbe/Resources/Private/Templates/
             1 = {$plugin.tx_wfqbe.view.templateRootPath}
+			2 = fileadmin/tmpl/wfqbe/
         }
         partialRootPaths {
             0 = EXT:tx_wfqbe/Resources/Private/Partials/
-            1 = {$plugin.tx_wfqbe.view.partialRootPath} 
+            1 = {$plugin.tx_wfqbe.view.partialRootPath}
+			2 = fileadmin/tmpl/wfqbe/Partials/
         }
         layoutRootPaths {
             0 = EXT:tx_wfqbe/Resources/Private/Layouts/
             1 = {$plugin.tx_wfqbe.view.layoutRootPath}
+			2 = fileadmin/tmpl/wfqbe/Layouts/
         }
     }
     wrapInBaseClass = 1

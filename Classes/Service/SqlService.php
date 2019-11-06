@@ -29,6 +29,9 @@ class SqlService
     {
         // Return the values
         $this->getRows();
+if (empty($this->rows[0])) {
+            DebugUtility::debug($this->query,'query in getColumnNames');exit(1);
+}
         return array_keys($this->rows[0]);
     }
 
