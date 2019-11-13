@@ -1,4 +1,5 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
 <f:debug>{_all}</f:debug>
 <h3>
@@ -20,14 +21,23 @@
                           <tr>
                             <td>
       							<span class="label">
+<f:if condition="{columnName.type} != 'nodisplay'">
+<f:then>
         							<label for="{columnName.name}">{columnName.name}:</label>
+</f:then>
+</f:if>
       							</span>
                             </td>
                             <td>
      							<div class="field">
 									<f:switch expression="{columnName.type}">
+										<f:case value="nodisplay">						
+										</f:case>
 										<f:case value="readonly">						
 											{rows.0.{columnName.name}}
+										</f:case>
+										<f:case value="gender">
+<f:form.select name="{columnName.name}" value="{rows.0.{columnName.name}}" options="{rs:selectGender()}" />
 										</f:case>
 										<f:case value="datum">
 											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{rows.0.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />

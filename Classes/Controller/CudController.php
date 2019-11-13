@@ -257,6 +257,18 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $rowsAffected = $sqlService->updateRow();
         //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
 
+        $this->view->assignMultiple([
+            'settings' => $this->pluginSettings->getSettings(),
+            'flexformdata' => $this->ffdata,
+            'keyValue' => $keyValue,
+            'statement' => $statement,
+            'columnNames' => $newColumns,
+            'rows' => $rows,
+            'fieldtypes' => $fieldtypes,
+        ]);
+
+/*
+
         // redirect to redirectPage
 	$pageUid = $this->ffdata['redirectPage'];
 
@@ -265,6 +277,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	   ->setTargetPageUid($pageUid)
 	   ->build();
 	$this->redirectToURI($uri);
+*/
     }
 
     /**

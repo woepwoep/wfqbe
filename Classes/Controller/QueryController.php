@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Utility\DebugUtility;
 use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\PluginService;
-use \RedSeadog\Wfqbe\Service\RowsService;
+use \RedSeadog\Wfqbe\Service\SqlService;
 
 
 /**
@@ -48,13 +48,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var \RedSeadog\Wfqbe\Domain\Model\Query $query
      */
     protected static $query = null;
-
-    /**
-     * RowsService ... the placeholder for the fluid template to work with (the array of rows[] matching the query)
-     *
-     * @var \RedSeadog\Wfqbe\Service\RowsService
-     */
-    protected $rowsService;
 
 
     public function injectQueryRepository(QueryRepository $queryRepository)
@@ -106,8 +99,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // execute the query and get the result set (rows)
-        $this->rowsService = new RowsService($this->query);
-        $rows = $this->rowsService->getRows();
+        $sqlService = new SqlService($this->query->getQuery());
 
         // use the template from the Flexform if there is one
         if (!empty($this->ffdata['templateFile'])) {
@@ -120,14 +112,16 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $TSparserObject->parse($this->ffdata['fieldtypes']);
         $fieldtypes = $TSparserObject->setup;
 
+        $columnNames = $sqlService->getColumnNames();
+        $rows = $sqlService->getRows();
+        $newColumns = $sqlService->getNewColumns($columnNames,$rows,$fieldtypes);
         // assign the results in a view for fluid Query/List.html
             //DebugUtility::debug($fieldtypes,'fieldtypes');
         $this->view->assignMultiple([
             'settings' => $this->pluginService->getSettings(),
             'flexformdata' => $this->ffdata,
             'query' => $this->query,
-            'rowsService' => $this->rowsService,
-            'columnNames' => $this->rowsService->getColumnNames(),
+            'columnNames' => $newColumns,
             'rows' => $rows,
             'request' => $this->request,
             'fieldtypes' => $fieldtypes,
