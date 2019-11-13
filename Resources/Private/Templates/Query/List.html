@@ -20,7 +20,7 @@
   <div id="Listing">
     <div class="wfqbe_description">
       {flexformdata.caption}
-      <f:link.action controller="Cud" pluginName="Picud" action="add" pageUid="16" >
+      <f:link.action controller="Cud" pluginName="Picud" action="add" pageUid="{flexformdata:cudPage}" >
         {f:image(src: '{wfqbe_add_image}', alt: 'Record toevoegen', title: 'Record toevoegen', width: 17)}
       </f:link.action>
     </div>
