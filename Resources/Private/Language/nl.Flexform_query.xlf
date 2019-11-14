@@ -116,10 +116,21 @@
       <trans-unit id="mailTemplate">
         <source>Email template file</source>
       </trans-unit>
-
       <trans-unit id="sheet_cud">
         <source>Cud</source>
         <target>Cud</target>
+      </trans-unit>
+	  <trans-unit id="sheet_child">
+        <source>childPage</source>
+        <target>subPagina</target>
+      </trans-unit>
+	  <trans-unit id="linkField">
+        <source>linkField</source>
+        <target>linkVeld</target>
+      </trans-unit>
+	  <trans-unit id="keyField">
+        <source>keyField</source>
+        <target>sleutelVeld</target>
       </trans-unit>
     </body>
   </file>

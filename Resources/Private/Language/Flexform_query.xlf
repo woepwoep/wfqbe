@@ -135,6 +135,15 @@
       <trans-unit id="mailTemplate">
         <source>Email template file</source>
       </trans-unit>
+	  <trans-unit id="sheet_child">
+        <source>childPage</source>
+      </trans-unit>
+	  <trans-unit id="linkField">
+        <source>linkField</source>
+      </trans-unit>
+	  <trans-unit id="keyField">
+        <source>keyField</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

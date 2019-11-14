@@ -34,17 +34,6 @@
                     </config>
                 </TCEforms>
             </sortField>
-            <linkField>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:linkField</label>
-                    <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>255</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </linkField>
             <emptyResult>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:emptyResult</label>
@@ -56,28 +45,6 @@
                     </config>
                 </TCEforms>
             </emptyResult>
-            <summary>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:summary</label>
-                    <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>255</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </summary>
-            <caption>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:caption</label>
-                    <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>255</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </caption>
             <csvDownload>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:csvDownload</label>

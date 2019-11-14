@@ -2,17 +2,16 @@
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
 <f:debug>{_all}</f:debug>
-<h3>
-   EXT:.../Cud/Edit.html
-</h3>
+
 <f:comment>
+	EXT:.../Cud/Edit.html
 	<f:render partial=”title.{person.gender}” /> and the partials “title.male.html”, “title.female.html”, 
 </f:comment>
 
 <div class="container">  
 	<div id="CUD">
 		<f:form id="CUD_form" object="{rows}" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
-    		<div class="wfqbe_description">Een Default Edit Scherm</div>
+    		<div class="wfqbe_description">{flexformdata.caption}</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
       				<table class="table table-bordered table-hover table-condensed">
@@ -21,11 +20,9 @@
                           <tr>
                             <td>
       							<span class="label">
-<f:if condition="{columnName.type} != 'nodisplay'">
-<f:then>
-        							<label for="{columnName.name}">{columnName.name}:</label>
-</f:then>
-</f:if>
+									<f:if condition="{columnName.type} != 'nodisplay'">
+										<label for="{columnName.name}">{columnName.name}:</label>
+									</f:if>
       							</span>
                             </td>
                             <td>
@@ -36,8 +33,11 @@
 										<f:case value="readonly">						
 											{rows.0.{columnName.name}}
 										</f:case>
+										<f:case value="readonly">
+											<f:form.textfield name="{columnName.name}" value="{rows.0.{columnName.name}}" />
+										</f:case>
 										<f:case value="gender">
-<f:form.select name="{columnName.name}" value="{rows.0.{columnName.name}}" options="{rs:selectGender()}" />
+											<f:form.select name="{columnName.name}" value="{rows.0.{columnName.name}}" options="{rs:selectGender()}" />
 										</f:case>
 										<f:case value="datum">
 											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{rows.0.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
@@ -51,13 +51,6 @@
 									</f:switch>
       							</div>
                             </td>
-							<f:comment>
-                            <td>
-     							<div class="fieldtype">
-        							(veldtype={columnName.type})
-      							</div>
-                            </td>
-							</f:comment>
                           </tr>
                          </f:for> 
                       </tbody>
@@ -72,5 +65,4 @@
       	</f:form>
 		<button class="btn btn-warning" onclick="goBack()">Terug</button>
   	</div>
-    
 </div>

@@ -17,6 +17,28 @@
                     </config>
                 </TCEforms>
             </templateFile>
+	    <caption>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:caption</label>
+                    <config>
+                        <type>input</type>
+                        <size>45</size>
+                        <max>255</max>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </caption>
+	    <summary>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:summary</label>
+                    <config>
+                        <type>input</type>
+                        <size>45</size>
+                        <max>255</max>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </summary>
         </el>
     </ROOT>
 </T3DataStructure>
