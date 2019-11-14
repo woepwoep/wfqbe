@@ -1,116 +1,33 @@
 page {
- includeCSS {
-	wfqbe = EXT:wfqbe/Resources/Public/Css/wfqbe.css
+  includeCSS {
+    wfqbe = EXT:wfqbe/Resources/Public/Css/wfqbe.css
     datepicker = EXT:wfqbe/Resources/Public/Css/bootstrap-datepicker3.css
-	timepicker = EXT:wfqbe/Resources/Public/Css/jquery.timepicker.css
- }
+    timepicker = EXT:wfqbe/Resources/Public/Css/jquery.timepicker.css
+  }
  
- includeJSFooter {
+  includeJSFooter {
     timepicker = EXT:wfqbe/Resources/Public/JavaScript/jquery.timepicker.min.js
     datepicker = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.js
     datepicker_nl = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.nl.min.js   
- }
+  }
 }
 
 plugin.tx_wfqbe {
-    settings {
-        templateFile = {$plugin.tx_wfqbe.settings.templateFile}
+  view {
+    templateRootPaths {
+      0 = EXT:tx_wfqbe/Resources/Private/Templates/
+      1 = {$plugin.tx_wfqbe.view.templateRootPath}
     }
-
-    backend {
-        template = EXT:wfqbe/Resources/Public/Templates/backend_default_template.html
+    partialRootPaths {
+      0 = EXT:tx_wfqbe/Resources/Private/Partials/
+      1 = {$plugin.tx_wfqbe.view.partialRootPath}
     }
-    classes {
-        even = wfqbe_even
-        odd = wfqbe_odd
+    layoutRootPaths {
+      0 = EXT:tx_wfqbe/Resources/Private/Layouts/
+      1 = {$plugin.tx_wfqbe.view.layoutRootPath}
     }
-    debugQuery = 0
-    defLayout = 0
-    email {
-        debug = 0
-        from_email = wfqbe@domain.com
-        from = DB Integration module
-        bcc = wfqbe@domain.com
-        notify_email = 
-        notify_subject = 
-        template = EXT:wfqbe/Resources/Public/Templates/mail_template.html
-        send_email = 0
-        
-        send_email_user = 0
-        field_email_user = 
-        notify_subject_user = 
-    }
-    enableXAJAX = 0
-    insert {
-        pageConfirmation = 1
-        requiredSymbol = *
-        add_new {
-            icon = EXT:wfqbe/Resources/Public/Icons/add.gif
-        }
-        select_wizard {
-            icon = EXT:wfqbe/Resources/Public/Icons/open.gif
-        }
-        edit_wizard {
-            icon = EXT:wfqbe/Resources/Public/Icons/edit.gif
-        }
-        delete_wizard {
-            icon = EXT:wfqbe/Resources/Public/Icons/delete.gif
-        }
-        
-        help_link = ?
-        help_link.wrap = (|)
-    }
-    pageLimit = -1
-    persistence {
-        storagePid = {$plugin.tx_wfqbe.persistence.storagePid}
-    }
-    results {
-        enableOrderByHeaders = 1
-        doNotRemoveQuotes = 0
-    }
-    style = EXT:wfqbe/Resources/Public/Css/stile.css
-    subinsert {
-        pageConfirmation = 0
-    }
-    template = EXT:wfqbe/Resources/Private/Templates/wfqbe_template.html
-    view {
-        templateRootPaths {
-            0 = EXT:tx_wfqbe/Resources/Private/Templates/
-            1 = {$plugin.tx_wfqbe.view.templateRootPath}
-			2 = fileadmin/tmpl/wfqbe/
-        }
-        partialRootPaths {
-            0 = EXT:tx_wfqbe/Resources/Private/Partials/
-            1 = {$plugin.tx_wfqbe.view.partialRootPath}
-			2 = fileadmin/tmpl/wfqbe/Partials/
-        }
-        layoutRootPaths {
-            0 = EXT:tx_wfqbe/Resources/Private/Layouts/
-            1 = {$plugin.tx_wfqbe.view.layoutRootPath}
-			2 = fileadmin/tmpl/wfqbe/Layouts/
-        }
-    }
-    wrapInBaseClass = 1
-}
-
-
-## This enables the csv file export
-csv_wfqbe >
-csv_wfqbe = PAGE
-csv_wfqbe {
-    typeNum = 181
-
-    10 =< plugin.tx_wfqbe_query
-    10.template = EXT:wfqbe/Resources/Public/Templates/wfqbe_csv_template.html
-    10.defLayout = 0
-    10.export_mode = csv
-    10.exportAll = 1
-    10.recordsForPage = 10
-
-    config {
-        disableAllHeaderCode = 1
-        additionalHeaders = Content-type:application/csv|Content-Disposition: attachment; filename=results.csv|Content-Transfer-Encoding:binary
-        xhtml_cleaning = 0
-        admPanel = 0
-    }
+  }
+  persistence {
+    storagePid = {$plugin.tx_wfqbe.persistence.storagePid}
+  }
 }

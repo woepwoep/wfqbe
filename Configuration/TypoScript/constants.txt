@@ -1,7 +1,7 @@
 plugin.tx_wfqbe {
-    settings {
-        # cat=plugin.tx_wfqbe/file; type=string; label=Default template for Listing
-        templateFile = EXT:wfqbe/Resources/Private/Templates/defaultFluidTemplate.html
+    persistence {
+        # cat=plugin.tx_wfqbe/file; type=int; label=Storage PID for wfqbe raw queries
+        storagePid = 
     }
     view {
         # cat=plugin.tx_wfqbe/file; type=string; label=Path to template root (FE)
