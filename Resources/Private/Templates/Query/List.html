@@ -1,77 +1,83 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
 <f:comment>
+  <f:debug>{_all}</f:debug>
+  <h3>Dit is een Custom Result Template</h3>
+  <h3>fileadmin/tmpl/wfqbe/List.html</h3>
 </f:comment>  
 <f:debug>{_all}</f:debug>
 
-<v:variable.set name="wfqbe_add_image" value='EXT:wfqbe/Resources/Public/Icons/add.gif' />
-<v:variable.set name="wfqbe_edit_image" value='EXT:wfqbe/Resources/Public/Icons/edit.gif' />
-<v:variable.set name="wfqbe_delete_image" value='EXT:wfqbe/Resources/Public/Icons/delete.gif' />
-
-
-<h1>default LIST.html</h1>
 
 <f:if condition="{rows}" >
-	<f:render section="resultTable" arguments="{_all}" />
+  	<f:then>
+		<f:render section="resultTable" arguments="{_all}" />
+    </f:then>
+  	<f:else>
+		<div class="emptyResult">{flexformdata.emptyResult} /></div>
+	</f:else>
 </f:if>
 
 <f:section name="resultTable" >
-
-<div class="container">
-  <div id="Listing">
-    <div class="wfqbe_description">
-      {flexformdata.caption}
-      <f:link.action controller="Cud" pluginName="Picud" action="add" pageUid="{flexformdata:cudPage}" >
-        {f:image(src: '{wfqbe_add_image}', alt: 'Record toevoegen', title: 'Record toevoegen', width: 17)}
-      </f:link.action>
-    </div>
   
+<div class="container">
+  <div id="{flexformdata.div_id}">
+    <div class="wfqbe_description">
+	<f:if condition="{flexformdata.summary}">
+	<f:then>
+      <button class="btn btn-primary" type="button"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >{flexformdata.caption}</button>
+	</f:then>
+	<f:else> 
+		{flexformdata.caption}
+	</f:else>
+    </f:if>
+    <f:link.action controller="Cud" pluginName="Picud" action="add" pageUid="{flexformdata.cudPage}" >
+        <button class="btn btn-secondary" type="button" >+</button>
+    </f:link.action>  
+    </div>
     <div class="table-responsive"> 
-      <table class="table table-bordered table-hover table-condensed">
+		<table class="table table-bordered table-hover table-condensed">
+		<div class="summary">
+			<div class="collapse" id="collapseExample">
+				<div class="card card-body bg-light">{flexformdata.summary}</div>
+			</div>
+		</div>
         <thead class="wfqbe_table_header">
-          <tr>
-            <f:for each="{columnNames}" as="columnName">
-            		<th>
-                        	<f:link.action action="sort" arguments="{orderby: '{columnName}'}" title="Sorteer op {columnName} ">
-            				{columnName}
-							</f:link.action>
-                    	</th>
-              		 
-			</f:for>
+			<tr>
+			<f:for each="{columnNames}" as="columnName">
+				<f:if condition='{columnName.type} != "nodisplay"'>
+					<th> 
+						<div class="{flexformdata.div_id}_label">{columnName.name}</div>
+					</th>
+				</f:if>
+            </f:for>
 			<f:if condition="{flexformdata.cudPage}">
-				<th> Edit - Delete </th>
+              <th> Edit - Delete </th>
 			</f:if>
-          </tr>
+			</tr>
         </thead>
   
         <tbody>
        		<f:for each="{rows}" as="row" >
         		<tr>  
-                	<f:for each="{row}" as="veld" iteration="i" >
-                  		<f:if condition="{columnNames.{i.index}}=={flexformdata.linkField}">
-                        	<f:then>
-                            	<td>
-                                	<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.uid}'}"> 
-										{row.{columnNames.{i.index}}}
-									</f:link.action>
-                            	</td>
-                          	</f:then>
-                          	<f:else>
-                              <td>{row.{columnNames.{i.index}}}</td>
-                          	</f:else>
-                        </f:if>
-                    </f:for>
-                               
+					<f:for each="{columnNames}" as="columnName">
+						<f:if condition='{columnName.type} != "nodisplay"'>
+							<td> 
+								<f:if condition="{columnName.name}=={flexformdata.linkField}">
+									<f:then>
+										<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{flexformdata.keyField}'}"> 
+											<f:render partial="{columnName.type}" arguments="{_all}" />
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<f:render partial="{columnName.type}" arguments="{_all}" />
+									</f:else>
+								</f:if>
+							</td>
+						</f:if>
+					</f:for>
+                          	
 					<f:if condition="{flexformdata.cudPage}">
-						<td>
-							<f:link.action controller="Cud" pluginName="Picud" action="edit" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{row.uid}'}" >
-								<f:image src="{wfqbe_edit_image}" title="record wijzigen" alt="edit" width="17"/>
-							</f:link.action>
-							&nbsp;-&nbsp;
-							<f:link.action controller="Cud" pluginName="Picud" action="delete" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{row.uid}' }" >
-								<f:image src="{wfqbe_delete_image}" title="record verwijderen" alt="delete" width="17"/>
-							</f:link.action>
-						</td>
+						<td> <f:render partial="PartialCud" arguments="{_all}" /> </td>
 					</f:if>
          		</tr>
        		</f:for>   

@@ -1,0 +1,24 @@
+<f:for each="{rows}" as="row" >
+	<tr>  
+   		<f:for each="{row}" as="veld" iteration="i" >
+        	<f:if condition="{columnNames.{i.index}}=={flexformdata.linkField}">
+               	<f:then>
+                   	<td>
+                       	<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.uid}'}"> 
+							{row.{columnNames.{i.index}}}
+						</f:link.action>
+                  	</td>
+               	</f:then>
+               	<f:else>
+                    <td>{row.{columnNames.{i.index}}}</td>
+               	</f:else>
+                
+           </f:if>
+        </f:for>	
+        <f:if condition="{flexformdata.cudPage}">
+			<td>
+				<f:render partial="PartialCud" arguments="{_all}" />
+			</td>
+		</f:if>
+     </tr>
+</f:for>   

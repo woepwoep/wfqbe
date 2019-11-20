@@ -1,41 +1,15 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
-<f:debug>{_all}</f:debug>
-<h3>
-   EXT:wfqbe/Resources/Private/Templates/Cud/Edit.html
-</h3>
+<f:comment> 
+	<f:debug>{_all}</f:debug>
+	<f:form.submit class="btn btn-primary" value="Add" />
+	<h3> EXT:.../Cud/Add.html </h3>
+</f:comment>
 
-<div class="container">  
-	<div id="CUD">
-		<f:form id="CUD_form" object="{rows}" name="CUD_form" enctype="multipart/form-data" method="post" action="insert" arguments="{keyValue: '{keyValue}'}"  >
-    		<div class="wfqbe_description">Een Default Add Scherm</div>
-    		<div class="wfqbe_block">
-            	<div class="table-responsive"> 
-      				<table class="table table-bordered table-hover table-condensed">
-                      <tbody> 
-              			<f:for each="{columnNames}" as="columnName" iteration="i">
-                          <tr>
-                            <td>
-      							<span class="label">
-        							<label for="{columnName}">{columnName}:</label>
-      							</span>
-                            </td>
-                            <td>
-     							<div class="field">
-        							<f:form.textfield class="add" name="{columnName}" value="{rows.0.{columnName}}" />
-      							</div>
-                            </td>
-                          </tr>
-                         </f:for> 
-                      </tbody>
-                   </table>
-    			</div>
-          	</div>
-          		<f:form.hidden name="uid" value="{rows.0.uid}" />
-    			<div class="wfqbe_block">    
-      				<f:form.submit class="btn btn-primary" value="Update" />
-    			</div>
-      	</f:form>
-  	</div>
-  
-</div>
+<f:form id="myform" name="myform" pluginName="piquery" controller="Query" action="list" pageUid="{flexformdata.redirectPage}" >
+</f:form>
+
+<script type="text/javascript">
+    document.myform.submit();
+</script>

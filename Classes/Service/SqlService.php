@@ -25,16 +25,6 @@ class SqlService
 
     }
 
-    public function getColumnNames()
-    {
-        // Return the values
-        $this->getRows();
-if (empty($this->rows[0])) {
-            DebugUtility::debug($this->query,'query in getColumnNames');exit(1);
-}
-        return array_keys($this->rows[0]);
-    }
-
     public function getRows()
     {
         // now execute the query
@@ -47,10 +37,29 @@ if (empty($this->rows[0])) {
         return $this->rows;
     }
 
-    public function getNewColumns($columnNames,$rows,$fieldtypes)
+    public function getColumnNamesFromResultRows($rows)
     {
         $newColumns = array();
-        $i=0;
+
+        // if no rows, then skip this exercise
+        if (!is_array($rows) || !is_array($rows[0])) return $newColumns;
+
+        foreach($rows[0] as $field => $value)
+        {
+	    $newColumns[] = $field;
+        }
+
+            DebugUtility::debug($newColumns,'newColumns in getColumnNamesFromResultRows');
+        return $newColumns;
+    }
+
+    public function mergeFieldTypes($columnNames,$fieldtypes)
+    {
+        $newColumns = array();
+
+        // if no columnNames, then skip this exercise
+        if (!is_array($columnNames)) return $newColumns;
+
         foreach ($columnNames as $column) {
 
             // name is important
@@ -59,21 +68,23 @@ if (empty($this->rows[0])) {
             // default is TEXT
             $newColumns[$column]['type'] = 'TEXT';
 
-            // if no rows, then skip this exercise
-            if (!is_array($rows)) continue;
-            
-            // if numeric, default is NUMERIC
-            if (is_numeric($rows[0][$column])) {
-                $newColumns[$column]['type'] = 'NUMERIC';
-            }
-
             // if user overrules, use the fieldtype provided by the user
             if ($fieldtypes[$column]) {
                 $newColumns[$column]['type'] = $fieldtypes[$column];
             }
-            $i++;
         }
+
+            DebugUtility::debug($newColumns,'newColumns in mergeFieldTypes');
         return $newColumns;
+    }
+
+    public function insertRow()
+    {
+        // now execute the query
+        $rowsAffected = $this->connection->executeQuery($this->query);
+
+        // Return the inserted values
+        return $rowsAffected;
     }
 
     public function updateRow()

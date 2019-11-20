@@ -1,0 +1,13 @@
+<tr>
+	<f:for each="{columnNames}" as="columnName">
+    	<th>
+           	<f:link.action action="sort" arguments="{orderby: '{columnName}'}" title="Sorteer op {columnName} ">
+        		{columnName}
+			</f:link.action>
+        </th>
+              		 
+	</f:for>
+	<f:if condition="{flexformdata.cudPage}">
+		<th> Edit - Delete </th>
+	</f:if>
+</tr>

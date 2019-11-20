@@ -21,6 +21,7 @@ use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\SqlService;
 
+use \Cobweb\Expressions\ExpressionParser;
 
 /**
  * QueryController
@@ -85,6 +86,15 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	    $koppelveldWaarde = $this->request->getArgument($parameter);
         }
 
+	$query = $this->query->getQuery();
+	$expr = explode('ExpressionParser',$query);
+	
+	for ($i=1; $i<sizeof($expr); $i++) {
+	    $joop = ExpressionParser::evaluateExpression($expr[$i]);
+	    $query = preg_replace('/ExpressionParser(.*)/',"'".$joop."'",$query);
+	    $this->query->setQuery($query);
+	}
+
         // the {keyValue} is substituted in the raw query
 	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query->getQuery());
         $this->query->setQuery($nieuw);
@@ -112,9 +122,10 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $TSparserObject->parse($this->ffdata['fieldtypes']);
         $fieldtypes = $TSparserObject->setup;
 
-        $columnNames = $sqlService->getColumnNames();
         $rows = $sqlService->getRows();
-        $newColumns = $sqlService->getNewColumns($columnNames,$rows,$fieldtypes);
+$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
+        $newColumns = $sqlService->mergeFieldTypes($columnNames,$fieldtypes);
+
         // assign the results in a view for fluid Query/List.html
             //DebugUtility::debug($fieldtypes,'fieldtypes');
         $this->view->assignMultiple([
@@ -124,7 +135,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'columnNames' => $newColumns,
             'rows' => $rows,
             'request' => $this->request,
-            'fieldtypes' => $fieldtypes,
             'user' => $GLOBALS["TSFE"]->fe_user->user,
         ]);
     }

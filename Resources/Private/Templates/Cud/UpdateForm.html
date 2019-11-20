@@ -1,16 +1,17 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
+
+
 <f:debug>{_all}</f:debug>
 
 <f:comment>
-	EXT:.../Cud/Edit.html
-	<f:render partial=”title.{person.gender}” /> and the partials “title.male.html”, “title.female.html”, 
+	EXT:.../Cud/UpdateForm.html
 </f:comment>
 
 <div class="container">  
 	<div id="CUD">
-		<f:form id="CUD_form" object="{rows}" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
+		<f:form id="CUD_form" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
     		<div class="wfqbe_description">{flexformdata.caption}</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
@@ -31,22 +32,22 @@
 										<f:case value="nodisplay">						
 										</f:case>
 										<f:case value="readonly">						
-											{rows.0.{columnName.name}}
+											{row.{columnName.name}}
 										</f:case>
 										<f:case value="readonly">
-											<f:form.textfield name="{columnName.name}" value="{rows.0.{columnName.name}}" />
+											<f:form.textfield name="{columnName.name}" value="{row.{columnName.name}}" />
 										</f:case>
-										<f:case value="gender">
-											<f:form.select name="{columnName.name}" value="{rows.0.{columnName.name}}" options="{rs:selectGender()}" />
+										<f:case value="select">
+											<f:render partial="select{columnName.name}" arguments="{_all}" />
 										</f:case>
 										<f:case value="datum">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{rows.0.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
 										</f:case>
 										<f:case value="tijd">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{rows.0.{columnName.name}-> f:format.date(format: 'H:i')}" />
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.date(format: 'H:i')}" />
 										</f:case>
 										<f:defaultCase>
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{rows.0.{columnName.name}}" />
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}}" />
 										</f:defaultCase>
 									</f:switch>
       							</div>
@@ -57,7 +58,7 @@
                    </table>
     			</div>
           	</div>
-          		<f:form.hidden name="uid" value="{rows.0.uid}" />
+          		<f:form.hidden name="{flexformdata.identifiers}" value="{keyValue}" />
     			<div class="wfqbe_block">    
       				<f:form.submit class="btn btn-primary" value="Wijzigen" />
     			</div>

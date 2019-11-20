@@ -52,6 +52,17 @@
                     </config>
                 </TCEforms>
             </fieldtypes>
+            <defaultvalues>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:defaultvalues</label>
+                    <config>
+                        <type>text</type>
+                        <cols>45</cols>
+                        <rows>5</rows>
+                        <eval>trim</eval>
+                    </config>
+                </TCEforms>
+            </defaultvalues>
         </el>
     </ROOT>
 </T3DataStructure>

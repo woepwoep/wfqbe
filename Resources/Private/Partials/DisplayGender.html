@@ -1,0 +1,16 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
+
+<f:variable name="gender" value="{0:'Man', 1:'Vrouw', 2:'Castraat', 3:'Onbekend'}"/>
+
+<f:comment>
+ <f:debug>{_all}</f:debug>
+ 	{row.{columnName.name}}
+</f:comment>  
+
+<f:for each="{gender}" as="label" key="status" >
+	<f:if condition="{status}=={row.{columnName.name}}" >
+		{label}
+	</f:if>
+</f:for>
+

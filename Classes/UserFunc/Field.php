@@ -35,13 +35,15 @@ class Field
     public function getColumnNames(array &$config, &$parentObject)
     {
         $targetTable = $config['row']['targetTable'];
-        $statement = "SELECT * FROM ".$targetTable." LIMIT 1";
+        $statement = "SHOW COLUMNS FROM ".$targetTable;
         $sqlService = new SqlService($statement);
-        $fieldList=$sqlService->getColumnNames();
+	$rows = $sqlService->getRows();
+        $fieldList = array();
         $options = [];
-        foreach($fieldList AS $name => $value)
+        foreach($rows AS $row)
         {
-            $options[] = [$value,$value];
+            //$options[] = [$value,$value];
+            $options[] = [$row['Field'],$row['Field']];
         }
         //DebugUtility::debug($options);exit(1);
 	$config['items'] = $options;
