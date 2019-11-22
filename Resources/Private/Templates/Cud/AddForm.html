@@ -1,29 +1,53 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
-<f:debug>{_all}</f:debug>
+
 <h3>
    EXT:wfqbe/Resources/Private/Templates/Cud/AddForm.html
+   <f:debug>{_all}</f:debug>
 </h3>
 
-<div class="container">  
+div class="container">  
 	<div id="CUD">
-		<f:form id="CUD_form" object="{rows}" name="CUD_form" enctype="multipart/form-data" method="post" action="add" >
-    		<div class="wfqbe_description">Een Default Add Scherm (hello <rs:logo />)</div>
+		<f:form id="CUD_form" name="CUD_form" enctype="multipart/form-data" method="post" action="add" >
+    		<div class="wfqbe_description">{flexformdata.caption} toevoegen</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
       				<table class="table table-bordered table-hover table-condensed">
                       <tbody> 
-              			<f:for each="{columnNames}" as="columnName" iteration="i">
+              			<f:for each="{columnNames}" as="columnName" >
                           <tr>
                             <td>
       							<span class="label">
-        							<label for="{columnName.name}">{columnName.name}:</label>
+									<f:if condition="{columnName.type} != 'nodisplay'">
+										<label for="{columnName.name}">{columnName.name}</label>
+									</f:if>
       							</span>
                             </td>
                             <td>
      							<div class="field">
-        							<f:form.textfield class="add" name="{columnName.name}" value="" />
+									<f:switch expression="{columnName.type}">
+										<f:case value="nodisplay">						
+										</f:case>
+										<f:case value="readonly">						
+											{row.{columnName.name}}
+										</f:case>
+										<f:case value="readonly">
+											<f:form.textfield name="{columnName.name}" value="{row.{columnName.name}}" />
+										</f:case>
+										<f:case value="select">
+											<f:render partial="select{columnName.name}" arguments="{_all}" />
+										</f:case>
+										<f:case value="datum">
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
+										</f:case>
+										<f:case value="tijd">
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.date(format: 'H:i')}" />
+										</f:case>
+										<f:defaultCase>
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}}" />
+										</f:defaultCase>
+									</f:switch>
       							</div>
                             </td>
                           </tr>
@@ -32,11 +56,11 @@
                    </table>
     			</div>
           	</div>
-          		
-    			<div class="wfqbe_block">    
-      				<f:form.submit class="btn btn-primary" value="Toevoegen" />
-    			</div>
+
+    		<div class="wfqbe_block">    
+				<button class="btn btn-warning" onclick="goBack()">Terug</button>
+      			<f:form.submit class="btn btn-primary" value="Toevoegen" />
+    		</div>	
       	</f:form>
   	</div>
-  
 </div>

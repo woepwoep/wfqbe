@@ -3,16 +3,18 @@
 
 
 
-<f:debug>{_all}</f:debug>
+
 
 <f:comment>
 	EXT:.../Cud/UpdateForm.html
+	<f:debug>{_all}</f:debug>
+	Dit werkt nog niet: <f:translate key="{columnName.name}" extensionName="wfqbe" /> 
 </f:comment>
 
 <div class="container">  
 	<div id="CUD">
 		<f:form id="CUD_form" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
-    		<div class="wfqbe_description">{flexformdata.caption}</div>
+    		<div class="wfqbe_description">{flexformdata.caption} wijzigen</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
       				<table class="table table-bordered table-hover table-condensed">
@@ -22,7 +24,7 @@
                             <td>
       							<span class="label">
 									<f:if condition="{columnName.type} != 'nodisplay'">
-										<label for="{columnName.name}">{columnName.name}:</label>
+										<label for="{columnName.name}">{columnName.name}</label>
 									</f:if>
       							</span>
                             </td>
@@ -58,12 +60,13 @@
                    </table>
     			</div>
           	</div>
-          		<f:form.hidden name="{flexformdata.identifiers}" value="{keyValue}" />
-    			<div class="wfqbe_block">    
-      				<f:form.submit class="btn btn-primary" value="Wijzigen" />
-    			</div>
+
+    		<div class="wfqbe_block">    
+				<button class="btn btn-warning" onclick="goBack()">Terug</button>
+      			<f:form.submit class="btn btn-primary" value="Wijzigen" />
+    		</div>
 				
       	</f:form>
-		<button class="btn btn-warning" onclick="goBack()">Terug</button>
+		
   	</div>
 </div>
