@@ -1,0 +1,11 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
+
+<f:variable name="selectArray" value="{0:'Dieren', 1:'Overig'}"/>
+
+<f:for each="{selectArray}" as="label" key="selectKey" >
+	<f:if condition="{selectKey}=={row.{columnName.name}}" >
+		{label}
+	</f:if>
+</f:for>
+
