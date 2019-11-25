@@ -117,17 +117,12 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
-        // introduce the fieldtype array
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['fieldtypes']);
-        $fieldtypes = $TSparserObject->setup;
-
         $rows = $sqlService->getRows();
-$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
-        $newColumns = $sqlService->mergeFieldTypes($columnNames,$fieldtypes);
+	$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
+        $flexformInfoService = new FlexformInfoService();
+        $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
 
         // assign the results in a view for fluid Query/List.html
-            //DebugUtility::debug($fieldtypes,'fieldtypes');
         $this->view->assignMultiple([
             'settings' => $this->pluginService->getSettings(),
             'flexformdata' => $this->ffdata,

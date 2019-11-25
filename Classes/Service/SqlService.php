@@ -25,6 +25,21 @@ class SqlService
 
     }
 
+    public function getColumnNamesFromResultRows($rows)
+    {
+        $columnNames = array();
+
+        // if no rows, then skip this exercise
+        if (!is_array($rows) || !is_array($rows[0])) return $columnNames;
+
+        foreach($rows[0] as $field => $value)
+        {
+	    $columnNames[] = $field;
+        }
+
+        return $columnNames;
+    }
+
     public function getRows()
     {
         // now execute the query
@@ -35,45 +50,6 @@ class SqlService
 
         // Return the values
         return $this->rows;
-    }
-
-    public function getColumnNamesFromResultRows($rows)
-    {
-        $newColumns = array();
-
-        // if no rows, then skip this exercise
-        if (!is_array($rows) || !is_array($rows[0])) return $newColumns;
-
-        foreach($rows[0] as $field => $value)
-        {
-	    $newColumns[] = $field;
-        }
-
-        return $newColumns;
-    }
-
-    public function mergeFieldTypes($columnNames,$fieldtypes)
-    {
-        $newColumns = array();
-
-        // if no columnNames, then skip this exercise
-        if (!is_array($columnNames)) return $newColumns;
-
-        foreach ($columnNames as $column) {
-
-            // name is important
-            $newColumns[$column]['name'] = $column;
-
-            // default is TEXT
-            $newColumns[$column]['type'] = 'TEXT';
-
-            // if user overrules, use the fieldtype provided by the user
-            if ($fieldtypes[$column]) {
-                $newColumns[$column]['type'] = $fieldtypes[$column];
-            }
-        }
-
-        return $newColumns;
     }
 
     public function insertRow()

@@ -56,6 +56,16 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $ffdata;
 
+    /**
+     * $targetTable -- required in all CRUD actions
+     */
+    protected $targetTable;
+
+    /**
+     * $keyField -- required in all CRUD actions
+     */
+    protected $keyField;
+
 
     public function injectQueryRepository(QueryRepository $queryRepository)
     {
@@ -65,21 +75,30 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function __construct()
     {
         $this->pluginSettings = new PluginService('tx_wfqbe');
+
+        // retrieve the tablename and the keyfield(s) from the flexform
         $flexformInfoService = new FlexformInfoService();
+	$this->targetTable = $flexformInfoService->getTargetTable();
+        $this->keyField = $flexformInfoService->getKeyField();
+        $this->fieldlist = $flexformInfoService->getFieldlist();
+
+        // use the template from the Flexform if there is one
+	$templateFile = $flexformInfoService->getTemplateFile();
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
+	// retrieve the other required information from the flexform
         $this->ffdata = $flexformInfoService->getData();
+
     }
+
 
     /**
      * Show the chosen query result row.
      */
     public function showAction()
     {
-        // retrieve the tablename and the keyfield(s) from the flexform
-        $targetTable = $this->ffdata['targetTable'];
-        $keyField = $this->ffdata['identifiers'];
-        $fieldList = $this->ffdata['fieldlist'];
-        if (empty($fieldList)) $fieldList = '*';
-
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
         if (!$this->request->hasArgument($parameter)) {
@@ -88,24 +107,13 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 	$keyValue = $this->request->getArgument($parameter);
 
-        // use the template from the Flexform if there is one
-        if (!empty($this->ffdata['templateFile'])) {
-            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
-            $this->view->setTemplatePathAndFilename($templateFile);
-        }
-
         // execute the query
-        $statement = "select ".$fieldList." from ".$targetTable." wHEre ".$keyField."='".$keyValue."'";
+        $statement = "select ".$this->fieldlist." from ".$this->targetTable." wHEre ".$this->keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
-        // introduce the fieldtype array
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['fieldtypes']);
-        $fieldtypes = $TSparserObject->setup;
-
         $rows = $sqlService->getRows();
-	$fl = explode(',',$fieldList);
-        $newColumns = $sqlService->mergeFieldTypes($fl,$fieldtypes);
+        $flexformInfoService = new FlexformInfoService();
+        $columnNames = $flexformInfoService->mergeFieldTypes();
 
             //DebugUtility::debug($statement,'showAction statement');exit(1);
         // assign the results in a view for fluid Query/Show.html
@@ -114,7 +122,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'flexformdata' => $this->ffdata,
             'keyValue' => $keyValue,
             'statement' => $statement,
-            'columnNames' => $newColumns,
+            'columnNames' => $columnNames,
             'row' => $rows[0],
             'request' => $this->request,
         ]);
@@ -125,35 +133,16 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addFormAction()
     {
-        // retrieve the tablename and the keyfield(s) from the flexform
-        $targetTable = $this->ffdata['targetTable'];
-        $keyField = $this->ffdata['identifiers'];
-        $fieldList = $this->ffdata['fieldlist'];
-        if (empty($fieldList)) $fieldList = '*';
-
-        // use the template from the Flexform if there is one
-        if (!empty($this->ffdata['templateFile'])) {
-            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
-            $this->view->setTemplatePathAndFilename($templateFile);
-        }
-
-        // introduce the fieldtype array
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['fieldtypes']);
-        $fieldtypes = $TSparserObject->setup;
-
-	$fl = explode(',',$fieldList);
-        $sqlService = new SqlService('Show columns for '.$targetTable);
-        $newColumns = $sqlService->mergeFieldTypes($fl,$fieldtypes);
-        DebugUtility::debug($newColumns,'column names in addAction');
+        $sqlService = new SqlService('Show columns for '.$this->targetTable);
+        $flexformInfoService = new FlexformInfoService();
+        $columnNames = $flexformInfoService->mergeFieldTypes();
+        DebugUtility::debug($columnNames,'column names in addAction');
 
         // assign the results in a view for fluid Query/Show.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
             'flexformdata' => $this->ffdata,
-            'keyValue' => $keyValue,
-            'statement' => $statement,
-            'columnNames' => $newColumns,
+            'columnNames' => $columnNames,
             'request' => $this->request,
         ]);
     }
@@ -163,27 +152,20 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addAction()
     {
-        $targetTable = $this->ffdata['targetTable'];
-        $fieldList = $this->ffdata['fieldlist'];
+        $sqlService = new SqlService('Show columns for '.$this->targetTable);
+        $flexformInfoService = new FlexformInfoService();
+        $columnNames = $flexformInfoService->mergeFieldTypes();
 
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['fieldtypes']);
-        $fieldtypes = $TSparserObject->setup;
-
-	$fl = explode(',',$fieldList);
-        $sqlService = new SqlService('Show columns for '.$targetTable);
-        $newColumns = $sqlService->mergeFieldTypes($fl,$fieldtypes);
-
-        // build an insert statement based on $fieldList
+        // build an insert statement
         $newValues = $this->request->getArguments();
         $insertList = array();
 
-        foreach($newColumns as $newColumn) {
+        foreach($columnNames as $columnName) {
 
-	    $columnName = $newColumn['name'];
+	    $columnName = $columnName['name'];
 
-            // add to insert fieldlist
-            $insertList[$columnName] = $sqlService->convert($newColumns[$columnName]['type'],$newValues[$columnName]);
+            // add to insert
+            $insertList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
         }
 
         // nothing to be done if there are no changed column values
@@ -192,7 +174,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             exit(1);
         }
 
-        $statement = "insert into ".$targetTable;
+        $statement = "insert into ".$this->targetTable;
 $columns = '';
 $values = '';
         foreach($insertList as $key => $value) {
@@ -229,7 +211,7 @@ $values = '';
             'flexformdata' => $this->ffdata,
             'rowsAffected' => $rowsAffected,
             'statement' => $statement,
-            'columnNames' => $newColumns,
+            'columnNames' => $columnNames,
             'row' => $rows[0],
             'request' => $this->request,
         ]);
@@ -248,12 +230,6 @@ $values = '';
      */
     public function updateAction()
     {
-        // retrieve the tablename and the keyfield(s) from the flexform
-        $targetTable = $this->ffdata['targetTable'];
-        $keyField = $this->ffdata['identifiers'];
-        $fieldList = $this->ffdata['fieldlist'];
-        if (empty($fieldList)) $fieldList = '*';
-
         // retrieve the {keyField : keyValue} from Fluid
         $parameter = 'keyValue';
         if (!$this->request->hasArgument($parameter)) {
@@ -267,7 +243,7 @@ $values = '';
         //DebugUtility::debug($argList,'Argument list for updateAction'); exit(1);
 
         // retrieve the row to see what columns have changed
-        $statement = "select ".$fieldList." from ".$targetTable." whEre ".$keyField."='".$keyValue."'";
+        $statement = "select ".$this->fieldlist." from ".$this->targetTable." whEre ".$this->keyField."='".$keyValue."'";
         $sqlService = new SqlService($statement);
 
         $rows = $sqlService->getRows();
@@ -276,12 +252,8 @@ $values = '';
             exit(1);
         }
 
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['fieldtypes']);
-        $fieldtypes = $TSparserObject->setup;
-
-	$fl = explode(',',$fieldList);
-        $newColumns = $sqlService->mergeFieldTypes($fl,$fieldtypes);
+        $flexformInfoService = new FlexformInfoService();
+        $columnNames = $flexformInfoService->mergeFieldTypes();
 
         foreach($rows[0] as $key => $value) {
             $oldValues[$key] = $value;
@@ -292,17 +264,17 @@ $values = '';
         $newValues = $this->request->getArguments();
         $updateList = array();
 
-        foreach($newColumns as $newColumn) {
+        foreach($columnNames as $columnName) {
 
-	    $columnName = $newColumn['name'];
+	    $columnName = $columnName['name'];
 
             // skip column if it is the keyField since we need it unchanged in the where clause
-            if (!strcmp($columnName,$keyField)) {
+            if (!strcmp($columnName,$this->keyField)) {
                 continue;
             }
-            // add to update fieldlist if value has changed
+            // add to update statement if value has changed
             if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
-                $updateList[$columnName] = $sqlService->convert($newColumns[$columnName]['type'],$newValues[$columnName]);
+                $updateList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
             }
         }
 
@@ -312,7 +284,7 @@ $values = '';
             exit(1);
         }
 
-        $statement = "update ".$targetTable. " set";
+        $statement = "update ".$this->targetTable. " set";
         foreach($updateList as $key => $value) {
             $statement .= " ".$key."='".$value."',";
         }
@@ -330,7 +302,7 @@ $values = '';
 	}
         // remove last comma
         $statement = rtrim($statement,',');
-        $statement .= " wHeRe ".$keyField."='".$keyValue."'";
+        $statement .= " wHeRe ".$this->keyField."='".$keyValue."'";
         //DebugUtility::debug($statement,'statement for updateAction');
 
         // execute the query
@@ -343,7 +315,7 @@ $values = '';
             'flexformdata' => $this->ffdata,
             'keyValue' => $keyValue,
             'statement' => $statement,
-            'columnNames' => $newColumns,
+            'columnNames' => $columnNames,
             'row' => $rows[0],
             'request' => $this->request,
         ]);
@@ -378,4 +350,18 @@ $values = '';
 	ob_end_clean();
 	return $output;
     }
+
+    /**
+     * retrieve the columnNames from the targetTable
+     * (in add/Form/action there are no rows, hence no row headings available)
+     */
+    protected function getColumnNamesFromTargetTable()
+    {
+        $columnNames = array();
+
+        $statement = 'SHOW COLUMNS FOR '.$this->targetTable;
+        $sqlService = new SqlService($statement);
+        return $columnNames;
+    }
+
 }
