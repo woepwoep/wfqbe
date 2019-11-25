@@ -12,8 +12,8 @@
         <target>ID voor de div container</target>
       </trans-unit>
       <trans-unit id="query">
-        <source>Query record</source>
-        <target>WFQBE query record</target>
+        <source>Query</source>
+        <target>Query</target>
       </trans-unit>
       <trans-unit id="parameterCheck">
         <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>

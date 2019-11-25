@@ -59,6 +59,15 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
 
     /**
+     * retrieve the query from the flexform data array
+     * (query is required in all QUERY actions)
+     */
+    public function getQuery()
+    {
+	return $this->getRequiredElement('query');
+    }
+
+    /**
      * retrieve the targetTable from the flexform data array
      * (targetTable is required in all CRUD actions)
      */

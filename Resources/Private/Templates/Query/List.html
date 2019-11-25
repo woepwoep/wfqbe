@@ -1,17 +1,28 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
+<f:debug>{_all}</f:debug>
 <f:comment>
-  <f:debug>{_all}</f:debug>
+  
   <h3>Dit is een Custom Result Template</h3>
   <h3>fileadmin/tmpl/wfqbe/List.html</h3>
 </f:comment>  
 
+  <h3> /var/www/orange/nlbs/fileadmin/tmpl/wfqbe/Templates </h3>
 <f:if condition="{rows}" >
   	<f:then>
 		<f:render section="resultTable" arguments="{_all}" />
     </f:then>
   	<f:else>
-		<div class="emptyResult">{flexformdata.emptyResult} /></div>
+		<div class="alert alert-warning emptyResult" role="alert">
+			<f:format.html>{flexformdata.emptyResult}</f:format.html>
+		</div>
+		<f:if condition="{flexformdata.cudPage}">
+			<f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{keyField}'}">
+				<button class="btn btn-primary" type="button" >Advertentie aanmaken</button>
+			</f:link.action>		
+		</f:if>
+		
+		
 	</f:else>
 </f:if>
 
@@ -28,7 +39,7 @@
 		{flexformdata.caption}
 	</f:else>
     </f:if>
-    <f:link.action controller="Cud" pluginName="Picud" action="add" pageUid="{flexformdata.cudPage}" >
+    <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" >
         <button class="btn btn-secondary" type="button" >+</button>
     </f:link.action>  
     </div>
@@ -49,7 +60,7 @@
 				</f:if>
             </f:for>
 			<f:if condition="{flexformdata.cudPage}">
-              <th> Edit - Delete </th>
+              <th class="center"> Edit - Delete </th>
 			</f:if>
 			</tr>
         </thead>
@@ -62,7 +73,7 @@
 							<td> 
 								<f:if condition="{columnName.name}=={flexformdata.linkField}">
 									<f:then>
-										<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{flexformdata.keyField}'}"> 
+										<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.{flexformdata.keyField}}'}"> 
 											<f:render partial="{columnName.type}" arguments="{_all}" />
 										</f:link.action>
 									</f:then>
@@ -75,7 +86,7 @@
 					</f:for>
                           	
 					<f:if condition="{flexformdata.cudPage}">
-						<td> <f:render partial="PartialCud" arguments="{_all}" /> </td>
+						<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>
 					</f:if>
          		</tr>
        		</f:for>   

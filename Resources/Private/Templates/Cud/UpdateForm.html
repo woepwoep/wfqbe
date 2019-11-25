@@ -1,10 +1,6 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
-
-
-
-
 <f:comment>
 	EXT:.../Cud/UpdateForm.html
 	<f:debug>{_all}</f:debug>
@@ -12,14 +8,14 @@
 </f:comment>
 
 <div class="container">  
-	<div id="CUD">
-		<f:form id="CUD_form" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
+	<div id="{flexformdata.div_id}">
+		<f:form id="{flexformdata.div_id}_form" name="{flexformdata.div_id}_form" enctype="multipart/form-data" method="post" action="update" arguments="{keyValue: '{keyValue}'}"  >
     		<div class="wfqbe_description">{flexformdata.caption} wijzigen</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
       				<table class="table table-bordered table-hover table-condensed">
                       <tbody> 
-              			<f:for each="{columnNames}" as="columnName" iteration="i">
+              			<f:for each="{columnNames}" as="columnName" >
                           <tr>
                             <td>
       							<span class="label">
@@ -36,17 +32,23 @@
 										<f:case value="readonly">						
 											{row.{columnName.name}}
 										</f:case>
-										<f:case value="readonly">
-											<f:form.textfield name="{columnName.name}" value="{row.{columnName.name}}" />
+										<f:case value="required">
+											<f:form.textfield class="form-control {columnName.type}" required="1" name="{columnName.name}" value="{row.{columnName.name}}" />
 										</f:case>
 										<f:case value="select">
 											<f:render partial="select{columnName.name}" arguments="{_all}" />
 										</f:case>
 										<f:case value="datum">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}"  value="{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
+											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
 										</f:case>
 										<f:case value="tijd">
 											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.date(format: 'H:i')}" />
+										</f:case>
+										<f:case value="textarea">
+											<f:form.textarea class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}}" />
+										</f:case>
+										<f:case value="upload">
+											<f:form.upload name="file" />
 										</f:case>
 										<f:defaultCase>
 											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}}" />

@@ -10,7 +10,7 @@
         <source>ID for the div container</source>
       </trans-unit>
       <trans-unit id="query">
-        <source>Query record</source>
+        <source>Query</source>
       </trans-unit>
       <trans-unit id="parameterCheck">
         <source>Execute query if the following parameter is not empty (eg. tx_wfqbe_query|submit means tx_wfqbe_query[submit])</source>

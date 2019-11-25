@@ -16,7 +16,6 @@ namespace RedSeadog\Wfqbe\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
-use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\SqlService;
@@ -31,11 +30,6 @@ use \Cobweb\Expressions\ExpressionParser;
 class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     /**
-     * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
-     */
-    protected $queryRepository = null;
-
-    /**
      * @var $ffdata
      */
     protected $ffdata;
@@ -46,15 +40,10 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $pluginService;
 
     /**
-     * @var \RedSeadog\Wfqbe\Domain\Model\Query $query
+     * @string query
      */
-    protected static $query = null;
+    protected $query;
 
-
-    public function injectQueryRepository(QueryRepository $queryRepository)
-    {
-        $this->queryRepository = $queryRepository;
-    }
 
     /**
      * __construct() ... retrieve both the plugin settings and the flexform info
@@ -63,6 +52,18 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $this->pluginService = new PluginService('tx_wfqbe');
         $flexformInfoService = new FlexformInfoService();
+
+        // retrieve the query from the flexform ...
+        $this->query = $flexformInfoService->getQuery();
+
+        // ... and substitute where possible
+	$expr = explode('ExpressionParser',$this->query);
+	for ($i=1; $i<sizeof($expr); $i++) {
+	    $joop = ExpressionParser::evaluateExpression($expr[$i]);
+	    $this->query = preg_replace('/ExpressionParser(.*)/',"'".$joop."'",$this->query);
+	}
+
+	// retrieve other ffdata
         $this->ffdata = $flexformInfoService->getData();
     }
 
@@ -71,33 +72,15 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        // retrieve the query from the flexform only the first time
-        $this->query = $this->queryRepository->findByUid($this->ffdata['queryObject']);
-
-        // is query filled out in FlexForm?
-        if (!$this->query) {
-            DebugUtility::debug($this->ffdata,'QueryController/listAction: Query ID is empty in FlexForm!');
-            exit(1);
-        }
-
         // retrieve the {keyValue} from Fluid
         $parameter = 'koppelveld';
         if ($this->request->hasArgument($parameter)) {
 	    $koppelveldWaarde = $this->request->getArgument($parameter);
         }
 
-	$query = $this->query->getQuery();
-	$expr = explode('ExpressionParser',$query);
-	
-	for ($i=1; $i<sizeof($expr); $i++) {
-	    $joop = ExpressionParser::evaluateExpression($expr[$i]);
-	    $query = preg_replace('/ExpressionParser(.*)/',"'".$joop."'",$query);
-	    $this->query->setQuery($query);
-	}
-
         // the {keyValue} is substituted in the raw query
-	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query->getQuery());
-        $this->query->setQuery($nieuw);
+	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query);
+        $this->query = $nieuw;
 
         // retrieve the {sortField} from Fluid
         $parameter = 'orderby';
@@ -105,11 +88,11 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	    $sortField = $this->request->getArgument($parameter);
             DebugUtility::debug($sortField,'sortField in listAction');
 	    $nieuw.= ' ORDER BY '.$sortField;
-            $this->query->setQuery($nieuw);
+            $this->query = $nieuw;
         }
 
         // execute the query and get the result set (rows)
-        $sqlService = new SqlService($this->query->getQuery());
+        $sqlService = new SqlService($this->query);
 
         // use the template from the Flexform if there is one
         if (!empty($this->ffdata['templateFile'])) {
