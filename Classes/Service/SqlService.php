@@ -49,7 +49,6 @@ class SqlService
 	    $newColumns[] = $field;
         }
 
-            DebugUtility::debug($newColumns,'newColumns in getColumnNamesFromResultRows');
         return $newColumns;
     }
 
@@ -74,7 +73,6 @@ class SqlService
             }
         }
 
-            DebugUtility::debug($newColumns,'newColumns in mergeFieldTypes');
         return $newColumns;
     }
 

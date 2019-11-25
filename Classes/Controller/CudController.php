@@ -78,7 +78,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
         $fieldList = $this->ffdata['fieldlist'];
-            DebugUtility::debug($fieldList,'fieldList in showAction');
         if (empty($fieldList)) $fieldList = '*';
 
         // retrieve the {keyValue} from Fluid
@@ -130,7 +129,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
         $fieldList = $this->ffdata['fieldlist'];
-            DebugUtility::debug($fieldList,'fieldList in addFormAction');
         if (empty($fieldList)) $fieldList = '*';
 
         // use the template from the Flexform if there is one
@@ -139,16 +137,15 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
-        $statement = "select ".$fieldList." from ".$targetTable." LIMIT 1";
-        $sqlService = new SqlService($statement);
-
         // introduce the fieldtype array
         $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
         $TSparserObject->parse($this->ffdata['fieldtypes']);
         $fieldtypes = $TSparserObject->setup;
 
 	$fl = explode(',',$fieldList);
+        $sqlService = new SqlService('Show columns for '.$targetTable);
         $newColumns = $sqlService->mergeFieldTypes($fl,$fieldtypes);
+        DebugUtility::debug($newColumns,'column names in addAction');
 
         // assign the results in a view for fluid Query/Show.html
         $this->view->assignMultiple([
@@ -166,8 +163,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addAction()
     {
-        DebugUtility::debug('in addAction');
-
         $targetTable = $this->ffdata['targetTable'];
         $fieldList = $this->ffdata['fieldlist'];
 
@@ -178,7 +173,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	$fl = explode(',',$fieldList);
         $sqlService = new SqlService('Show columns for '.$targetTable);
         $newColumns = $sqlService->mergeFieldTypes($fl,$fieldtypes);
-        DebugUtility::debug($fieldtypes,'fieldtypes in addAction');
 
         // build an insert statement based on $fieldList
         $newValues = $this->request->getArguments();
@@ -191,7 +185,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             // add to insert fieldlist
             $insertList[$columnName] = $sqlService->convert($newColumns[$columnName]['type'],$newValues[$columnName]);
         }
-        DebugUtility::debug($insertList,'insertList in addAction');
 
         // nothing to be done if there are no changed column values
         if (empty($insertList)) {
@@ -225,12 +218,11 @@ $values = '';
         $values = rtrim($values,',');
 
         $statement .= " (".$columns.") VALUES (".$values.")";
-        DebugUtility::debug($statement,'statement in addAction');
+        // DebugUtility::debug($statement,'statement in addAction');
 
         // execute the query
         $sqlService = new SqlService($statement);
         $rowsAffected = $sqlService->insertRow();
-        DebugUtility::debug($rowsAffected,'rowsAffected in addAction');
 
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
@@ -260,7 +252,6 @@ $values = '';
         $targetTable = $this->ffdata['targetTable'];
         $keyField = $this->ffdata['identifiers'];
         $fieldList = $this->ffdata['fieldlist'];
-            DebugUtility::debug($fieldList,'fieldList in updateAction');
         if (empty($fieldList)) $fieldList = '*';
 
         // retrieve the {keyField : keyValue} from Fluid
@@ -340,7 +331,7 @@ $values = '';
         // remove last comma
         $statement = rtrim($statement,',');
         $statement .= " wHeRe ".$keyField."='".$keyValue."'";
-        DebugUtility::debug($statement,'statement for updateAction');
+        //DebugUtility::debug($statement,'statement for updateAction');
 
         // execute the query
         $sqlService = new SqlService($statement);
