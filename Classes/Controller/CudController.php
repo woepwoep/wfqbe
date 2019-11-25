@@ -18,7 +18,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
-use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\SqlService;
@@ -45,13 +44,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $pluginSettings;
 
     /**
-     * QueryRepository
-     *
-     * @var \RedSeadog\Wfqbe\Domain\Repository\QueryRepository
-     */
-    protected $queryRepository = null;
-
-    /**
      * $ffdata
      */
     protected $ffdata;
@@ -66,11 +58,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $keyField;
 
-
-    public function injectQueryRepository(QueryRepository $queryRepository)
-    {
-        $this->queryRepository = $queryRepository;
-    }
 
     public function __construct()
     {
