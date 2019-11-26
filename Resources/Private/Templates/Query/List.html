@@ -7,23 +7,26 @@
   <h3>fileadmin/tmpl/wfqbe/List.html</h3>
 </f:comment>  
 
-  <h3> /var/www/orange/nlbs/fileadmin/tmpl/wfqbe/Templates </h3>
+<h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
 <f:if condition="{rows}" >
-  	<f:then>
-		<f:render section="resultTable" arguments="{_all}" />
+    <f:then>
+        <f:render section="resultTable" arguments="{_all}" />
     </f:then>
-  	<f:else>
-		<div class="alert alert-warning emptyResult" role="alert">
-			<f:format.html>{flexformdata.emptyResult}</f:format.html>
-		</div>
-		<f:if condition="{flexformdata.cudPage}">
-			<f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{keyField}'}">
-				<button class="btn btn-primary" type="button" >Advertentie aanmaken</button>
-			</f:link.action>		
-		</f:if>
-		
-		
-	</f:else>
+    <f:else>
+	<div class="alert alert-warning emptyResult" role="alert">
+	    <f:format.html>{flexformdata.emptyResult}</f:format.html>
+	</div>
+	<f:if condition="{flexformdata.cudPage}">
+	    <f:link.action 
+		controller="Cud" 
+		pluginName="Picud"
+		action="addForm"
+		pageUid="{flexformdata.cudPage}"
+		arguments="{keyValue: '{keyField}'}">
+			<button class="btn btn-primary" type="button" >Advertentie aanmaken</button>
+	    </f:link.action>		
+	</f:if>
+    </f:else>
 </f:if>
 
 <f:section name="resultTable" >
@@ -31,66 +34,73 @@
 <div class="container">
   <div id="{flexformdata.div_id}">
     <div class="wfqbe_description">
-	<f:if condition="{flexformdata.summary}">
+      <f:if condition="{flexformdata.summary}">
 	<f:then>
-      <button class="btn btn-primary" type="button"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >{flexformdata.caption}</button>
+	  <button
+	    class="btn btn-primary"
+	    type="button"
+	    data-toggle="collapse"
+	    data-target="#collapseExample"
+	    aria-expanded="false"
+	    aria-controls="collapseExample" >
+	      {flexformdata.caption}</button>
 	</f:then>
 	<f:else> 
-		{flexformdata.caption}
+	  {flexformdata.caption}
 	</f:else>
-    </f:if>
-    <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" >
+      </f:if>
+      <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" >
         <button class="btn btn-secondary" type="button" >+</button>
-    </f:link.action>  
+      </f:link.action>  
     </div>
     <div class="table-responsive"> 
-		<table class="table table-bordered table-hover table-condensed">
-		<div class="summary">
-			<div class="collapse" id="collapseExample">
-				<div class="card card-body bg-light">{flexformdata.summary}</div>
-			</div>
-		</div>
-        <thead class="wfqbe_table_header">
-			<tr>
-			<f:for each="{columnNames}" as="columnName">
-				<f:if condition='{columnName.type} != "nodisplay"'>
-					<th> 
-						<div class="{flexformdata.div_id}_label">{columnName.name}</div>
-					</th>
-				</f:if>
+      <table class="table table-bordered table-hover table-condensed">
+	<div class="summary">
+	  <div class="collapse" id="collapseExample">
+	    <div class="card card-body bg-light">{flexformdata.summary}</div>
+	  </div>
+	</div>
+	<thead class="wfqbe_table_header">
+	  <tr>
+	    <f:for each="{columnNames}" as="columnName">
+	      <f:if condition='{columnName.type} != "nodisplay"'>
+		<th> 
+		  <div class="{flexformdata.div_id}_label">{columnName.name}</div>
+		</th>
+	      </f:if>
             </f:for>
-			<f:if condition="{flexformdata.cudPage}">
+	    <f:if condition="{flexformdata.cudPage}">
               <th class="center"> Edit - Delete </th>
-			</f:if>
-			</tr>
-        </thead>
+	    </f:if>
+	  </tr>
+	</thead>
   
-        <tbody>
-       		<f:for each="{rows}" as="row" >
-        		<tr>  
-					<f:for each="{columnNames}" as="columnName">
-						<f:if condition='{columnName.type} != "nodisplay"'>
-							<td> 
-								<f:if condition="{columnName.name}=={flexformdata.linkField}">
-									<f:then>
-										<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.{flexformdata.keyField}}'}"> 
-											<f:render partial="{columnName.type}" arguments="{_all}" />
-										</f:link.action>
-									</f:then>
-									<f:else>
-										<f:render partial="{columnName.type}" arguments="{_all}" />
-									</f:else>
-								</f:if>
-							</td>
-						</f:if>
-					</f:for>
+	<tbody>
+	  <f:for each="{rows}" as="row" >
+            <tr>  
+	      <f:for each="{columnNames}" as="columnName">
+		<f:if condition='{columnName.type} != "nodisplay"'>
+		  <td> 
+		    <f:if condition="{columnName.name}=={flexformdata.linkField}">
+		      <f:then>
+		        <f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.{flexformdata.keyField}}'}"> 
+			  <f:render partial="{columnName.type}" arguments="{_all}" />
+			</f:link.action>
+		      </f:then>
+		      <f:else>
+			<f:render partial="{columnName.type}" arguments="{_all}" />
+		      </f:else>
+		    </f:if>
+		  </td>
+		</f:if>
+              </f:for>
                           	
-					<f:if condition="{flexformdata.cudPage}">
-						<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>
-					</f:if>
-         		</tr>
-       		</f:for>   
-  		</tbody>		
+	      <f:if condition="{flexformdata.cudPage}">
+		<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>
+	      </f:if>
+            </tr>
+       	  </f:for>   
+	</tbody>		
       </table>
     </div>
   </div>
