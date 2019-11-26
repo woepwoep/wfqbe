@@ -13,7 +13,7 @@
                         <type>text</type>
                         <cols>45</cols>
                         <rows>5</rows>
-                        <eval>trim</eval>
+                        <eval>trim,required</eval>
                     </config>
                 </TCEforms>
             </query>

@@ -40,7 +40,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $pluginService;
 
     /**
-     * @string query
+     * @var query
      */
     protected $query;
 

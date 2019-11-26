@@ -2,30 +2,30 @@
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
 <div class="container">
-	<div id="CUD">
-	
-    		<div class="wfqbe_description">Het Default Show Scherm</div>
-    		<div class="wfqbe_block">
-            	<div class="table-responsive"> 
-      				<table class="table table-bordered table-hover table-condensed">
-                      <tbody> 
-              			<f:for each="{columnNames}" as="columnName" >
-                          <tr>
-                            <td>
-      							<span class="label">
-        							<label for="{columnName.name}">{columnName.name}:</label>
-      							</span>
-                            </td>
-                            <td>
-     							<div class="field">
-        							{rows.0.{columnName.name}}
-      							</div>
-                            </td>
-                          </tr>
-                         </f:for> 
-                      </tbody>
-                   </table>
-    			</div>
-          	</div>		
-  	</div>
+    <div id="CUD">
+
+	<div class="wfqbe_description">Het Default Show Scherm</div>
+	<div class="wfqbe_block">
+	    <div class="table-responsive"> 
+		<table class="table table-bordered table-hover table-condensed">
+		    <tbody> 
+			<f:for each="{columnNames}" as="columnName" >
+			    <tr>
+				<td>
+				    <span class="label">
+        				<label for="{columnName.name}">{columnName.name}:</label>
+      				    </span>
+				</td>
+				<td>
+				    <div class="field">
+					{rows.0.{columnName.name}}
+				    </div>
+				</td>
+			    </tr>
+			</f:for> 
+		    </tbody>
+		</table>
+	    </div>
+	</div>		
+    </div>
 </div>

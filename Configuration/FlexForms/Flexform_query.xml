@@ -11,6 +11,6 @@
         <results>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetResults.xml</results>
         <search>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetSearch.xml</search>
         <insert>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetInsert.xml</insert>
-		<child>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetChild.xml</child>
+	<child>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetChild.xml</child>
     </sheets>
 </T3DataStructure>
