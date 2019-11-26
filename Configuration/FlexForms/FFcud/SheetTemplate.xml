@@ -17,7 +17,7 @@
                     </config>
                 </TCEforms>
             </templateFile>
-			<caption>
+	    <caption>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:caption</label>
                     <config>
