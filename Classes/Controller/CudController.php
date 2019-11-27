@@ -58,6 +58,17 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $keyField;
 
+    /**
+     * $fieldlist -- optional in all CRUD actions
+     */
+    protected $fieldlist;
+
+    /**
+     * $templateFile -- optional in all CRUD actions
+     */
+    protected $templateFile;
+
+
 
     public function __construct()
     {
@@ -68,12 +79,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	$this->targetTable = $flexformInfoService->getTargetTable();
         $this->keyField = $flexformInfoService->getKeyField();
         $this->fieldlist = $flexformInfoService->getFieldlist();
-
-        // use the template from the Flexform if there is one
-	$templateFile = $flexformInfoService->getTemplateFile();
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
-        }
+	$this->templateFile = $flexformInfoService->getTemplateFile();
 
 	// retrieve the other required information from the flexform
         $this->ffdata = $flexformInfoService->getData();
@@ -86,6 +92,11 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function showAction()
     {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
         if (!$this->request->hasArgument($parameter)) {
@@ -120,6 +131,11 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addFormAction()
     {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
         $sqlService = new SqlService('Show columns for '.$this->targetTable);
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
@@ -139,6 +155,11 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function addAction()
     {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
         $sqlService = new SqlService('Show columns for '.$this->targetTable);
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
@@ -209,6 +230,11 @@ $values = '';
      */
     public function updateFormAction()
     {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
         return $this->showAction();
     }
 
@@ -217,6 +243,11 @@ $values = '';
      */
     public function updateAction()
     {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
         // retrieve the {keyField : keyValue} from Fluid
         $parameter = 'keyValue';
         if (!$this->request->hasArgument($parameter)) {
@@ -321,10 +352,28 @@ $values = '';
     }
 
     /**
+     * Ask permission to delete the chosen query result row.
+     */
+    public function confirmDeleteAction()
+    {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
+	return $this->showAction();
+    }
+
+    /**
      * Delete the chosen query result row.
      */
     public function deleteAction()
     {
+        // use the template from the Flexform if there is one
+        if (!empty($templateFile)) {
+            $this->view->setTemplatePathAndFilename($templateFile);
+        }
+
 	return $this->showAction();
     }
 
