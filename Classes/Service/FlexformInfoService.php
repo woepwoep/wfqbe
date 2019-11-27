@@ -39,19 +39,31 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	}
 
 	$fieldtypes = $this->getFieldtypes();
+	$validators = $this->getValidators();
+
         $columnNames = array();
         foreach ($fieldlist as $field) {
 
             // name is important
             $columnNames[$field]['name'] = $field;
 
-            // default is TEXT
-            $columnNames[$field]['type'] = 'TEXT';
+	    // add select info from flexform
+	    $parameter = 'typesection';
+	    $columnNames[$field]['type'] = 'TEXT';
+	    if (is_array($fieldtypes)) foreach($fieldtypes as $key => $value) {
+		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
+		    $columnNames[$field]['type'] = $value[$parameter]['type'];
+		}
+	    }
 
-            // if user overrules, use the fieldtype provided by the user
-            if ($fieldtypes[$field]) {
-                $columnNames[$field]['type'] = $fieldtypes[$field];
-            }
+	    // add validation info from flexform
+	    $parameter = 'validation';
+	    $columnNames[$field][$parameter] = '';
+	    if (is_array($validators)) foreach($validators as $key => $value) {
+		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
+		    $columnNames[$field][$parameter] = $value[$parameter]['validator'];
+		}
+	    }
         }
 
         return $columnNames;
@@ -101,11 +113,23 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function getFieldtypes()
     {
         // introduce the fieldtype array
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->getOptionalElement('fieldtypes'));
-        $fieldtypes = $TSparserObject->setup;
+/**
+ * no longer TypoScript
+ *      $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+ *      $TSparserObject->parse($this->getOptionalElement('fieldtypes'));
+ *      $fieldtypes = $TSparserObject->setup;
+ */
 
-	return $fieldtypes;
+	return $this->getOptionalElement('fieldtypes');
+    }
+
+    /**
+     * retrieve the validators from the flexform data array
+     * (validators is optional in all CRUD actions)
+     */
+    public function getValidators()
+    {
+	return $this->getOptionalElement('field');
     }
 
     /**

@@ -23,17 +23,6 @@
                     </config>
                 </TCEforms>
             </recordsForPage>
-            <sortField>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sortField</label>
-                    <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>255</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </sortField>
             <emptyResult>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:emptyResult</label>

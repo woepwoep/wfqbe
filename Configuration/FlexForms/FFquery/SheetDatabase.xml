@@ -18,15 +18,38 @@
                 </TCEforms>
             </query>
             <fieldtypes>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:fieldtypes</label>
-                    <config>
-                        <type>text</type>
-                        <cols>45</cols>
-                        <rows>5</rows>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
+                <section>1</section>
+                    <type>array</type>
+                    <title>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fieldtypes</title>
+                    <el>
+                        <typesection>
+                            <type>array</type>
+                            <el>
+                                <name>
+									<TCEforms>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:name</label>
+										<config>
+											<type>input</type>
+											<cols>45</cols>
+											<eval>trim</eval>
+										</config>
+									</TCEforms>
+								</name>
+                                <type>
+									<TCEforms>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:type</label>
+										<config>
+											<type>text</type>
+											<cols>45</cols>
+											<rows>5</rows>
+											<eval>trim</eval>
+										</config>
+										
+									</TCEforms>
+								</type>
+                            </el>
+                        </typesection>
+                   </el>
             </fieldtypes>
         </el>
     </ROOT>

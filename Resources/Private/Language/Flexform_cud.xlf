@@ -51,6 +51,12 @@
       <trans-unit id="fieldtypes">
         <source>Field Types</source>
       </trans-unit>
+	  <trans-unit id="name">
+        <source>Field Name</source>
+      </trans-unit>
+	  <trans-unit id="type">
+        <source>Field Types</source>
+      </trans-unit>
       <trans-unit id="defaultvalues">
         <source>Default values</source>
       </trans-unit>

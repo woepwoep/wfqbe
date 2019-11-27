@@ -41,39 +41,27 @@
                     </config>
                 </TCEforms>
             </fieldlist>
-            <fieldtypes>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fieldtypes</label>
-                    <config>
-                        <type>text</type>
-                        <cols>45</cols>
-                        <rows>5</rows>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </fieldtypes>
-			<veldtypes>
+			<fieldtypes>
                 <section>1</section>
                     <type>array</type>
-                    <title>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectfields</title>
+                    <title>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fieldtypes</title>
                     <el>
-                        <selectsection>
+                        <typesection>
                             <type>array</type>
                             <el>
-                                <selecttype>
+                                <name>
 									<TCEforms>
-										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selecttype</label>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:name</label>
 										<config>
 											<type>input</type>
 											<cols>45</cols>
 											<eval>trim</eval>
 										</config>
 									</TCEforms>
-								</selecttype>
-                                <selectobject>
+								</name>
+                                <type>
 									<TCEforms>
-										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectobject</label>
-										<displayCond>FIELD:selecttype:REQ:true</displayCond>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:type</label>
 										<config>
 											<type>text</type>
 											<cols>45</cols>
@@ -82,11 +70,11 @@
 										</config>
 										
 									</TCEforms>
-								</selectobject>ation>
+								</type>
                             </el>
-                        </selectsection>
+                        </typesection>
                    </el>
-            </veldtypes>
+            </fieldtypes>
             <defaultvalues>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fixedvalues</label>
