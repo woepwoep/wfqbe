@@ -4,12 +4,20 @@
   <f:debug>{_all}</f:debug>
 </f:comment>  
 
-<f:link.action controller="Cud" pluginName="Picud" action="updateForm" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
+<f:link.action
+    controller="Cud"
+    pluginName="Picud"
+    action="updateForm"
+    pageUid="{flexformdata.cudPage}"
+    arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
 	<i class="fas fa-edit"></i>
-	</f:link.action>
-	&nbsp;-&nbsp;
-	<f:link.action controller="Cud" pluginName="Picud" action="delete" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{keyValue'}" >
+</f:link.action>
+&nbsp;-&nbsp;
+<f:link.action
+    controller="Cud"
+    pluginName="Picud"
+    action="confirmDelete"
+    pageUid="{flexformdata.cudPage}"
+    arguments="{keyValue: '{keyValue'}" >
 	<i class="fas fa-trash-alt"></i>
 </f:link.action>
-
-
