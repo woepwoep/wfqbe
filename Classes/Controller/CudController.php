@@ -136,10 +136,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
-        $sqlService = new SqlService('Show columns for '.$this->targetTable);
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
-        DebugUtility::debug($columnNames,'column names in addAction');
 
         // assign the results in a view for fluid Query/Show.html
         $this->view->assignMultiple([
@@ -214,15 +212,14 @@ $values = '';
         $sqlService = new SqlService($statement);
         $rowsAffected = $sqlService->insertRow();
 
-        $this->view->assignMultiple([
-            'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $this->ffdata,
-            'rowsAffected' => $rowsAffected,
-            'statement' => $statement,
-            'columnNames' => $columnNames,
-            'row' => $rows[0],
-            'request' => $this->request,
-        ]);
+        // redirect to redirectPage
+	$pageUid = $this->ffdata['redirectPage'];
+
+	$uriBuilder = $this->uriBuilder;
+	$uri = $uriBuilder
+	   ->setTargetPageUid($pageUid)
+	   ->build();
+	$this->redirectToURI($uri);
     }
 
     /**
@@ -328,18 +325,6 @@ $values = '';
         $rowsAffected = $sqlService->updateRow();
         //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
 
-        $this->view->assignMultiple([
-            'settings' => $this->pluginSettings->getSettings(),
-            'flexformdata' => $this->ffdata,
-            'keyValue' => $keyValue,
-            'statement' => $statement,
-            'columnNames' => $columnNames,
-            'row' => $rows[0],
-            'request' => $this->request,
-        ]);
-
-/*
-
         // redirect to redirectPage
 	$pageUid = $this->ffdata['redirectPage'];
 
@@ -348,13 +333,12 @@ $values = '';
 	   ->setTargetPageUid($pageUid)
 	   ->build();
 	$this->redirectToURI($uri);
-*/
     }
 
     /**
      * Ask permission to delete the chosen query result row.
      */
-    public function confirmDeleteAction()
+    public function deleteFormAction()
     {
         // use the template from the Flexform if there is one
         if (!empty($templateFile)) {
@@ -374,7 +358,32 @@ $values = '';
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
-	return $this->showAction();
+        // retrieve the {keyField : keyValue} from Fluid
+        $parameter = 'keyValue';
+        if (!$this->request->hasArgument($parameter)) {
+            DebugUtility::debug('updateAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
+            exit(1);
+        }
+	$keyValue = $this->request->getArgument($parameter);
+
+	// build delete statement
+        $statement = "delete from ".$this->targetTable;
+        $statement.= " where ".$this->keyField."='".$keyValue."'";
+        // DebugUtility::debug($statement,'statement for deleteAction');exit(1);
+
+        // execute the query
+        $sqlService = new SqlService($statement);
+        $rowsAffected = $sqlService->deleteRow();
+        // DebugUtility::debug($rowsAffected,'rowsAffected after deleteAction');exit(1);
+
+        // redirect to redirectPage
+	$pageUid = $this->ffdata['redirectPage'];
+
+	$uriBuilder = $this->uriBuilder;
+	$uri = $uriBuilder
+	   ->setTargetPageUid($pageUid)
+	   ->build();
+	$this->redirectToURI($uri);
     }
 
 
@@ -385,19 +394,6 @@ $values = '';
 	$output = ob_get_contents();
 	ob_end_clean();
 	return $output;
-    }
-
-    /**
-     * retrieve the columnNames from the targetTable
-     * (in add/Form/action there are no rows, hence no row headings available)
-     */
-    protected function getColumnNamesFromTargetTable()
-    {
-        $columnNames = array();
-
-        $statement = 'SHOW COLUMNS FOR '.$this->targetTable;
-        $sqlService = new SqlService($statement);
-        return $columnNames;
     }
 
 }

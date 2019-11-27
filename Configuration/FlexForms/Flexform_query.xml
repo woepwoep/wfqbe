@@ -9,8 +9,6 @@
         <database>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetDatabase.xml</database>
         <actions>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetActions.xml</actions>
         <results>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetResults.xml</results>
-        <search>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetSearch.xml</search>
-        <insert>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetInsert.xml</insert>
 	<child>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetChild.xml</child>
     </sheets>
 </T3DataStructure>

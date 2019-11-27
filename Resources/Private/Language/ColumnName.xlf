@@ -19,6 +19,12 @@
             <trans-unit id="middle_name">
                 <source>Middle Name</source>
             </trans-unit>
+			<trans-unit id="Activiteit">
+                <source>Joop</source>
+            </trans-unit>
+			<trans-unit id="Soort">
+                <source>Harry</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

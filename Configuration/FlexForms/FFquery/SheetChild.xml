@@ -6,7 +6,7 @@
         </TCEforms>
         <type>array</type>
         <el>
-			<linkField>
+	    <linkField>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:linkField</label>
                     <config>
@@ -17,17 +17,6 @@
                     </config>
                 </TCEforms>
             </linkField>
-			<keyField>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:keyField</label>
-                    <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>255</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </keyField>
 			<childPage>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:childPage</label>

@@ -24,7 +24,7 @@
                         <type>input</type>
                         <size>45</size>
                         <max>45</max>
-                        <eval>trim,required</eval>
+                        <eval>trim</eval>
                     </config>
                 </TCEforms>
             </identifiers>
@@ -52,9 +52,44 @@
                     </config>
                 </TCEforms>
             </fieldtypes>
+			<veldtypes>
+                <section>1</section>
+                    <type>array</type>
+                    <title>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectfields</title>
+                    <el>
+                        <selectsection>
+                            <type>array</type>
+                            <el>
+                                <selecttype>
+									<TCEforms>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selecttype</label>
+										<config>
+											<type>input</type>
+											<cols>45</cols>
+											<eval>trim</eval>
+										</config>
+									</TCEforms>
+								</selecttype>
+                                <selectobject>
+									<TCEforms>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectobject</label>
+										<displayCond>FIELD:selecttype:REQ:true</displayCond>
+										<config>
+											<type>text</type>
+											<cols>45</cols>
+											<rows>5</rows>
+											<eval>trim</eval>
+										</config>
+										
+									</TCEforms>
+								</selectobject>ation>
+                            </el>
+                        </selectsection>
+                   </el>
+            </veldtypes>
             <defaultvalues>
                 <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:defaultvalues</label>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fixedvalues</label>
                     <config>
                         <type>text</type>
                         <cols>45</cols>

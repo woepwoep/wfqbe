@@ -70,6 +70,15 @@ class SqlService
         return $rowsAffected;
     }
 
+    public function deleteRow()
+    {
+        // now execute the query
+        $rowsAffected = $this->connection->executeQuery($this->query);
+
+        // Return the deleted values
+        return $rowsAffected;
+    }
+
     public function convert($type,$value)
     {
         switch($type) {

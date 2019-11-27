@@ -9,9 +9,6 @@
       <trans-unit id="div_id">
         <source>ID for the div container</source>
       </trans-unit>
-      <trans-unit id="query">
-        <source>Query record</source>
-      </trans-unit>
       <trans-unit id="detailPage">
         <source>Detail page</source>
       </trans-unit>
@@ -56,6 +53,9 @@
       </trans-unit>
       <trans-unit id="defaultvalues">
         <source>Default values</source>
+      </trans-unit>
+	  <trans-unit id="fixedvalues">
+        <source>Fixed values</source>
       </trans-unit>
       <trans-unit id="sheet_actions">
         <source>Actions</source>
@@ -134,6 +134,18 @@
       </trans-unit>
       <trans-unit id="mailTemplate">
         <source>Email template file</source>
+      </trans-unit>
+	  <trans-unit id="sheet_validation">
+        <source>Validation</source>
+      </trans-unit>
+	  <trans-unit id="validator">
+        <source>Validator</source>
+      </trans-unit>
+	  <trans-unit id="field_name">
+        <source>Field Name</source>
+      </trans-unit>
+	  <trans-unit id="please_select">
+        <source>--- Please Select ---</source>
       </trans-unit>
     </body>
   </file>

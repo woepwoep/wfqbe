@@ -17,10 +17,10 @@ defined('TYPO3_MODE') or die('Access denied.');
     'RedSeadog.wfqbe',
     'Picud',
     [
-        'Cud' => 'show,addForm,add,updateForm,update,confirmDelete,delete',
+        'Cud' => 'show,addForm,add,updateForm,update,deleteForm,delete',
     ],
     // non-cacheable actions
     [
-        'Cud' => 'show,addForm,add,updateForm,update,confirmDelete,delete',
+        'Cud' => 'show,addForm,add,updateForm,update,deleteForm,delete',
     ]
 );

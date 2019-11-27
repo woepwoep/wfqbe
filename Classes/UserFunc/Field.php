@@ -35,9 +35,12 @@ class Field
     public function getColumnNames(array &$config, &$parentObject)
     {
         $targetTable = $config['row']['targetTable'];
-        $statement = "SHOW COLUMNS FROM ".$targetTable;
-        $sqlService = new SqlService($statement);
-	$rows = $sqlService->getRows();
+	$rows = array();
+	if (!empty($targetTable)) {
+            $statement = "SHOW COLUMNS FROM ".$targetTable;
+            $sqlService = new SqlService($statement);
+	    $rows = $sqlService->getRows();
+	}
         $fieldList = array();
         $options = [];
         foreach($rows AS $row)

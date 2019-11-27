@@ -1,0 +1,80 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
+
+<f:comment>
+	EXT:.../Cud/deleteForm.html
+	<f:debug>{_all}</f:debug>
+	Dit werkt nog niet: <f:translate key="{columnName.name}" extensionName="wfqbe" /> 
+</f:comment>
+
+<div class="container">  
+	<div id="{flexformdata.div_id}">
+		<f:form
+			id="{flexformdata.div_id}_form"
+			name="{flexformdata.div_id}_form"
+			enctype="multipart/form-data"
+			method="post"
+			action="delete"
+			arguments="{keyValue: '{keyValue}'}"  >
+    		<div class="wfqbe_description">{flexformdata.caption} verwijderen</div>
+    		<div class="wfqbe_block">
+            	<div class="table-responsive"> 
+      				<table class="table table-bordered table-hover table-condensed">
+                      <tbody> 
+              			<f:for each="{columnNames}" as="columnName" >
+                          <tr>
+                            <td>
+      							<span class="label">
+									<f:if condition="{columnName.type} != 'nodisplay'">
+										<label for="{columnName.name}"><f:translate key="{columnName.name}" extensionName="wfqbe" />{columnName.name}</label>
+									</f:if>
+      							</span>
+                            </td>
+                            <td>
+     							<div class="field">
+									<f:switch expression="{columnName.type}">
+										<f:case value="nodisplay">						
+										</f:case>
+										<f:case value="readonly">						
+											{row.{columnName.name}}
+										</f:case>
+										<f:case value="required">
+											{row.{columnName.name}}
+										</f:case>
+										<f:case value="select">
+											<f:render partial="display{columnName.name}" arguments="{_all}" />
+										</f:case>
+										<f:case value="datum">
+											{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}
+										</f:case>
+										<f:case value="tijd">
+											{row.{columnName.name}-> f:format.date(format: 'H:i')}
+										</f:case>
+										<f:case value="textarea">
+											{row.{columnName.name}}
+										</f:case>
+										<f:case value="upload">
+											{row.{columnName.name}}
+										</f:case>
+										<f:defaultCase>
+											{row.{columnName.name}}
+										</f:defaultCase>
+									</f:switch>
+      							</div>
+                            </td>
+                          </tr>
+                         </f:for> 
+                      </tbody>
+                   </table>
+    			</div>
+          	</div>
+
+    		<div class="wfqbe_block">    
+				<button class="btn btn-warning" onclick="goBack()">Terug</button>
+      			<f:form.submit class="btn btn-primary" value="Verwijderen" />
+    		</div>
+				
+      	</f:form>
+		
+  	</div>
+</div>

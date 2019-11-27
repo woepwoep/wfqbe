@@ -91,7 +91,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getFieldlist()
     {
-	return $this->getRequiredElement('fieldlist');
+	return $this->getOptionalElement('fieldlist');
     }
 
     /**

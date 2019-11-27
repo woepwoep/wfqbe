@@ -9,6 +9,8 @@ page {
     timepicker = EXT:wfqbe/Resources/Public/JavaScript/jquery.timepicker.min.js
     datepicker = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.js
     datepicker_nl = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.nl.min.js   
+    bouncer = EXT:wfqbe/Resources/Public/JavaScript/bouncer.polyfills.min.js
+    goback = EXT:wfqbe/Resources/Public/JavaScript/goBack.js
   }
 }
 
