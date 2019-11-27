@@ -293,37 +293,36 @@ $values = '';
             }
         }
 
-        // nothing to be done if there are no changed column values
-        if (empty($updateList)) {
-            DebugUtility::debug('nothing changed in the row - updateAction');
-            exit(1);
-        }
+        // update changed column values
+        if (!empty($updateList)) {
 
-        $statement = "update ".$this->targetTable. " set";
-        foreach($updateList as $key => $value) {
-            $statement .= " ".$key."='".$value."',";
-        }
+	    $statement = "update ".$this->targetTable. " set";
+            foreach($updateList as $key => $value) {
+        	$statement .= " ".$key."='".$value."',";
+            }
 
-	// default values
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['defaultvalues']);
-        $defaultvalues = $TSparserObject->setup;
+	    // default values
+            $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+            $TSparserObject->parse($this->ffdata['defaultvalues']);
+            $defaultvalues = $TSparserObject->setup;
 
-	if (!empty($defaultvalues)) foreach ($defaultvalues as $key => $value) {
+	    if (!empty($defaultvalues)) foreach ($defaultvalues as $key => $value) {
 		if (!strncmp($value,'php',3)) {
 			$output = $this->evalPHP(substr($value,3,strlen($value)-3));
 			$statement .= " ".$key."='".$output."',";
 		}
-	}
-        // remove last comma
-        $statement = rtrim($statement,',');
-        $statement .= " wHeRe ".$this->keyField."='".$keyValue."'";
-        //DebugUtility::debug($statement,'statement for updateAction');
+	    }
+            // remove last comma
+            $statement = rtrim($statement,',');
+            $statement .= " wHeRe ".$this->keyField."='".$keyValue."'";
+            //DebugUtility::debug($statement,'statement for updateAction');
 
-        // execute the query
-        $sqlService = new SqlService($statement);
-        $rowsAffected = $sqlService->updateRow();
-        //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
+            // execute the query
+            $sqlService = new SqlService($statement);
+            $rowsAffected = $sqlService->updateRow();
+            //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
+
+	}
 
         // redirect to redirectPage
 	$pageUid = $this->ffdata['redirectPage'];

@@ -54,9 +54,6 @@
       <trans-unit id="cudPage">
         <source>CUD page</source>
       </trans-unit>
-      <trans-unit id="childPage">
-        <source>Child page</source>
-      </trans-unit>
       <trans-unit id="targetTable">
         <source>Target table</source>
       </trans-unit>
@@ -68,12 +65,6 @@
       </trans-unit>
       <trans-unit id="max_items_in_list">
         <source>Records for page</source>
-      </trans-unit>
-      <trans-unit id="sortField">
-        <source>sortField</source>
-      </trans-unit>
-      <trans-unit id="linkField">
-        <source>linkField</source>
       </trans-unit>
       <trans-unit id="emptyResult">
         <source>Text for empty result</source>
@@ -87,56 +78,14 @@
       <trans-unit id="csvDownload">
         <source>Provide CSV Download?</source>
       </trans-unit>
-      <trans-unit id="sheet_search">
-        <source>Search</source>
-      </trans-unit>
-      <trans-unit id="resultsPage">
-        <source>Results page</source>
-      </trans-unit>
-      <trans-unit id="div_search_result_id">
-        <source>ID for the div that contains the results</source>
-      </trans-unit>
-      <trans-unit id="sheet_insert">
-        <source>Insert</source>
-      </trans-unit>
-      <trans-unit id="pageConfirmation">
-        <source>Insert confirmation</source>
-      </trans-unit>
-      <trans-unit id="detailedPage">
-        <source>Redirect page on update</source>
-      </trans-unit>
-      <trans-unit id="redirectQuery">
-        <source>Redirect parameters</source>
-      </trans-unit>
-      <trans-unit id="deletedPage">
-        <source>Redirect page on delete</source>
-      </trans-unit>
-      <trans-unit id="clear_cache">
-        <source>Clear cache pages (comma separated uids list)</source>
-      </trans-unit>
-      <trans-unit id="send_email">
-        <source>Send email confirmation to administrator?</source>
-      </trans-unit>
-      <trans-unit id="notify_email">
-        <source>Administrator notify email</source>
-      </trans-unit>
-      <trans-unit id="notify_subject">
-        <source>Subject of the notify email to the administrator</source>
-      </trans-unit>
-      <trans-unit id="send_email_user">
-        <source>Send email confirmation to user?</source>
-      </trans-unit>
-      <trans-unit id="field_email_user">
-        <source>Form field containing email (field number!!!)</source>
-      </trans-unit>
-      <trans-unit id="notify_subject_user">
-        <source>Subject of the notify email to the user</source>
-      </trans-unit>
-      <trans-unit id="mailTemplate">
-        <source>Email template file</source>
-      </trans-unit>
 	  <trans-unit id="sheet_child">
         <source>childPage</source>
+      </trans-unit>
+	  <trans-unit id="childPage">
+        <source>Child page</source>
+      </trans-unit>
+	  <trans-unit id="linkFields">
+        <source>Link Fields</source>
       </trans-unit>
 	  <trans-unit id="linkField">
         <source>linkField</source>

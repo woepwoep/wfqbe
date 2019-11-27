@@ -29,8 +29,7 @@
                     <config>
                         <type>text</type>
                         <size>50</size>
-                        <max>50</max>
-						<enableRichtext>1</enableRichtext>
+						<enableRichtext>0</enableRichtext>
                     </config>
                 </TCEforms>
             </emptyResult>

@@ -9,11 +9,16 @@
             <templateFile>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:templateFile</label>
-                    <config>
-                        <type>input</type>
-                        <size>95</size>
-                        <max>95</max>
-                        <eval>trim</eval>
+                    <config type="array">
+                                <type>group</type>
+                                <internal_type>file</internal_type>
+                                <allowed>html</allowed>
+                                <max_size>2000</max_size>
+                                <show_thumbs>0</show_thumbs>
+                                <size>1</size>
+                                <minitems>0</minitems>
+                                <maxitems>1</maxitems>
+                                <eval></eval>
                     </config>
                 </TCEforms>
             </templateFile>

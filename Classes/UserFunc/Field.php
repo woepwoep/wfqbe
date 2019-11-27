@@ -17,6 +17,7 @@ namespace RedSeadog\Wfqbe\UserFunc;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use \RedSeadog\Wfqbe\Service\SqlService;
+use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 
 
 /**
@@ -35,12 +36,7 @@ class Field
     public function getColumnNames(array &$config, &$parentObject)
     {
         $targetTable = $config['row']['targetTable'];
-	$rows = array();
-	if (!empty($targetTable)) {
-            $statement = "SHOW COLUMNS FROM ".$targetTable;
-            $sqlService = new SqlService($statement);
-	    $rows = $sqlService->getRows();
-	}
+	$rows = $this->showColumns($targetTable);
         $fieldList = array();
         $options = [];
         foreach($rows AS $row)
@@ -50,5 +46,33 @@ class Field
         }
         //DebugUtility::debug($options);exit(1);
 	$config['items'] = $options;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return void
+     */
+    public function joop(array &$config)
+    {
+        $targetTable = $config['row']['targetTable'];
+	$rows = $this->showColumns($targetTable);
+	$itemList = array();
+        foreach($rows AS $row)
+        {
+	    $itemList[] = array($row['Field']);
+	}
+	$config['items'] = $itemList;
+    }
+
+    protected function showColumns($targetTable)
+    {
+	$rows = array();
+	if (!empty($targetTable)) {
+            $statement = "SHOW COLUMNS FROM ".$targetTable;
+            $sqlService = new SqlService($statement);
+	    $rows = $sqlService->getRows();
+	}
+	return $rows;
     }
 }
