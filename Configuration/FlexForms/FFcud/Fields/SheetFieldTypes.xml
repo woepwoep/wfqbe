@@ -2,23 +2,11 @@
 <T3DataStructure>
     <ROOT>
         <TCEforms>
-            <sheetTitle>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sheet_database</sheetTitle>
+            <sheetTitle>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:sheet_fields</sheetTitle>
         </TCEforms>
         <type>array</type>
         <el>
-            <query>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:query</label>
-                    <config>
-                        <type>text</type>
-                        <cols>45</cols>
-                        <rows>5</rows>
-                        <eval>trim,required</eval>
-                    </config>
-                </TCEforms>
-            </query>
-            <fieldtypes>
-                <section>1</section>
+            <section>1</section>
                     <type>array</type>
                     <title>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fieldtypes</title>
                     <el>
@@ -26,37 +14,23 @@
                             <type>array</type>
                             <el>
                                 <name>
-					<TCEforms>
-						<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:name</label>
-						<config>
-							<type>select</type>
-							<renderType>selectSingle</renderType>
-							<itemsProcFunc>RedSeadog\Wfqbe\UserFunc\Field->showQueryColumns</itemsProcFunc>
-							<minitems>0</minitems>
-							<maxitems>1</maxitems>
-							<size>1</size>
-						</config>
-					</TCEforms>
-				</name>
-				<sortfield>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sortfield</label>
-					<config>
-						<type>checkboxToggle</type>
-						<items type="array">
-							<numIndex index="0"></numIndex>
-						</items>
-					</config>
-				</sortfield>
-                                <veldtype>
 									<TCEforms>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:name</label>
+										<config>
+											<type>input</type>
+											<cols>45</cols>
+											<eval>trim</eval>
+										</config>
+									</TCEforms>
+								</name>
+                                <veldtype>
 										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:veldtype</label>
 										<onChange>reload</onChange>
 										<config>
 											<type>select</type>
                                             <renderType>selectSingle</renderType>
                                             <autosizemax>2</autosizemax>
-                                            <size>25</size>
-											<items type="array">
+                                            <items type="array">
                                                 <numIndex index="0" type="array">
                                                     <numIndex index="0">LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:please_select</numIndex>
                                                     <numIndex index="1"></numIndex>
@@ -78,10 +52,6 @@
 													<numIndex index="1">SelectDisplay</numIndex>
                                                 </numIndex>
 												<numIndex index="5" type="array">
-													<numIndex index="0">text</numIndex>
-													<numIndex index="1">TEXT</numIndex>
-                                                </numIndex>
-												<numIndex index="5" type="array">
 													<numIndex index="0">textarea</numIndex>
 													<numIndex index="1">textarea</numIndex>
                                                 </numIndex>
@@ -98,17 +68,41 @@
 													<numIndex index="1">custom</numIndex>
                                                 </numIndex>
                                             </items>
-											
                                             <maxitems>1</maxitems>
                                             <minitems>1</minitems>
                                             <size>1</size>
 										</config>
-									</TCEforms>
 								</veldtype>
+								<date.format>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:date_format</label>
+										<displayCond>FIELD:veldtype:=:datum</displayCond>
+										<config>
+											<type>input</type>
+											<cols>15</cols>
+											<eval>trim</eval>
+										</config>
+								</date.format>
+								<valuta>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:valuta</label>
+										<displayCond>FIELD:veldtype:=:valuta</displayCond>
+										<config>
+											<type>input</type>
+											<cols>15</cols>
+											<eval>trim</eval>
+										</config>
+								</valuta>
+								<custom>
+									<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:custom</label>
+									<displayCond>FIELD:veldtype:=:custom</displayCond>
+									<config>
+										<type>input</type>
+										<cols>15</cols>
+										<eval>trim</eval>
+									</config>
+								</custom>
                             </el>
                         </typesection>
-                   </el>
-            </fieldtypes>
+                </el>
         </el>
     </ROOT>
 </T3DataStructure>

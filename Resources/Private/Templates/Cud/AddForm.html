@@ -5,7 +5,11 @@
 <h3>
    EXT:wfqbe/Resources/Private/Templates/Cud/AddForm.html
 </h3>
+	Variabele 'modus' is important!! 
+	Is nodig voor select en display partials en voor de Fieldtypes partials
 </f:comment>
+
+<f:variable name="modus" value="select" />
 
 <div class="container">  
 	<div id="{flexformdata.div_id}">
@@ -15,49 +19,9 @@
             	<div class="table-responsive"> 
       				<table class="table table-bordered table-hover table-condensed">
                       <tbody> 
-              			<f:for each="{columnNames}" as="columnName" >
-                          <tr>
-                            <td>
-      							<span class="label">
-									<f:if condition="{columnName.type} != 'nodisplay'">
-										<label for="{columnName.name}">{columnName.name}</label>
-									</f:if>
-      							</span>
-                            </td>
-                            <td>
-     							<div class="field">
-									<f:switch expression="{columnName.type}">
-										<f:case value="nodisplay">						
-										</f:case>
-										<f:case value="readonly">						
-											{row.{columnName.name}}
-										</f:case>
-										<f:case value="required">
-											<f:form.textfield class="form-control {columnName.type}" required="1" name="{columnName.name}" value="{row.{columnName.name}}" />
-										</f:case>
-										<f:case value="select">
-											<f:render partial="select{columnName.name}" arguments="{_all}" />
-										</f:case>
-										<f:case value="datum">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}" />
-										</f:case>
-										<f:case value="tijd">
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.date(format: 'H:i')}" />
-										</f:case>
-										<f:case value="textarea">
-											<f:form.textarea class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}}" />
-										</f:case>
-										<f:case value="upload">
-											<f:form.upload name="file" />
-										</f:case>
-										<f:defaultCase>
-											<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}}" />
-										</f:defaultCase>
-									</f:switch>
-      							</div>
-                            </td>
-                          </tr>
-                         </f:for> 
+              			<tbody> 
+							<f:render partial="FieldList" arguments="{_all}" />
+                      </tbody>
                       </tbody>
                    </table>
     			</div>

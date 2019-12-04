@@ -40,6 +40,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
 	$fieldtypes = $this->getFieldtypes();
 	$validators = $this->getValidators();
+	$valutas = $this->getValutas();
 
         $columnNames = array();
         foreach ($fieldlist as $field) {
@@ -52,7 +53,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	    $columnNames[$field]['type'] = 'TEXT';
 	    if (is_array($fieldtypes)) foreach($fieldtypes as $key => $value) {
 		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
-		    $columnNames[$field]['type'] = $value[$parameter]['type'];
+		    $columnNames[$field]['type'] = $value[$parameter]['veldtype'];
 		}
 	    }
 
@@ -64,6 +65,16 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		    $columnNames[$field][$parameter] = $value[$parameter]['validator'];
 		}
 	    }
+		
+		// <<<EW>>> add valuta currency info from flexform
+	    $parameter = 'valuta';
+	    $columnNames[$field][$parameter] = '';
+	    if (is_array($valutas)) foreach($valuta as $key => $value) {
+		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
+		    $columnNames[$field][$parameter] = $value[$parameter]['valuta'];
+		}
+	    }
+		
         }
 
         return $columnNames;
@@ -130,6 +141,16 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function getValidators()
     {
 	return $this->getOptionalElement('field');
+    }
+	
+	//<<<EW>>>
+	/**
+     * retrieve the validators from the flexform data array
+     * (validators is optional in all CRUD actions)
+     */
+    public function getValutas()
+    {
+	return $this->getOptionalElement('valuta');
     }
 
     /**

@@ -27,15 +27,14 @@ use \RedSeadog\Wfqbe\Service\FlexformInfoService;
  */
 class Field
 {
-
     /**
-     ** @param array $config configuration array
-     ** @param $parentObject parent object
-     ** @return array 
+     * @param array $config configuration array
+     * @param $parentObject parent object
+     * @return array 
      */
     public function getColumnNames(array &$config, &$parentObject)
     {
-        $targetTable = $config['row']['targetTable'];
+        $targetTable = $config['row']['targetTable'][0];
 	$rows = $this->showColumns($targetTable);
         $fieldList = array();
         $options = [];
@@ -75,4 +74,117 @@ class Field
 	}
 	return $rows;
     }
+	
+	/* <<<EW>>> */
+	/** <<<EW>>> Poging tot een lijst van tables. Gebaseerd op de dataviewer
+	/**
+	 * Populate flexform tables
+	 *
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
+	public function populateTablesAction(array &$config, &$parentObject)
+	{
+		$options = [];
+
+		/** $label = Locale::translate("please_select", \RedSeadog\wfqbe\Configuration\ExtensionConfiguration::EXTENSION_KEY); **/
+		$label = "Select targetTable";
+		$options[] = [0 => $label, 1 => ""];
+
+		$sqlService = new SqlService('SHOW TABLES');
+		$tables = $sqlService->getRows();
+		
+		foreach($tables as $_table)
+		{
+			$tableName = reset($_table);
+			$options[] = [0 => $tableName, 1 => $tableName];
+		}
+		
+		$config["items"] = $options;
+
+		return $config;
+	}
+	
+	/**
+	 * Populate flexform fieldlist
+	 *
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
+	public function populateFieldsAction(array &$config, &$parentObject)
+	{
+		$options = [];
+
+		$label = "Select field";
+		$options[] = [0 => $label, 1 => ""];
+
+
+		$fieldlist = explode(',',$config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['fieldlist']['vDEF']);
+
+		foreach($fieldlist as $_field)
+		{
+			$fieldName = $_field;
+			$options[] = [0 => $fieldName, 1 => $fieldName];
+		}
+
+		$config["items"] = $options;
+
+		return $config;
+	}
+
+	/** Dit zou het moeten zijn..... **/
+	
+	/**
+	 * Display a rendered template from a
+	 * given path by parameters -> template
+	 *
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
+	public function displayTemplate(array &$config, &$parentObject)
+	{
+		$parameters = $config["parameters"];
+		$template = (isset($parameters["template"]))?$parameters["template"]:null;
+		
+		if(!is_null($template))
+		{
+			$templateFile = GeneralUtility::getFileAbsFileName($template);
+			if(file_exists($templateFile))
+			{
+				/* @var StandaloneView $view */
+				//$view = $this->objectManager->get(StandaloneView::class);
+				//$view->setTemplatePathAndFilename($templateFile);
+				//$view->assignMultiple($parameters);
+				//$view->assign("config", $config);
+				
+				//return $view->render();
+				$tekst = "Hier moet de inhoud van een template staan";
+				return $tekst;
+			}
+		}
+		
+		return;
+	}
+
+	/**
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
+	public function showQueryColumns(array &$config, &$parentObject)
+	{
+		$statement = $config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['query']['vDEF'];
+		$sqlService = new SqlService($statement . ' LIMIT 1');
+		$rows = $sqlService->getRows();
+		$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
+		$options = [];
+		foreach($columnNames AS $columnName)
+		{
+			$options[] = [0 => $columnName, 1 => $columnName];
+		}
+		$config['items'] = $options;
+	}
 }

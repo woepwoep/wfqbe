@@ -6,18 +6,6 @@
         </TCEforms>
         <type>array</type>
         <el>
-	    <linkField>
-                <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:linkField</label>
-                    <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>255</max>
-                        <eval>trim</eval>
-                    </config>
-                </TCEforms>
-            </linkField>
-			
 			<linkfields>
                 <section>1</section>
                     <type>array</type>
@@ -26,9 +14,20 @@
                         <linksection>
                             <type>array</type>
                             <el>
-                                <name>
+								<linkField>
 									<TCEforms>
 										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:linkField</label>
+										<config>
+											<type>input</type>
+											<size>45</size>
+											<max>255</max>
+											<eval>trim</eval>
+										</config>
+									</TCEforms>
+								</linkField>
+                                <name>
+									<TCEforms>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:relationField</label>
 										<config>
 											<type>input</type>
 											<cols>45</cols>
@@ -43,10 +42,9 @@
 											<type>group</type>
 											<internal_type>db</internal_type>
 											<allowed>pages</allowed>
-											<size>2</size>
+											<size>1</size>
 											<maxitems>1</maxitems>
 											<minitems>0</minitems>
-											<show_thumbs>1</show_thumbs>
 										</config>
 									</TCEforms>
 								</childPage>

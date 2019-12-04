@@ -22,7 +22,7 @@ plugin.tx_wfqbe {
     }
     partialRootPaths {
       0 = EXT:tx_wfqbe/Resources/Private/Partials/
-      1 = {$plugin.tx_wfqbe.view.partialRootPath}
+	  1 = {$plugin.tx_wfqbe.view.partialRootPath}
     }
     layoutRootPaths {
       0 = EXT:tx_wfqbe/Resources/Private/Layouts/

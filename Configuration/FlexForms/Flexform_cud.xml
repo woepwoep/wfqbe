@@ -9,7 +9,5 @@
 		<template>EXT:wfqbe/Configuration/FlexForms/FFcud/SheetTemplate.xml</template>
 		<validation>EXT:wfqbe/Configuration/FlexForms/FFcud/SheetValidation.xml</validation>
         <actions>EXT:wfqbe/Configuration/FlexForms/FFcud/SheetActions.xml</actions>
-        
-		
     </sheets>
 </T3DataStructure>

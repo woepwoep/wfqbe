@@ -7,18 +7,19 @@
         <type>array</type>
         <el>
             <targetTable>
-                <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:targetTable</label>
+					<onChange>reload</onChange>
                     <config>
-                        <type>input</type>
-                        <size>45</size>
-                        <max>45</max>
-                        <eval>trim,required</eval>
+                        <type>select</type>
+                        <renderType>selectSingle</renderType>
+						<itemsProcFunc>RedSeadog\Wfqbe\UserFunc\Field->populateTablesAction</itemsProcFunc>
+                        <minitems>0</minitems>
+                        <maxitems>1</maxitems>
+                        <size>1</size>
                     </config>
-                </TCEforms>
+                
             </targetTable>
             <identifiers>
-                <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:identifiers</label>
                     <config>
                         <type>input</type>
@@ -26,20 +27,18 @@
                         <max>45</max>
                         <eval>trim</eval>
                     </config>
-                </TCEforms>
             </identifiers>
             <fieldlist>
-                <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fieldlist</label>
                     <config>
                         <type>select</type>
                         <renderType>selectMultipleSideBySide</renderType>
+						<enableMultiSelectFilterTextfield>true</enableMultiSelectFilterTextfield>
                         <itemsProcFunc>RedSeadog\Wfqbe\UserFunc\Field->getColumnNames</itemsProcFunc>
                         <minitems>0</minitems>
                         <maxitems>45</maxitems>
                         <size>5</size>
                     </config>
-                </TCEforms>
             </fieldlist>
 			<fieldtypes>
                 <section>1</section>
@@ -50,33 +49,101 @@
                             <type>array</type>
                             <el>
                                 <name>
-									<TCEforms>
-										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:name</label>
-										<config>
-											<type>input</type>
-											<cols>45</cols>
-											<eval>trim</eval>
-										</config>
-									</TCEforms>
-								</name>
-                                <type>
-									<TCEforms>
-										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:type</label>
-										<config>
-											<type>text</type>
-											<cols>45</cols>
-											<rows>5</rows>
-											<eval>trim</eval>
-										</config>
-										
-									</TCEforms>
-								</type>
+					<TCEforms>
+						<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:name</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<itemsProcFunc>RedSeadog\Wfqbe\UserFunc\Field->populateFieldsAction</itemsProcFunc>
+                        				<minitems>0</minitems>
+                        				<maxitems>1</maxitems>
+                        				<size>1</size>
+						</config>
+					</TCEforms>
+				</name>
+                                <veldtype>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:veldtype</label>
+					<onChange>reload</onChange>
+					<config>
+						<type>select</type>
+						<renderType>selectSingle</renderType>
+						<autosizemax>2</autosizemax>
+						<items type="array">
+                                                	<numIndex index="0" type="array">
+								<numIndex index="0">LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:please_select</numIndex>
+								<numIndex index="1"></numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">datum</numIndex>
+								<numIndex index="1">datum</numIndex>
+							</numIndex>
+							<numIndex index="2" type="array">
+								<numIndex index="0">image</numIndex>
+								<numIndex index="1">image</numIndex>
+							</numIndex>
+							<numIndex index="3" type="array">
+								<numIndex index="0">nodisplay</numIndex>
+								<numIndex index="1">nodisplay</numIndex>
+							</numIndex>
+							<numIndex index="4" type="array">
+								<numIndex index="0">select</numIndex>
+								<numIndex index="1">SelectDisplay</numIndex>
+							</numIndex>
+							<numIndex index="5" type="array">
+								<numIndex index="0">textarea</numIndex>
+								<numIndex index="1">textarea</numIndex>
+							</numIndex>
+							<numIndex index="6" type="array">
+								<numIndex index="0">tijd</numIndex>
+								<numIndex index="1">tijd</numIndex>
+							</numIndex>
+							<numIndex index="7" type="array">
+								<numIndex index="0">valuta</numIndex>
+								<numIndex index="1">valuta</numIndex>
+							</numIndex>
+							<numIndex index="8" type="array">
+								<numIndex index="0">custom</numIndex>
+								<numIndex index="1">custom</numIndex>
+							</numIndex>
+						</items>
+						<maxitems>1</maxitems>
+						<minitems>1</minitems>
+						<size>1</size>
+					</config>
+				</veldtype>
+				<datum.format>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:date_format</label>
+					<displayCond>FIELD:veldtype:=:datum</displayCond>
+					<config>
+						<type>input</type>
+						<cols>15</cols>
+						<eval>trim</eval>
+					</config>
+				</datum.format>
+				<valuta.currency>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:valuta</label>
+					<displayCond>FIELD:veldtype:=:valuta</displayCond>
+					<config>
+						<type>input</type>
+						<cols>15</cols>
+						<eval>trim</eval>
+					</config>
+				</valuta.currency>
+				<custom>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:custom</label>
+					<displayCond>FIELD:veldtype:=:custom</displayCond>
+					<config>
+						<type>input</type>
+						<cols>15</cols>
+						<eval>trim</eval>
+					</config>
+				</custom>
                             </el>
                         </typesection>
                    </el>
             </fieldtypes>
             <defaultvalues>
-                <TCEforms>
+                
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fixedvalues</label>
                     <config>
                         <type>text</type>
@@ -84,7 +151,7 @@
                         <rows>5</rows>
                         <eval>trim</eval>
                     </config>
-                </TCEforms>
+                
             </defaultvalues>
         </el>
     </ROOT>

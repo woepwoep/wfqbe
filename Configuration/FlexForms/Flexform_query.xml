@@ -5,8 +5,8 @@
     </meta>
     <sheets>
         <sDEF>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetGeneral.xml</sDEF>
+		<database>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetDatabase.xml</database>
         <template>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetTemplate.xml</template>
-        <database>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetDatabase.xml</database>
         <actions>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetActions.xml</actions>
         <results>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetResults.xml</results>
 	<child>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetChild.xml</child>

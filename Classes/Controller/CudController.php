@@ -181,14 +181,14 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         $statement = "insert into ".$this->targetTable;
-$columns = '';
-$values = '';
+		$columns = '';
+		$values = '';
         foreach($insertList as $key => $value) {
             $columns .= $key.",";
             $values .= "'".$value."',";
         }
 
-	// default values
+	// fixed values
         $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
         $TSparserObject->parse($this->ffdata['defaultvalues']);
         $defaultvalues = $TSparserObject->setup;
@@ -288,9 +288,11 @@ $values = '';
                 continue;
             }
             // add to update statement if value has changed
-            if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
-                $updateList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
-            }
+			// <<<EW>>> even uitgezet ivm file/image upload
+            //if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
+            //    $updateList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
+            //}
+            $updateList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
         }
 
         // update changed column values

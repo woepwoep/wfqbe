@@ -1,0 +1,20 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
+
+<f:for each="{columnNames}" as="columnName" >
+	<f:if condition="{columnName.type} != 'nodisplay'">
+		<tr>
+			<td>
+				<span class="label {f:if(condition: '{columnName.validation}==required', then: 'isRequired')}">
+					<label for="{columnName.name}">{columnName.name}</label>
+				</span>
+			</td>
+			<td>
+				<div class="field">
+					<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+				</div>
+			</td>
+		</tr>
+	</f:if>
+</f:for> 
+

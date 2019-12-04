@@ -7,6 +7,8 @@
   <h3>fileadmin/tmpl/wfqbe/List.html</h3>
 </f:comment>  
 
+<f:variable name="modus" value="display" />
+
 <h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
 <f:if condition="{rows}" >
     <f:then>
@@ -53,8 +55,9 @@
         <button class="btn btn-secondary" type="button" >+</button>
       </f:link.action>  
     </div>
-    <div class="table-responsive"> 
-      <table class="table table-bordered table-hover table-condensed">
+    <div class="table-responsive">
+	  <input type='hidden' id='sort' value='asc'>
+      <table class="table table-bordered table-hover table-condensed" id="{flexformdata.div_id}_Table">
 	<div class="summary">
 	  <div class="collapse" id="collapseExample">
 	    <div class="card card-body bg-light">{flexformdata.summary}</div>
@@ -65,7 +68,9 @@
 	    <f:for each="{columnNames}" as="columnName">
 	      <f:if condition='{columnName.type} != "nodisplay"'>
 		<th> 
-		  <div class="{flexformdata.div_id}_label">{columnName.name}</div>
+		<div class="{flexformdata.div_id}_label">
+			<span onclick='sortTable({columnName.name});'>{columnName.name}</span>
+		</div>
 		</th>
 	      </f:if>
             </f:for>
@@ -84,16 +89,16 @@
 		    <f:if condition="{columnName.name}=={flexformdata.linkField}">
 		      <f:then>
 		        <f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.{flexformdata.keyField}}'}"> 
-			  <f:render partial="{columnName.type}" arguments="{_all}" />
+			  <f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
 			</f:link.action>
 		      </f:then>
 		      <f:else>
-			<f:render partial="{columnName.type}" arguments="{_all}" />
+			<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
 		      </f:else>
 		    </f:if>
 		  </td>
 		</f:if>
-              </f:for>
+		</f:for>
                           	
 	      <f:if condition="{flexformdata.cudPage}">
 		<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>

@@ -1,0 +1,14 @@
+<f:if condition="{modus}=='display'" >
+<f:then>
+	<f:comment>
+		{row.{columnName.name}}
+	</f:comment>
+	<f:if condition="{row.{columnName.t3ver_count}}=='Array'" >
+		Plaatje: <f:image src="fileadmin/office/css/images/delete.gif" alt="alt text" />
+	</f:if>
+</f:then>
+<f:else>
+	<f:form.upload name="{columnName.name}" 
+		value="{row.{columnName.name}}" />
+</f:else>
+</f:if>
