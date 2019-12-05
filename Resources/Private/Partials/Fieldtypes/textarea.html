@@ -1,10 +1,10 @@
-<f:if condition="{modus}=='display'" >
-<f:then>
-	{row.{columnName.name}}
-</f:then>
-<f:else>
-	<f:form.textarea class="form-control {columnName.type}" name="{columnName.name}" 
-		value="{row.{columnName.name}}" />
-</f:else>
+<f:if condition="{request.controllerActionName}=='updateForm' || {request.controllerActionName}=='addForm' " >
+	<f:then>
+		<f:form.textarea class="form-control {columnName.type}" name="{columnName.name}" 
+			value="{row.{columnName.name}}" />
+	</f:then>
+	<f:else>
+		{row.{columnName.name}}
+	</f:else>
 </f:if>
 

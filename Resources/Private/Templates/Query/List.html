@@ -1,15 +1,12 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
-<f:debug>{_all}</f:debug>
+
 <f:comment>
-  
-  <h3>Dit is een Custom Result Template</h3>
-  <h3>fileadmin/tmpl/wfqbe/List.html</h3>
+  <f:debug>{_all}</f:debug>
+ <h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
 </f:comment>  
 
-<f:variable name="modus" value="display" />
 
-<h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
 <f:if condition="{rows}" >
     <f:then>
         <f:render section="resultTable" arguments="{_all}" />
@@ -24,7 +21,7 @@
 		pluginName="Picud"
 		action="addForm"
 		pageUid="{flexformdata.cudPage}"
-		arguments="{keyValue: '{keyField}'}">
+		arguments="{keyValue: '{keyValue}'}">
 			<button class="btn btn-primary" type="button" >{flexformdata.caption} aanmaken</button>
 	    </f:link.action>		
 	</f:if>
@@ -51,9 +48,11 @@
 	  {flexformdata.caption}
 	</f:else>
       </f:if>
-      <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" >
-        <button class="btn btn-secondary" type="button" >+</button>
-      </f:link.action>  
+		<f:if condition="{flexformdata.cudPage}">
+		  <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" >
+			<button class="btn btn-secondary" type="button" >+</button>
+		  </f:link.action> 
+		</f:if>
     </div>
     <div class="table-responsive">
 	  <input type='hidden' id='sort' value='asc'>
@@ -89,7 +88,11 @@
 	  <f:for each="{rows}" as="row" >
             <tr>  
 				<f:if condition="{flexformdata.detailPage}">
-					<td class="center"> <f:render partial="PartialDetail" arguments="{_all}" /> </td>
+					<td class="center"> 
+						<f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
+							<i class="fas fa-info-circle"></i>
+						</f:link.action>
+					</td>
 				</f:if>
             
 				<f:for each="{columnNames}" as="columnName">
@@ -97,7 +100,7 @@
 						<td> 
 						<f:if condition="{columnName.relationField}">
 						<f:then>
-							<f:link.action pageUid="{columnName.childPage}" arguments="{koppelveld: '{row.{columnName.relationField}}'}"> 
+							<f:link.action pageUid="{columnName.childPage}" arguments="{keyValue: '{row.{columnName.relationField}}'}"> 
 								<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
 							</f:link.action>
 						</f:then>
@@ -110,7 +113,15 @@
 				</f:for>
                           	
 			<f:if condition="{flexformdata.cudPage}">
-				<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>
+				<td class="center"> 
+					<f:link.action controller="Cud" pluginName="Picud" action="updateForm" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
+						<i class="fas fa-edit"></i>
+					</f:link.action>
+					&nbsp;-&nbsp;
+					<f:link.action controller="Cud"	pluginName="Picud" action="deleteForm" pageUid="{flexformdata.cudPage}"	arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
+						<i class="fas fa-trash-alt"></i>
+					</f:link.action>
+				</td>
 			</f:if>
         </tr>
      </f:for>   

@@ -16,6 +16,7 @@ namespace RedSeadog\Wfqbe\UserFunc;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
+use TYPO3\CMS\Core\Core\Environment;
 use \RedSeadog\Wfqbe\Service\SqlService;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 
@@ -197,5 +198,33 @@ class Field
 			$options[] = [0 => $columnName, 1 => $columnName];
 		}
 		$config['items'] = $options;
+	}
+
+	/**
+	 * Populate flexform fieldtypes
+	 *
+	 * @param array $config Configuration Array
+	 * @param array $parentObject Parent Object
+	 * @return array
+	 */
+	public function populateFieldTypes(array &$config, &$parentObject)
+	{
+		$options = [];
+
+		$label = "--- Please Select field ---";
+		$options[] = [0 => $label, 1 => ""];
+
+		$partialDir = Environment::getPublicPath().'/typo3conf/ext/wfqbe/Resources/Private/Partials/Fieldtypes/';
+		$filelist = array_diff(scandir($partialDir), array('..', '.'));
+
+		foreach($filelist as $_file)
+		{
+			$fileName = basename($_file,'.html');
+			$options[] = [0 => $fileName, 1 => $fileName];
+		}
+
+		$config["items"] = $options;
+
+		return $config;
 	}
 }

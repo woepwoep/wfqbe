@@ -17,7 +17,7 @@ namespace RedSeadog\Wfqbe\Controller;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
-use \TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\FlexformInfoService;

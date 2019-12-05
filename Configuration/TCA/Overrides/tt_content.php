@@ -32,7 +32,6 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_piquer
     'FILE:EXT:wfqbe/Configuration/FlexForms/Flexform_query.xml'
 );
 
-
 /**
  * Add Flexform for cud plugin
  */

@@ -1,19 +1,17 @@
-
-<f:if condition="{modus}=='display'" >
-<f:then>
-	<f:format.currency 
-		currencySign="€" 
-		decimalSeparator="," 
-		thousandsSeparator="." 
-		prependCurrency="true" 
-		separateCurrency="true" 
-		decimals="2">
-			{row.{columnName.name}}
-	</f:format.currency>
-</f:then>
-<f:else>
-	<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" 
-		value="{row.{columnName.name}->f:format.currency(thousandsSeparator: '.', currencySign: '€', decimalSeparator: ',', prependCurrency: 'true', separateCurrency: 'true', decimals: '2' )}" />
-										
-</f:else>
+<f:if condition="{request.controllerActionName}=='updateForm' || {request.controllerActionName}=='addForm' " >
+	<f:then>
+		<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" 
+			value="{row.{columnName.name}->f:format.currency(thousandsSeparator: '.', currencySign: '€', decimalSeparator: ',', prependCurrency: 'true', separateCurrency: 'true', decimals: '2' )}" />
+	</f:then>
+	<f:else>
+		<f:format.currency 
+			currencySign="€" 
+			decimalSeparator="," 
+			thousandsSeparator="." 
+			prependCurrency="true" 
+			separateCurrency="true" 
+			decimals="2">
+				{row.{columnName.name}}
+		</f:format.currency>									
+	</f:else>
 </f:if>

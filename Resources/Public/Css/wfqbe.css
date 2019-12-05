@@ -1,90 +1,31 @@
-/* EW */
-
-.wfqbe_actualPage {
-  background: yellow !important;
-  color: blue !important;
+.error {
+  border-color: red;
 }
 
-.form-group {
-  clear: both;
+.error-message {
+  color: red;
+  font-style: italic;
 }
 
-.delete {
-  background: wheat;
-  border: none;
+.isRequired::before {
+  content: "* ";
 }
 
-#datumvan {
-  float: left;
-  margin: -4px 10px;
-  padding: 3px 3px 3px 10px;
-}  
-
-#datumtot {
-  float: left;
-  margin: -4px 10px;
-  padding: 3px 3px 3px 10px;
-}  
-  
-.zoekveld {
-  margin-left: 120px;
-  margin-bottom: 5px;
+.table th, .table td {
+  padding: 0.25rem;
 }
 
-.field {
-  margin: 4px 5px 0 0 ;
+.table {
+  font-size: small;
 }
 
-.zoekveld input[type="radio"] {
-  width: 10px;
+.center {
+  text-align: center;
 }
 
-input[type="button"] {
-  clear: both;
-  float: left;
-}
-
-/******** einde zoekveld **********/
-.totaal {
-    float: right;
-}
-
-.notpaid {
-  background: red;
-}
-
-.paid {
-  color: green;
-}
-
-/* insert block RW */
-.field > input[type="checkbox"] {
-  margin-left: -1px;
-  width: 10px;
-}
-
-
-/* classes van WFQBE_FIELD in custom templates */
-
-.tx-wfqbe-pi1 {
-  
-}
-
-.hidden {
-  display: none;
-}
 
 .wfqbe_block {
   clear: both;
-}
-
-.wfqbe_block > input {
-  float: right;
-  margin: 14px 0 14px ;  
-}
-
-#wfqbe_id_notset_form {
-  float: left;
 }
 
 
@@ -121,33 +62,29 @@ input[type="button"] {
   width: 100%;
   clear: both;
   float: none;
-  
 }
 
-.Show_label {
+.Show_label,
+.label {
   float: left;
   min-width: 7em;
+  text-align: right;
+  font-size: 1em;
+  color: #333;
 }
 
-.Show_field {
+.Show_field,
+.field {
   font-weight: 600;
+  margin: 4px 5px 0 0 ;
 }
 
-.Show_titel {
+
+.Show_titel,
+.titel {
   text-align: center;
   font-weight: 600;
   font-size: 2em;
-}
-
-#ZoekListing {
-  background: none repeat scroll 0 0 lightyellow;
-  border: 1px solid;
-  border-radius: 5px 5px 5px 5px;
-  margin: 15px 0;
-  padding: 10px;
-  max-width: 30%;
-  min-width: 450px;
- 
 }
 
 #CUD {
@@ -159,35 +96,11 @@ input[type="button"] {
   float: left;
 }
 
-#DossierDetails-CUD {
-  width: 685px;
-}
 
 .wfqbe_table_header {
   background: lightgreen;
 }
 
-
-
-.label {
-  float: left;
+.integer {
   text-align: right;
-  min-width: 110px;
-  font-size: 1em;
-  color: #333;
 }
-
-.hProduct {
-  width: 150px;
-}
-
-.button_add {
-  margin: 10px 0 0 0;
-  clear: both;
-}
-
-.button_add a {
-  text-decoration: none;
-}
-
-

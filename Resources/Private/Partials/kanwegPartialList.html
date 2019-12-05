@@ -4,7 +4,7 @@
         	<f:if condition="{columnNames.{i.index}}=={flexformdata.linkField}">
                	<f:then>
                    	<td>
-                       	<f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.uid}'}"> 
+                       	<f:link.action pageUid="{flexformdata.childPage}" arguments="{keyValue: '{row.uid}'}"> 
 							{row.{columnNames.{i.index}}}
 						</f:link.action>
                   	</td>

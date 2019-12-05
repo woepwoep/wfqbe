@@ -1,20 +1,19 @@
-<f:if condition="{modus}=='display'" >
-<f:then>
-	<f:comment>
-		{row.{columnName.name}}
-		<f:form.upload name="{columnName.name}" 
-		value="{row.{columnName.name}}" />
-	</f:comment>
-	<f:if condition="{row.{columnName.t3ver_count}}=='Array'" >
-		Plaatje: <f:image src="fileadmin/office/css/images/delete.gif" alt="alt text" />
-	</f:if>
-</f:then>
-<f:else>
-	<v:media.exists file="fileadmin/user_upload/{row.{columnName.name}}">
-		<f:then>
-			<f:image src="fileadmin/user_upload/{row.{columnName.name}}"  maxWidth="150" maxHeight="150" />
-		</f:then>
-	</v:media.exists>
-	<f:form.upload name="{columnName.name}" value="{row.{columnName.name}}" />
-</f:else>
+<f:if condition="{request.controllerActionName}=='updateForm' || {request.controllerActionName}=='addForm' " >
+	<f:then>
+		<v:media.exists file="fileadmin/user_upload/{row.{columnName.name}}">
+			<f:then>
+				<f:image src="fileadmin/user_upload/{row.{columnName.name}}"  maxWidth="150" maxHeight="150" />
+			</f:then>
+		</v:media.exists>
+		<f:form.upload name="{columnName.name}" value="fileadmin/user_upload/{row.{columnName.name}}" />
+	</f:then>
+	<f:else>
+		<v:media.exists file="fileadmin/user_upload/{row.{columnName.name}}">
+			<f:then>
+				<f:link.typolink parameter="fileadmin/user_upload/{row.{columnName.name}}">
+					<f:image src="fileadmin/user_upload/{row.{columnName.name}}"  maxWidth="50" maxHeight="50" />
+				</f:link.typolink>
+			</f:then>
+		</v:media.exists>
+	</f:else>
 </f:if>

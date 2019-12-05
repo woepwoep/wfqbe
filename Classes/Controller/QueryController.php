@@ -70,16 +70,24 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * List the results of a query
      */
+    public function detailFormAction()
+    {
+	return $this->listAction();
+    }
+
+    /**
+     * List the results of a query
+     */
     public function listAction()
     {
         // retrieve the {keyValue} from Fluid
-        $parameter = 'koppelveld';
+        $parameter = 'keyValue';
         if ($this->request->hasArgument($parameter)) {
-	    $koppelveldWaarde = $this->request->getArgument($parameter);
+	    $keyValue = $this->request->getArgument($parameter);
         }
 
         // the {keyValue} is substituted in the raw query
-	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query);
+	$nieuw = str_replace('$keyValue',$keyValue,$this->query);
         $this->query = $nieuw;
 
         // retrieve the {sortField} from Fluid
@@ -106,57 +114,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
 
         // assign the results in a view for fluid Query/List.html
-        $this->view->assignMultiple([
-            'settings' => $this->pluginService->getSettings(),
-            'flexformdata' => $this->ffdata,
-            'query' => $this->query,
-            'columnNames' => $newColumns,
-            'rows' => $rows,
-            'request' => $this->request,
-            'user' => $GLOBALS["TSFE"]->fe_user->user,
-        ]);
-    }
-
-    /**
-     * Show detailed result row
-     */
-    public function detailFormAction()
-    {
-        // retrieve the {keyValue} from Fluid
-        $parameter = 'keyValue';
-        if ($this->request->hasArgument($parameter)) {
-	    $koppelveldWaarde = $this->request->getArgument($parameter);
-        }
-        DebugUtility::debug($koppelveldWaarde,'koppelveldWaarde in detailFormAction');
-
-        // the {keyValue} is substituted in the raw query
-	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query);
-        $this->query = $nieuw;
-
-        // retrieve the {sortField} from Fluid
-        $parameter = 'orderby';
-        if ($this->request->hasArgument($parameter)) {
-	    $sortField = $this->request->getArgument($parameter);
-	    $nieuw.= ' ORDER BY '.$sortField;
-            $this->query = $nieuw;
-        }
-
-        // execute the query and get the result set (rows)
-        DebugUtility::debug($this->query,'this->query in detailFormAction');
-        $sqlService = new SqlService($this->query);
-
-        // use the template from the Flexform if there is one
-        if (!empty($this->ffdata['templateFile'])) {
-            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
-            $this->view->setTemplatePathAndFilename($templateFile);
-        }
-
-        $rows = $sqlService->getRows();
-	$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
-        $flexformInfoService = new FlexformInfoService();
-        $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
-
-        // assign the results in a view for fluid Query/Detail.html
         $this->view->assignMultiple([
             'settings' => $this->pluginService->getSettings(),
             'flexformdata' => $this->ffdata,
