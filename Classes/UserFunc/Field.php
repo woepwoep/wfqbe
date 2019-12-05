@@ -117,7 +117,7 @@ class Field
 	{
 		$options = [];
 
-		$label = "Select field";
+		$label = "--- Please Select field ---";
 		$options[] = [0 => $label, 1 => ""];
 
 
@@ -177,7 +177,18 @@ class Field
 	public function showQueryColumns(array &$config, &$parentObject)
 	{
 		$statement = $config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['query']['vDEF'];
-		$sqlService = new SqlService($statement . ' LIMIT 1');
+
+		// remove WHERE part because we need the column names
+		$wherepos = strripos($statement,'WHERE');
+		if ($wherepos !== FALSE) {
+			$newstatement = substr($statement,0,$wherepos);
+			$newstatement.= ' WHERE 1=1';
+		} else {
+			$newstatement = $statement;
+		}
+		$newstatement.= ' LIMIT 1';
+
+		$sqlService = new SqlService($newstatement);
 		$rows = $sqlService->getRows();
 		$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
 		$options = [];

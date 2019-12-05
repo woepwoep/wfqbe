@@ -317,7 +317,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             // remove last comma
             $statement = rtrim($statement,',');
             $statement .= " wHeRe ".$this->keyField."='".$keyValue."'";
-            //DebugUtility::debug($statement,'statement for updateAction');
 
             // execute the query
             $sqlService = new SqlService($statement);
@@ -325,6 +324,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
 
 	}
+
+        // perhaps a file was uploaded
+	$this->uploadFile($_FILES);
 
         // redirect to redirectPage
 	$pageUid = $this->ffdata['redirectPage'];
@@ -397,4 +399,21 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	return $output;
     }
 
+    protected function uploadFile($files)
+    {
+	if (!is_array($files) || empty($files)) return;
+//        DebugUtility::debug($files,'files.');exit(1);
+	$upload_dir = '/var/www/orange/office/fileadmin/user_upload/';
+	foreach($files['tx_wfqbe_picud']['error'] as $key => $error) {
+	    if ($error == UPLOAD_ERR_OK) {
+		$tmp_name = $_FILES["tx_wfqbe_picud"]["tmp_name"][$key];
+		// basename() may prevent filesystem traversal attacks;
+		// further validation/sanitation of the filename may be appropriate
+		$name = basename($_FILES["tx_wfqbe_picud"]["name"][$key]);
+		$location = $upload_dir . $name;
+		move_uploaded_file($tmp_name, $location);
+	    }
+	}
+
+    }
 }

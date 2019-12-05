@@ -86,9 +86,9 @@
 	      <f:for each="{columnNames}" as="columnName">
 		<f:if condition='{columnName.type} != "nodisplay"'>
 		  <td> 
-		    <f:if condition="{columnName.name}=={flexformdata.linkField}">
+		    <f:if condition="{columnName.relationField}">
 		      <f:then>
-		        <f:link.action pageUid="{flexformdata.childPage}" arguments="{koppelveld: '{row.{flexformdata.keyField}}'}"> 
+		        <f:link.action pageUid="{columnName.childPage}" arguments="{koppelveld: '{row.{columnName.relationField}}'}"> 
 			  <f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
 			</f:link.action>
 		      </f:then>

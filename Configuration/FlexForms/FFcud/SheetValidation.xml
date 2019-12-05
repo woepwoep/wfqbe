@@ -19,7 +19,7 @@
 										<config>
 											<type>input</type>
 											<size>45</size>
-											<max>255</max>
+											<max>45</max>
 											<eval>trim</eval>
 										</config>
 									</name>

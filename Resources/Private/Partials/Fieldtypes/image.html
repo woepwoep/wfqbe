@@ -2,13 +2,19 @@
 <f:then>
 	<f:comment>
 		{row.{columnName.name}}
+		<f:form.upload name="{columnName.name}" 
+		value="{row.{columnName.name}}" />
 	</f:comment>
 	<f:if condition="{row.{columnName.t3ver_count}}=='Array'" >
 		Plaatje: <f:image src="fileadmin/office/css/images/delete.gif" alt="alt text" />
 	</f:if>
 </f:then>
 <f:else>
-	<f:form.upload name="{columnName.name}" 
-		value="{row.{columnName.name}}" />
+	<v:media.exists file="fileadmin/user_upload/{row.{columnName.name}}">
+		<f:then>
+			<f:image src="fileadmin/user_upload/{row.{columnName.name}}"  maxWidth="150" maxHeight="150" />
+		</f:then>
+	</v:media.exists>
+	<f:form.upload name="{columnName.name}" value="{row.{columnName.name}}" />
 </f:else>
 </f:if>

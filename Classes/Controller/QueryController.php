@@ -77,6 +77,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if ($this->request->hasArgument($parameter)) {
 	    $koppelveldWaarde = $this->request->getArgument($parameter);
         }
+        DebugUtility::debug($koppelveldWaarde,'koppelveldWaarde in listAction');
 
         // the {keyValue} is substituted in the raw query
 	$nieuw = str_replace('$koppelveldWaarde',$koppelveldWaarde,$this->query);
@@ -92,6 +93,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // execute the query and get the result set (rows)
+        DebugUtility::debug($this->query,'this->query in listAction');
         $sqlService = new SqlService($this->query);
 
         // use the template from the Flexform if there is one

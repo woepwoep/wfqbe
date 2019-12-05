@@ -48,63 +48,61 @@
 					</config>
 				</sortfield>
                                 <veldtype>
-									<TCEforms>
-										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:veldtype</label>
-										<onChange>reload</onChange>
-										<config>
-											<type>select</type>
-                                            <renderType>selectSingle</renderType>
-                                            <autosizemax>2</autosizemax>
-                                            <size>25</size>
-											<items type="array">
-                                                <numIndex index="0" type="array">
-                                                    <numIndex index="0">LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:please_select</numIndex>
-                                                    <numIndex index="1"></numIndex>
-												</numIndex>
-												<numIndex index="1" type="array">
-													<numIndex index="0">datum</numIndex>
-													<numIndex index="1">datum</numIndex>
-                                                </numIndex>
-												<numIndex index="2" type="array">
-													<numIndex index="0">image</numIndex>
-													<numIndex index="1">image</numIndex>
-                                                </numIndex>
-												<numIndex index="3" type="array">
-													<numIndex index="0">nodisplay</numIndex>
-													<numIndex index="1">nodisplay</numIndex>
-                                                </numIndex>
-												<numIndex index="4" type="array">
-													<numIndex index="0">select</numIndex>
-													<numIndex index="1">SelectDisplay</numIndex>
-                                                </numIndex>
-												<numIndex index="5" type="array">
-													<numIndex index="0">text</numIndex>
-													<numIndex index="1">TEXT</numIndex>
-                                                </numIndex>
-												<numIndex index="5" type="array">
-													<numIndex index="0">textarea</numIndex>
-													<numIndex index="1">textarea</numIndex>
-                                                </numIndex>
-												<numIndex index="6" type="array">
-													<numIndex index="0">tijd</numIndex>
-													<numIndex index="1">tijd</numIndex>
-                                                </numIndex>
-												<numIndex index="7" type="array">
-													<numIndex index="0">valuta</numIndex>
-													<numIndex index="1">valuta</numIndex>
-                                                </numIndex>
-												<numIndex index="8" type="array">
-													<numIndex index="0">custom</numIndex>
-													<numIndex index="1">custom</numIndex>
-                                                </numIndex>
-                                            </items>
-											
-                                            <maxitems>1</maxitems>
-                                            <minitems>1</minitems>
-                                            <size>1</size>
-										</config>
-									</TCEforms>
-								</veldtype>
+					<TCEforms>
+						<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:veldtype</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<autosizemax>2</autosizemax>
+							<size>25</size>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="0">LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:please_select</numIndex>
+									<numIndex index="1"></numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">datum</numIndex>
+									<numIndex index="1">datum</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">image</numIndex>
+									<numIndex index="1">image</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="0">nodisplay</numIndex>
+									<numIndex index="1">nodisplay</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="0">select</numIndex>
+									<numIndex index="1">SelectDisplay</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="0">text</numIndex>
+									<numIndex index="1">TEXT</numIndex>
+								</numIndex>
+								<numIndex index="5" type="array">
+									<numIndex index="0">textarea</numIndex>
+									<numIndex index="1">textarea</numIndex>
+								</numIndex>
+								<numIndex index="6" type="array">
+									<numIndex index="0">tijd</numIndex>
+									<numIndex index="1">tijd</numIndex>
+								</numIndex>
+								<numIndex index="7" type="array">
+									<numIndex index="0">valuta</numIndex>
+									<numIndex index="1">valuta</numIndex>
+								</numIndex>
+								<numIndex index="8" type="array">
+									<numIndex index="0">custom</numIndex>
+									<numIndex index="1">custom</numIndex>
+								</numIndex>
+							</items>
+							<maxitems>1</maxitems>
+							<minitems>1</minitems>
+							<size>1</size>
+						</config>
+					</TCEforms>
+				</veldtype>
                             </el>
                         </typesection>
                    </el>

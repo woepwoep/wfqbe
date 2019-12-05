@@ -89,6 +89,9 @@ class SqlService
         case 'tijd':
             $newValue = strtotime($value);
             break;
+	case 'image':
+	    $newValue = $value['name'];
+	    break;
         }
         return $newValue;
     }

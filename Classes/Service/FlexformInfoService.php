@@ -41,6 +41,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	$fieldtypes = $this->getFieldtypes();
 	$validators = $this->getValidators();
 	$valutas = $this->getValutas();
+	$linkfields = $this->getLinkfields();
 
         $columnNames = array();
         foreach ($fieldlist as $field) {
@@ -72,6 +73,18 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	    if (is_array($valutas)) foreach($valuta as $key => $value) {
 		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
 		    $columnNames[$field][$parameter] = $value[$parameter]['valuta'];
+		}
+	    }
+            //DebugUtility::debug($valutas,'valutas');
+		
+	    // add select info from flexform
+	    $parameter = 'linksection';
+	    $columnNames[$field]['relationField'] = '';
+	    $columnNames[$field]['childPage'] = '';
+	    if (is_array($linkfields)) foreach($linkfields as $key => $value) {
+		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['linkField'])) {
+		    $columnNames[$field]['relationField'] = $value[$parameter]['relationField'];
+		    $columnNames[$field]['childPage'] = $value[$parameter]['childPage'];
 		}
 	    }
 		
@@ -194,5 +207,10 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
 
 	return $value;
+    }
+
+    public function getLinkfields()
+    {
+	return $this->getOptionalElement('linkfields');
     }
 }
