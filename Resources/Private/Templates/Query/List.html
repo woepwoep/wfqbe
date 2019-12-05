@@ -65,8 +65,13 @@
 	</div>
 	<thead class="wfqbe_table_header">
 	  <tr>
+		<f:if condition="{flexformdata.detailPage}">
+				<th></th>
+		</f:if>
+			
 	    <f:for each="{columnNames}" as="columnName">
 	      <f:if condition='{columnName.type} != "nodisplay"'>
+		  
 		<th> 
 		<div class="{flexformdata.div_id}_label">
 			<span onclick='sortTable({columnName.name});'>{columnName.name}</span>
@@ -83,28 +88,32 @@
 	<tbody>
 	  <f:for each="{rows}" as="row" >
             <tr>  
-	      <f:for each="{columnNames}" as="columnName">
-		<f:if condition='{columnName.type} != "nodisplay"'>
-		  <td> 
-		    <f:if condition="{columnName.relationField}">
-		      <f:then>
-		        <f:link.action pageUid="{columnName.childPage}" arguments="{koppelveld: '{row.{columnName.relationField}}'}"> 
-			  <f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
-			</f:link.action>
-		      </f:then>
-		      <f:else>
-			<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
-		      </f:else>
-		    </f:if>
-		  </td>
-		</f:if>
-		</f:for>
+				<f:if condition="{flexformdata.detailPage}">
+					<td class="center"> <f:render partial="PartialDetail" arguments="{_all}" /> </td>
+				</f:if>
+            
+				<f:for each="{columnNames}" as="columnName">
+					<f:if condition='{columnName.type} != "nodisplay"'>
+						<td> 
+						<f:if condition="{columnName.relationField}">
+						<f:then>
+							<f:link.action pageUid="{columnName.childPage}" arguments="{koppelveld: '{row.{columnName.relationField}}'}"> 
+								<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+							</f:link.action>
+						</f:then>
+						<f:else>
+							<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+						</f:else>
+						</f:if>
+						</td>
+					</f:if>
+				</f:for>
                           	
-	      <f:if condition="{flexformdata.cudPage}">
-		<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>
-	      </f:if>
-            </tr>
-       	  </f:for>   
+			<f:if condition="{flexformdata.cudPage}">
+				<td class="center"> <f:render partial="PartialCud" arguments="{_all}" /> </td>
+			</f:if>
+        </tr>
+     </f:for>   
 	</tbody>		
       </table>
     </div>

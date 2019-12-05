@@ -1,6 +1,8 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
+<f:debug>{_all}</f:debug>
+
 <f:for each="{columnNames}" as="columnName" >
 	<f:if condition="{columnName.type} != 'nodisplay'">
 		<tr>

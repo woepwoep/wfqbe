@@ -1,0 +1,47 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
+
+<f:variable name="modus" value="display" />
+
+<div class="container">
+    <div id="{flexformdata.div_id}">
+
+		<div class="wfqbe_description">Het Default QueryController/Detail.html Scherm</div>
+		<div class="wfqbe_block">
+			<div class="table-responsive"> 
+				<table class="table table-bordered table-hover table-condensed">
+				
+					<tbody> 
+						<f:for each="{rows}" as="row" >
+						 
+						<f:for each="{columnNames}" as="columnName">
+							<f:if condition='{columnName.type} != "nodisplay"'>
+								<tr> 
+								<td> 
+									<div class="{flexformdata.div_id}_label">
+										<span onclick='sortTable({columnName.name});'>{columnName.name}</span>
+									</div>
+								</td>
+								<td> 
+									<f:if condition="{columnName.relationField}">
+									<f:then>
+										<f:link.action pageUid="{columnName.childPage}" arguments="{koppelveld: '{row.{columnName.relationField}}'}"> 
+											<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+									</f:else>
+									</f:if>
+								</td>
+								</tr>
+							</f:if>
+						</f:for>
+						
+						</f:for>   
+					</tbody>
+				</table>
+			</div>
+		</div>		
+    </div>
+</div>
