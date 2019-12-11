@@ -92,7 +92,11 @@ class SqlService
 	case 'image':
 	    $newValue = $value['name'];
 	    break;
+	case 'valuta':
+	    $newValue = str_replace(',','.',$value);
+	    break;
         }
+	//Debug('Convert. type=:'.$type.': value=:'.$value.': newValue=:'.$newValue.':');
         return $newValue;
     }
 }
