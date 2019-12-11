@@ -94,8 +94,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function showAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
         // retrieve the {keyValue} from Fluid
@@ -133,8 +133,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function addFormAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
         $flexformInfoService = new FlexformInfoService();
@@ -155,8 +155,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function addAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
         $sqlService = new SqlService('Show columns for '.$this->targetTable);
@@ -229,8 +229,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateFormAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
         return $this->showAction();
@@ -242,8 +242,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
         // retrieve the {keyField : keyValue} from Fluid
@@ -345,8 +345,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function deleteFormAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
 	return $this->showAction();
@@ -358,8 +358,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function deleteAction()
     {
         // use the template from the Flexform if there is one
-        if (!empty($templateFile)) {
-            $this->view->setTemplatePathAndFilename($templateFile);
+        if (!empty($this->templateFile)) {
+            $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
         // retrieve the {keyField : keyValue} from Fluid
