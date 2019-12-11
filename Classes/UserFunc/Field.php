@@ -48,17 +48,6 @@ class Field
 	$config['items'] = $options;
     }
 
-    protected function showColumns($targetTable)
-    {
-	$rows = array();
-	if (!empty($targetTable)) {
-            $statement = "SHOW COLUMNS FROM ".$targetTable;
-            $sqlService = new SqlService($statement);
-	    $rows = $sqlService->getRows();
-	}
-	return $rows;
-    }
-	
 	/**
 	 * PopulateTargetTable - used to populate 'select targetTable' in the Cud/database.xml flexform
 	 *
