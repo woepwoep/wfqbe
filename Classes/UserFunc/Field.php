@@ -116,18 +116,18 @@ class Field
 	 */
 	public function populateFieldsAction(array &$config, &$parentObject)
 	{
-		$options = [];
-
 		$label = "--- Please Select field ---";
 		$options[] = [0 => $label, 1 => ""];
 
-
-		$fieldlist = explode(',',$config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['fieldlist']['vDEF']);
-
-		foreach($fieldlist as $_field)
-		{
-			$fieldName = $_field;
-			$options[] = [0 => $fieldName, 1 => $fieldName];
+		$pi_flexform = $config['flexParentDatabaseRow']['pi_flexform'];
+		$fields = $pi_flexform['data']['database']['lDEF']['fieldlist']['vDEF'];
+		$fieldlist = [];
+		if (is_string($fields) && strpos($fields,',')) {
+			$fieldlist = explode(',',$fields);
+			foreach($fieldlist as $_field) {
+				$fieldName = $_field;
+				$options[] = [0 => $fieldName, 1 => $fieldName];
+			}
 		}
 
 		$config["items"] = $options;
