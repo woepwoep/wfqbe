@@ -59,12 +59,26 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // ... and substitute where possible
 	$expr = explode('ExpressionParser',$this->query);
 	for ($i=1; $i<sizeof($expr); $i++) {
-	    $joop = ExpressionParser::evaluateExpression($expr[$i]);
-	    $this->query = preg_replace('/ExpressionParser(.*)/',"'".$joop."'",$this->query);
+	    $joop = $this->parseExpression($expr[$i]);
+	    $this->query = preg_replace('/ExpressionParser(.*)/',"'".$joop[0]."'",$this->query);
+	    $this->query.= $joop[1];
 	}
 
 	// retrieve other ffdata
         $this->ffdata = $flexformInfoService->getData();
+    }
+
+    /**
+     *  $expr contains {...expr...} then a space and then the rest
+     */
+    protected function parseExpression($expr)
+    {
+	$endpos = strpos($expr,' ');
+	$parsedExpr = substr($expr,0,$endpos);
+	$rest = substr($expr,$endpos);
+
+	$newExpr = ExpressionParser::evaluateExpression($parsedExpr);
+	return array($newExpr,$rest);
     }
 
     /**
