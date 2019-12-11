@@ -177,7 +177,13 @@ class Field
 	 */
 	public function showQueryColumns(array &$config, &$parentObject)
 	{
+		$options = [];
+
 		$statement = $config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['query']['vDEF'];
+		if (empty($statement)) {
+			$config['items'] = $options;
+			return;
+		}
 
 		// remove WHERE part because we need the column names
 		$wherepos = strripos($statement,'WHERE');
