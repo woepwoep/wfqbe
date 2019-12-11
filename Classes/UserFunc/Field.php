@@ -76,8 +76,6 @@ class Field
 	return $rows;
     }
 	
-	/* <<<EW>>> */
-	/** <<<EW>>> Poging tot een lijst van tables. Gebaseerd op de dataviewer
 	/**
 	 * Populate flexform tables
 	 *
@@ -85,7 +83,7 @@ class Field
 	 * @param array $parentObject Parent Object
 	 * @return array
 	 */
-	public function populateTablesAction(array &$config, &$parentObject)
+	public function populateTargetTable(array &$config, &$parentObject)
 	{
 		$options = [];
 
