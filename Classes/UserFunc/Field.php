@@ -49,13 +49,13 @@ class Field
     }
 
 	/**
-	 * PopulateTablesAction - used to populate 'select targetTable' in the Cud/database.xml flexform
+	 * PopulateTargetTable - used to populate 'select targetTable' in the Cud/database.xml flexform
 	 *
 	 * @param array $config Configuration Array
 	 * @param array $parentObject Parent Object
 	 * @return array
 	 */
-	public function populateTablesAction(array &$config, &$parentObject)
+	public function populateTargetTable(array &$config, &$parentObject)
 	{
 		$options = [];
 
