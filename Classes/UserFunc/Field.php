@@ -48,23 +48,6 @@ class Field
 	$config['items'] = $options;
     }
 
-    /**
-     * @param array $config
-     *
-     * @return void
-     */
-    public function joop(array &$config)
-    {
-        $targetTable = $config['row']['targetTable'];
-	$rows = $this->showColumns($targetTable);
-	$itemList = array();
-        foreach($rows AS $row)
-        {
-	    $itemList[] = array($row['Field']);
-	}
-	$config['items'] = $itemList;
-    }
-
     protected function showColumns($targetTable)
     {
 	$rows = array();
@@ -77,7 +60,7 @@ class Field
     }
 	
 	/**
-	 * Populate flexform tables
+	 * PopulateTargetTable - used to populate 'select targetTable' in the Cud/database.xml flexform
 	 *
 	 * @param array $config Configuration Array
 	 * @param array $parentObject Parent Object
@@ -112,13 +95,12 @@ class Field
 	 * @param array $parentObject Parent Object
 	 * @return array
 	 */
-	public function populateFieldsAction(array &$config, &$parentObject)
+	public function populateFieldNames(array &$config, &$parentObject)
 	{
-		$label = "--- Please Select field ---";
-		$options[] = [0 => $label, 1 => ""];
-
+		$options = [];
 		$pi_flexform = $config['flexParentDatabaseRow']['pi_flexform'];
 		$fields = $pi_flexform['data']['database']['lDEF']['fieldlist']['vDEF'];
+
 		$fieldlist = [];
 		if (is_string($fields) && strpos($fields,',')) {
 			$fieldlist = explode(',',$fields);
@@ -133,8 +115,6 @@ class Field
 		return $config;
 	}
 
-	/** Dit zou het moeten zijn..... **/
-	
 	/**
 	 * Display a rendered template from a
 	 * given path by parameters -> template
@@ -205,7 +185,11 @@ class Field
 	}
 
 	/**
-	 * Populate flexform fieldtypes
+	 * PopulateFieldTypes - showing the Partials dir with a partial for each fieldType, both in CUD and in Query/database.xml flexform
+	 *
+	 *  fieldtypes are arrays of { name, veldtype }
+	 *  the names are populated in showQueryColumns (for Query) and populateFieldNames (for Cud)
+	 *  the veldtypes are populated
 	 *
 	 * @param array $config Configuration Array
 	 * @param array $parentObject Parent Object
@@ -231,4 +215,19 @@ class Field
 
 		return $config;
 	}
+
+    /**
+     *
+     */
+    protected function showColumns($targetTable)
+    {
+	$rows = array();
+	if (!empty($targetTable)) {
+            $statement = "SHOW COLUMNS FROM ".$targetTable;
+            $sqlService = new SqlService($statement);
+	    $rows = $sqlService->getRows();
+	}
+	return $rows;
+    }
+	
 }
