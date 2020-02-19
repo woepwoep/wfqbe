@@ -4,7 +4,6 @@
 <f:comment>
 	EXT:.../Cud/deleteForm.html
 	<f:debug>{_all}</f:debug>
-	Dit werkt nog niet: <f:translate key="{columnName.name}" extensionName="wfqbe" /> 
 </f:comment>
 
 <div class="container">  
@@ -26,7 +25,7 @@
                             <td>
       							<span class="label">
 									<f:if condition="{columnName.type} != 'nodisplay'">
-										<label for="{columnName.name}"><f:translate key="{columnName.name}" extensionName="wfqbe" />{columnName.name}</label>
+										<label for="{columnName.name}"><f:translate id="{columnName.name}" />{columnName.name}</label>
 									</f:if>
       							</span>
                             </td>

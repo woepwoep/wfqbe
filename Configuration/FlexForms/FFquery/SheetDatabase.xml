@@ -38,16 +38,7 @@
 						</config>
 					</TCEforms>
 				</name>
-				<sortfield>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sortfield</label>
-					<config>
-						<type>checkboxToggle</type>
-						<items type="array">
-							<numIndex index="0"></numIndex>
-						</items>
-					</config>
-				</sortfield>
-                                <veldtype>
+				<veldtype>
 					<TCEforms>
 						<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:veldtype</label>
 						<config>

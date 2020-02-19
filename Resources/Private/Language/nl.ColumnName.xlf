@@ -45,7 +45,7 @@
       </trans-unit>
       <trans-unit id="Query.connectionname">
         <source>Connection name from LocalConfiguration.php</source>
-        <target>Naam van de DB connection uit LocalConfiguration.php</target>
+        <target>Naam van de DB connectie uit LocalConfiguration.php</target>
       </trans-unit>
       <trans-unit id="Query.searchinquery">
         <source>Results query</source>
