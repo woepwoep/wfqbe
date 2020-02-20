@@ -114,7 +114,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
 
-            //DebugUtility::debug($statement,'showAction statement');exit(1);
         // assign the results in a view for fluid Query/Show.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
@@ -172,7 +171,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	    $columnName = $columnName['name'];
 
             // add to insert
-            $insertList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
+            $insertList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
         }
 
         // nothing to be done if there are no changed column values
@@ -256,7 +255,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // retrieve the new values for this row
         $argList = $this->request->getArguments();
-        //DebugUtility::debug($argList,'Argument list for updateAction'); exit(1);
 
         // retrieve the row to see what columns have changed
         $statement = "select ".$this->fieldlist." from ".$this->targetTable." whEre ".$this->keyField."='".$keyValue."'";
@@ -274,7 +272,6 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         foreach($rows[0] as $key => $value) {
             $oldValues[$key] = $value;
         }
-        //DebugUtility::debug($oldValues,'oldValues');
 
         // build an update statement where only changed column values are updated
         $newValues = $this->request->getArguments();
@@ -291,9 +288,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             // add to update statement if value has changed
 			// <<<EW>>> even uitgezet ivm file/image upload
             //if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
-            //    $updateList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
+            //    $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
             //}
-            $updateList[$columnName] = $sqlService->convert($columnNames[$columnName]['type'],$newValues[$columnName]);
+            $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
         }
 
         // update changed column values
@@ -309,12 +306,15 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $TSparserObject->parse($this->ffdata['defaultvalues']);
             $defaultvalues = $TSparserObject->setup;
 
-	    if (!empty($defaultvalues)) foreach ($defaultvalues as $key => $value) {
-		if (!strncmp($value,'php',3)) {
+	    if (!empty($defaultvalues)) {
+		foreach ($defaultvalues as $key => $value) {
+		    if (!strncmp($value,'php',3)) {
 			$output = $this->evalPHP(substr($value,3,strlen($value)-3));
 			$statement .= " ".$key."='".$output."',";
+		    }
 		}
 	    }
+
             // remove last comma
             $statement = rtrim($statement,',');
             $statement .= " wHeRe ".$this->keyField."='".$keyValue."'";
@@ -322,11 +322,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             // execute the query
             $sqlService = new SqlService($statement);
             $rowsAffected = $sqlService->updateRow();
-            //DebugUtility::debug($rowsAffected,'rowsAffected after updateAction');
-
 	}
 
-        // perhaps a file was uploaded
+	// perhaps a file was uploaded
 	$this->uploadFile($_FILES);
 
         // redirect to redirectPage
@@ -403,18 +401,18 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected function uploadFile($files)
     {
 	if (!is_array($files) || empty($files)) return;
-//        DebugUtility::debug($files,'files.');exit(1);
 	$upload_dir = Environment::getPublicPath().'/fileadmin/user_upload/';
 	foreach($files['tx_wfqbe_picud']['error'] as $key => $error) {
 	    if ($error == UPLOAD_ERR_OK) {
 		$tmp_name = $_FILES["tx_wfqbe_picud"]["tmp_name"][$key];
+
 		// basename() may prevent filesystem traversal attacks;
 		// further validation/sanitation of the filename may be appropriate
 		$name = basename($_FILES["tx_wfqbe_picud"]["name"][$key]);
+
 		$location = $upload_dir . $name;
 		move_uploaded_file($tmp_name, $location);
 	    }
 	}
-
     }
 }

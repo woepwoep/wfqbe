@@ -79,7 +79,7 @@ class SqlService
         return $rowsAffected;
     }
 
-    public function convert($type,$value)
+    public function convert($columnName,$type,$value)
     {
         switch($type) {
         default:
@@ -90,7 +90,9 @@ class SqlService
             $newValue = strtotime($value);
             break;
 	case 'image':
-	    $newValue = $value['name'];
+	    $newValue = preg_replace('/\s+/', '_', $value['name']);
+	    $newValue = date_timestamp_get(date_create()).'_'.$newValue;
+	    $_FILES['tx_wfqbe_picud']['name'][$columnName] = $newValue;
 	    break;
 	case 'valuta':
 	    $newValue = str_replace(',','.',$value);
