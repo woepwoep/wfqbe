@@ -212,6 +212,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $sqlService = new SqlService($statement);
         $rowsAffected = $sqlService->insertRow();
 
+	// perhaps a file was uploaded
+	$this->uploadFile($_FILES);
+
         // redirect to redirectPage
 	$pageUid = $this->ffdata['redirectPage'];
 
