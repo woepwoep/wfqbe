@@ -27,7 +27,7 @@
 				<f:comment>
 				<f:form.hidden name="{columnName.uid}" value="{row.{columnName.name}}" />
 				</f:comment>
-				<button class="btn btn-warning" onclick="goBack()">Terug</button>
+				<f:link.page class="btn btn-warning" pageUid="{flexformdata.redirectPage}">Terug</f:link.page>
       			<f:form.submit class="btn btn-primary" value="Toevoegen" />
     		</div>	
       	</f:form>
