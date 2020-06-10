@@ -6,7 +6,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-class GetuidViewHelper extends AbstractViewHelper
+class GetUidViewHelper extends AbstractViewHelper
 {
    use CompileWithRenderStatic;
 
