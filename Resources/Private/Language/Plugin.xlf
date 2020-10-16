@@ -4,13 +4,13 @@
         <header/>
         <body>
             <trans-unit id="piquery.title">
-                <source>RSRQ piquery = list mode for TYPO3 v9</source>
+                <source>RSRQ piquery = list mode for TYPO3 v10</source>
             </trans-unit>
             <trans-unit id="pidetail.title">
-                <source>RSRQ pidetail = detail mode for TYPO3 v9</source>
+                <source>RSRQ pidetail = detail mode for TYPO3 v10</source>
             </trans-unit>
             <trans-unit id="picud.title">
-                <source>RSRQ picud = add/update/delete mode for TYPO3 v9</source>
+                <source>RSRQ picud = add/update/delete mode for TYPO3 v10</source>
             </trans-unit>
         </body>
     </file>

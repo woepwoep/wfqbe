@@ -47,5 +47,5 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_picud'
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'wfqbe',
     'Configuration/TypoScript',
-    'DB Integration for TYPO3 v9'
+    'DB Integration for TYPO3 v10'
 );
