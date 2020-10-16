@@ -10,10 +10,10 @@
 ########################################################################
 
 $EM_CONF['wfqbe'] = [
-    'title' => 'DB Integration for TYPO3 v9',
-    'description' => 'This extension is based on the DB Integration (wfqbe) extension using TYPO3 v9 standards.',
+    'title' => 'DB Integration for TYPO3 v10',
+    'description' => 'This extension is based on the DB Integration (wfqbe) extension using TYPO3 v10 standards.',
     'category' => 'plugin',
-    'version' => '9.5.14',
+    'version' => '10.4.6',
     'state' => 'alpha',
     'uploadfolder' => false,
     'createDirs' => '',
@@ -24,7 +24,7 @@ $EM_CONF['wfqbe'] = [
     'constraints' => [
         'depends' => [
             'php' => '7.2.0-7.2.99',
-            'typo3' => '9.5.5-9.5.599',
+            'typo3' => '10.4.0-10.9.99',
         ],
         'conflicts' => [],
         'suggests' => [],

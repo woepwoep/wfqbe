@@ -32,13 +32,22 @@
         <source>Field Type</source>
       </trans-unit>
       <trans-unit id="valuta">
-        <source>Currency</source>
+        <source>XXX Currency</source>
       </trans-unit>
-	  <trans-unit id="date_format">
-        <source>Date Format</source>
+	  <trans-unit id="argument">
+        <source>XXX Argument</source>
+      </trans-unit>
+	  <trans-unit id="additionalargument">
+        <source>XXX Additional Argument</source>
+      </trans-unit>
+	  <trans-unit id="targetfield">
+        <source>XXX Targetfield</source>
       </trans-unit>
 	  <trans-unit id="custom">
-        <source>Custom Fieldtype</source>
+        <source>XXX Custom Fieldtype</source>
+      </trans-unit>
+	  <trans-unit id="selectarray">
+        <source>Value array for f:form.select</source>
       </trans-unit>
 	  <trans-unit id="fixedvalues">
         <source>Fixed values</source>

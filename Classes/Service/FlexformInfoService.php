@@ -55,6 +55,13 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	    if (is_array($fieldtypes)) foreach($fieldtypes as $key => $value) {
 		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
 		    $columnNames[$field]['type'] = $value[$parameter]['veldtype'];
+		    $columnNames[$field]['argument'] = $value[$parameter]['argument'];
+		    $columnNames[$field]['additionalargument'] = $value[$parameter]['additionalargument'];
+		    $columnNames[$field]['targetfield'] = $value[$parameter]['targetfield'];
+		    if (!strcmp('selectarray',$columnNames[$field]['type'])) {
+			$options = explode(",",$value[$parameter]['selectarray']);
+			$columnNames[$field]['selectarray'] = $options;
+		    }
 		}
 	    }
 
@@ -79,15 +86,15 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		
 	    // add select info from flexform
 	    $parameter = 'linksection';
-	    $columnNames[$field]['relationField'] = '';
+	    $columnNames[$field]['relationfield'] = '';
 	    $columnNames[$field]['childPage'] = '';
 	    if (is_array($linkfields)) foreach($linkfields as $key => $value) {
 		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['linkField'])) {
-		    $columnNames[$field]['relationField'] = $value[$parameter]['relationField'];
+		    $columnNames[$field]['relationfield'] = $value[$parameter]['relationfield'];
 		    $columnNames[$field]['childPage'] = $value[$parameter]['childPage'];
 		}
 	    }
-		
+
         }
 
         return $columnNames;

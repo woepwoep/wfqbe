@@ -2,9 +2,9 @@
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
 <f:comment>
+</f:comment>
 	EXT:.../Cud/deleteForm.html
 	<f:debug>{_all}</f:debug>
-</f:comment>
 
 <div class="container">  
 	<div id="{flexformdata.div_id}">
@@ -25,7 +25,9 @@
                             <td>
       							<span class="label">
 									<f:if condition="{columnName.type} != 'nodisplay'">
-										<label for="{columnName.name}"><f:translate id="{columnName.name}" />{columnName.name}</label>
+										<label for="{columnName.name}">
+											<f:translate id="{columnName.name}" key="{columnName.name}" default="{columnName.name}" />
+										</label>
 									</f:if>
       							</span>
                             </td>

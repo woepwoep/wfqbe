@@ -1,5 +1,11 @@
+<f:comment>
 <div class="alert alert-warning" role="alert">
   Custom template needed on fileadmin
 </div>
+{row.{columnName.name}}
+
+</f:comment>
+<f:render partial="{columnName.name}" arguments="{_all}" />
+
 
 

@@ -76,33 +76,39 @@
 							<size>1</size>
 					</config>
 				</veldtype>
-				<datumFormat>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:date_format</label>
-					<displayCond>FIELD:veldtype:=:datum</displayCond>
+				<argument>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:argument</label>
 					<config>
 						<type>input</type>
 						<cols>15</cols>
 						<eval>trim</eval>
 					</config>
-				</datumFormat>
-				<currency>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:valuta</label>
-					<displayCond>FIELD:veldtype:=:valuta</displayCond>
+				</argument>
+				<additionalargument>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:additionalargument</label>
 					<config>
 						<type>input</type>
 						<cols>15</cols>
 						<eval>trim</eval>
 					</config>
-				</currency>
-				<custom>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:custom</label>
-					<displayCond>FIELD:veldtype:=:custom</displayCond>
+				</additionalargument>
+				<targetfield>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:targetfield</label>
 					<config>
 						<type>input</type>
 						<cols>15</cols>
 						<eval>trim</eval>
 					</config>
-				</custom>
+				</targetfield>
+				<selectarray>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectarray</label>
+					<displayCond>FIELD:veldtype:=:selectarray</displayCond>
+					<config>
+						<type>input</type>
+						<cols>15</cols>
+						<eval>trim</eval>
+					</config>
+				</selectarray>
                             </el>
                         </typesection>
                    </el>

@@ -5,7 +5,7 @@ namespace RedSeadog\Wfqbe\Service;
 use \TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Core\Utility\PathUtility;
 use \TYPO3\CMS\Core\Utility\DebugUtility;
-use \TYPO3\CMS\Extbase\Service\TypoScriptService;
+use \TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use \TYPO3\CMS\Core\Core\Environment;
 
 /**
