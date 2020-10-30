@@ -72,10 +72,10 @@
         <source>Link Fields</source>
       </trans-unit>
 	  <trans-unit id="linkField">
-        <source>linkField</source>
+        <source>Link Field</source>
       </trans-unit>
-	  <trans-unit id="relationfield">
-        <source>Relationfield</source>
+	  <trans-unit id="relationField">
+        <source>Relation Field</source>
       </trans-unit>
 	  
     </body>

@@ -27,9 +27,9 @@
 										</config>
 									</TCEforms>
 								</linkField>
-                                <relationfield>
+                                <relationField>
 									<TCEforms>
-										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:relationfield</label>
+										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:relationField</label>
 										<config>
 							<type>select</type>
 							<renderType>selectSingle</renderType>
@@ -39,7 +39,7 @@
 							<size>1</size>
 										</config>
 									</TCEforms>
-								</relationfield>
+								</relationField>
                                 <childPage>
 									<TCEforms>
 										<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:childPage</label>

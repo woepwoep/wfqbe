@@ -86,11 +86,11 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		
 	    // add select info from flexform
 	    $parameter = 'linksection';
-	    $columnNames[$field]['relationfield'] = '';
+	    $columnNames[$field]['relationField'] = '';
 	    $columnNames[$field]['childPage'] = '';
 	    if (is_array($linkfields)) foreach($linkfields as $key => $value) {
 		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['linkField'])) {
-		    $columnNames[$field]['relationfield'] = $value[$parameter]['relationfield'];
+		    $columnNames[$field]['relationField'] = $value[$parameter]['relationField'];
 		    $columnNames[$field]['childPage'] = $value[$parameter]['childPage'];
 		}
 	    }
