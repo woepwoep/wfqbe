@@ -23,7 +23,7 @@ $EM_CONF['wfqbe'] = [
     'author_company' => 'Red-Seadog',
     'constraints' => [
         'depends' => [
-            'php' => '7.2.0-7.2.99',
+            'php' => '7.2.0-7.4.99',
             'typo3' => '10.4.0-10.9.99',
         ],
         'conflicts' => [],
