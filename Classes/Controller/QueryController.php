@@ -94,6 +94,42 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
+	// search the where-clause for filter arguments ###filter###
+	$pattern = '/###[^#]*###/';
+	$subject = $this->query;
+	preg_match_all($pattern, $subject, $matches);
+	$filterFields = array_unique($matches[0]);
+
+	// replace the ### with empty string
+	$search = '###';
+	$replace = '';
+	$subject = $filterFields;
+	$filterFields = str_replace($search,$replace,$subject);
+        // DebugUtility::debug($filterFields,'filterFields');
+
+	// process RSRQ_* arguments
+	$joop = $this->request->getArguments();
+	foreach($joop as $rsrq_name => $rsrq_value) {
+	    $rest = substr($rsrq_name,0,5);
+	    if ($rest === 'RSRQ_') {
+		$rsrq_names[substr($rsrq_name,5)] = $rsrq_value;
+	    }
+	}
+
+	// the RSRQ_* arguments are substituted in the raw query
+	if (!empty($rsrq_names)) foreach($rsrq_names as $rsrq_name => $rsrq_value) {
+	    $replace = '###'.$rsrq_name.'###';
+	    $nieuw = str_replace($replace,$rsrq_value,$this->query);
+            $this->query = $nieuw;
+	}
+
+	// remove any other marker from the query
+	$string = $this->query;
+	$pattern = '/###[^#]+###/';
+	$replacement = '';
+	$sjaak = preg_replace($pattern, $replacement, $string);
+	$this->query = $sjaak;
+
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
         if ($this->request->hasArgument($parameter)) {
@@ -113,7 +149,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         // execute the query and get the result set (rows)
-        //DebugUtility::debug($this->query,'this->query in listAction');
+        // DebugUtility::debug($this->query,'this->query in listAction');
         $sqlService = new SqlService($this->query);
 
         // use the template from the Flexform if there is one
@@ -136,6 +172,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'rows' => $rows,
             'request' => $this->request,
             'user' => $GLOBALS["TSFE"]->fe_user->user,
+	    'filterFields' => $filterFields,
         ]);
     }
 

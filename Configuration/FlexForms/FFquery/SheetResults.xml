@@ -3,8 +3,8 @@
     <ROOT>
         <TCEforms>
             <sheetTitle>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sheet_results</sheetTitle>
-			<sheetDescription>Dit is de omschrijving van de flexform</sheetDescription>
-			<sheetShortDescr>Dit is een korte omschrijving in de flexform</sheetShortDescr>
+			<sheetDescription></sheetDescription>
+			<sheetShortDescr></sheetShortDescr>
         </TCEforms>
         <type>array</type>
         <el>
