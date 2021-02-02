@@ -91,14 +91,16 @@ class SqlService
             break;
 	case 'image':
 	    $newValue = preg_replace('/\s+/', '_', $value['name']);
-	    $newValue = date_timestamp_get(date_create()).'_'.$newValue;
+	    if ($newValue) {
+		$newValue = date_timestamp_get(date_create()).'_'.$newValue;
+	    }
 	    $_FILES['tx_wfqbe_picud']['name'][$columnName] = $newValue;
 	    break;
 	case 'valuta':
 	    $newValue = str_replace(',','.',$value);
 	    break;
         }
-	//Debug('Convert. type=:'.$type.': value=:'.$value.': newValue=:'.$newValue.':');
+	//Debug('Convert. type=:'.$type.': value=:'.$value.': newValue=:'.$newValue.':',$columnName);
         return $newValue;
     }
 }

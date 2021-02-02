@@ -153,6 +153,7 @@ class Field
 		}
 
 		// remove WHERE part because we need the column names
+        // DebugUtility::debug($statement,'BEFORE');
 		$wherepos = strripos($statement,'WHERE');
 		if ($wherepos !== FALSE) {
 			$newstatement = substr($statement,0,$wherepos);
@@ -161,6 +162,7 @@ class Field
 			$newstatement = $statement;
 		}
 		$newstatement.= ' LIMIT 1';
+        // DebugUtility::debug($newstatement,'AFTER');
 
 		$sqlService = new SqlService($newstatement);
 		$rows = $sqlService->getRows();

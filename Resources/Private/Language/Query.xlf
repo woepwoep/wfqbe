@@ -39,6 +39,9 @@
       <trans-unit id="Query.searchinquery">
         <source>Results query</source>
       </trans-unit>
+	  <trans-unit id="NewButtonText">
+        <source>Create</source>
+	  </trans-unit>
     </body>
   </file>
 </xliff>

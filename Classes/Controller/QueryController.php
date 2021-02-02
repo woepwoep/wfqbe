@@ -82,6 +82,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
+     * Filter the results of a query
+     */
+    public function filterAction()
+    {
+	return $this->listAction();
+    }
+
+    /**
      * List the results of a query
      */
     public function detailFormAction()
@@ -98,14 +106,13 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	$pattern = '/###[^#]*###/';
 	$subject = $this->query;
 	preg_match_all($pattern, $subject, $matches);
-	$filterFields = array_unique($matches[0]);
+	$markerFields = array_unique($matches[0]);
 
 	// replace the ### with empty string
 	$search = '###';
 	$replace = '';
-	$subject = $filterFields;
-	$filterFields = str_replace($search,$replace,$subject);
-        // DebugUtility::debug($filterFields,'filterFields');
+	$subject = $markerFields;
+	$markerFields = str_replace($search,$replace,$subject);
 
 	// process RSRQ_* arguments
 	$joop = $this->request->getArguments();
@@ -123,22 +130,11 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->query = $nieuw;
 	}
 
-	// remove any other marker from the query
-	$string = $this->query;
-	$pattern = '/###[^#]+###/';
-	$replacement = '';
-	$sjaak = preg_replace($pattern, $replacement, $string);
-	$this->query = $sjaak;
-
         // retrieve the {keyValue} from Fluid
         $parameter = 'keyValue';
         if ($this->request->hasArgument($parameter)) {
 	    $keyValue = $this->request->getArgument($parameter);
         }
-
-        // the {keyValue} is substituted in the raw query
-	$nieuw = str_replace('$keyValue',$keyValue,$this->query);
-        $this->query = $nieuw;
 
         // retrieve the {sortField} from Fluid
         $parameter = 'orderby';
@@ -147,6 +143,24 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	    $nieuw.= ' ORDER BY '.$sortField;
             $this->query = $nieuw;
         }
+
+	// insert right after the WHERE
+        $flexformInfoService = new FlexformInfoService();
+	$andWhere = $flexformInfoService->andWhere($rsrq_names);
+
+	// replace the special marker ###filterFields### with andWhere
+	$string = $this->query;
+	$pattern = '/###filterFields###/';
+	$replacement = $andWhere;
+	$sjaak = preg_replace($pattern, $replacement, $string);
+	$this->query = $sjaak;
+
+	// remove any other marker from the query
+	$string = $this->query;
+	$pattern = '/###[^#]+###/';
+	$replacement = '';
+	$sjaak = preg_replace($pattern, $replacement, $string);
+	$this->query = $sjaak;
 
         // execute the query and get the result set (rows)
         // DebugUtility::debug($this->query,'this->query in listAction');
@@ -158,10 +172,11 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
+	// execute the query
         $rows = $sqlService->getRows();
 	$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
-        $flexformInfoService = new FlexformInfoService();
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
+        $filterFieldList = $flexformInfoService->getFilterFieldList();
 
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
@@ -172,7 +187,9 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'rows' => $rows,
             'request' => $this->request,
             'user' => $GLOBALS["TSFE"]->fe_user->user,
-	    'filterFields' => $filterFields,
+	    'filterFields' => $markerFields,
+	    'rsrq_names' => $rsrq_names,
+	    'filterFieldList' => $filterFieldList,
         ]);
     }
 

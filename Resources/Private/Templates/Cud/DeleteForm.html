@@ -2,10 +2,10 @@
 {namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 
 <f:comment>
-</f:comment>
-	EXT:.../Cud/deleteForm.html
+	EXT:wfqbe/Resources/Private/Templates/Cud/DeleteForm.html
 	<f:debug>{_all}</f:debug>
-
+</f:comment>
+	
 <div class="container">  
 	<div id="{flexformdata.div_id}">
 		<f:form
@@ -32,46 +32,18 @@
       							</span>
                             </td>
                             <td>
-     							<div class="field">
-									<f:switch expression="{columnName.type}">
-										<f:case value="nodisplay">						
-										</f:case>
-										<f:case value="readonly">						
-											{row.{columnName.name}}
-										</f:case>
-										<f:case value="required">
-											{row.{columnName.name}}
-										</f:case>
-										<f:case value="select">
-											<f:render partial="display{columnName.name}" arguments="{_all}" />
-										</f:case>
-										<f:case value="datum">
-											{row.{columnName.name}-> f:format.date(format: 'd-m-Y')}
-										</f:case>
-										<f:case value="tijd">
-											{row.{columnName.name}-> f:format.date(format: 'H:i')}
-										</f:case>
-										<f:case value="textarea">
-											{row.{columnName.name}}
-										</f:case>
-										<f:case value="upload">
-											{row.{columnName.name}}
-										</f:case>
-										<f:defaultCase>
-											{row.{columnName.name}}
-										</f:defaultCase>
-									</f:switch>
-      							</div>
+     				<f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
                             </td>
                           </tr>
                          </f:for> 
+                         
                       </tbody>
                    </table>
     			</div>
           	</div>
 
     		<div class="wfqbe_block">    
-				<f:link.page class="btn btn-warning" pageUid="{flexformdata.redirectPage}">Terug</f:link.page>
+				<f:link.page class="btn btn-warning" pageUid="		{flexformdata.redirectPage}">Terug</f:link.page>
       			<f:form.submit class="btn btn-primary" value="Verwijderen" />
     		</div>
 				

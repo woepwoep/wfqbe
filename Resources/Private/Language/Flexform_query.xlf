@@ -10,26 +10,26 @@
         <source>ID for the div container</source>
       </trans-unit>
       
-	  <trans-unit id="sheet_database">
+      <trans-unit id="sheet_database">
         <source>Database</source>
       </trans-unit>
-	  <trans-unit id="query">
+      <trans-unit id="query">
         <source>Query</source>
       </trans-unit>
       <trans-unit id="fieldtypes">
         <source>Field Types</source>
       </trans-unit>
-	  <trans-unit id="sortfield">
+      <trans-unit id="sortfield">
         <source>Sort Field</source>
       </trans-unit>
       
       <trans-unit id="sheet_template">
         <source>Template</source>
       </trans-unit>
-	  <trans-unit id="templateFile">
+      <trans-unit id="templateFile">
         <source>Fluid template file</source>
       </trans-unit>
-	  <trans-unit id="summary">
+      <trans-unit id="summary">
         <source>Summary</source>
       </trans-unit>
       <trans-unit id="caption">
@@ -62,22 +62,37 @@
         <source>Provide CSV Download?</source>
       </trans-unit>
 	  
-	  <trans-unit id="sheet_child">
+      <trans-unit id="sheet_child">
         <source>childPage</source>
       </trans-unit>
-	  <trans-unit id="childPage">
+      <trans-unit id="childPage">
         <source>Child page</source>
       </trans-unit>
-	  <trans-unit id="linkFields">
+      <trans-unit id="linkFields">
         <source>Link Fields</source>
       </trans-unit>
-	  <trans-unit id="linkField">
+      <trans-unit id="linkField">
         <source>Link Field</source>
       </trans-unit>
-	  <trans-unit id="relationField">
+      <trans-unit id="relationField">
         <source>Relation Field</source>
       </trans-unit>
 	  
+      <trans-unit id="sheet_filter">
+        <source>Filter</source>
+      </trans-unit>
+      <trans-unit id="filterFields">
+        <source>Filter Fields</source>
+      </trans-unit>
+      <trans-unit id="filterFieldName">
+        <source>Filter Field Name</source>
+      </trans-unit>
+      <trans-unit id="filterFieldType">
+        <source>Filter Field Type</source>
+      </trans-unit>
+      <trans-unit id="filterFieldWhere">
+        <source>Filter Field Where-clause</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

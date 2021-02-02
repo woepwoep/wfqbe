@@ -289,11 +289,9 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 continue;
             }
             // add to update statement if value has changed
-			// <<<EW>>> even uitgezet ivm file/image upload
             //if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
-            //    $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
+                $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
             //}
-            $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
         }
 
         // update changed column values

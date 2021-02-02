@@ -11,6 +11,8 @@ page {
     datepicker_nl = EXT:wfqbe/Resources/Public/JavaScript/bootstrap-datepicker.nl.min.js   
     bouncer = EXT:wfqbe/Resources/Public/JavaScript/bouncer.polyfills.min.js
     goback = EXT:wfqbe/Resources/Public/JavaScript/goBack.js
+	wfc = EXT:wfqbe/Resources/Public/JavaScript/WhenFieldChanges.js
+	CUD = EXT:wfqbe/Resources/Public/JavaScript/CUD_form.js
   }
 }
 

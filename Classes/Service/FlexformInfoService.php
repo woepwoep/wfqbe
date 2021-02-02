@@ -74,7 +74,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		}
 	    }
 		
-		// <<<EW>>> add valuta currency info from flexform
+	    // <<<EW>>> add valuta currency info from flexform
 	    $parameter = 'valuta';
 	    $columnNames[$field][$parameter] = '';
 	    if (is_array($valutas)) foreach($valuta as $key => $value) {
@@ -82,8 +82,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		    $columnNames[$field][$parameter] = $value[$parameter]['valuta'];
 		}
 	    }
-            //DebugUtility::debug($valutas,'valutas');
-		
+
 	    // add select info from flexform
 	    $parameter = 'linksection';
 	    $columnNames[$field]['relationField'] = '';
@@ -96,10 +95,26 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	    }
 
         }
+        //DebugUtility::debug($linkfields,'linkfields');
 
         return $columnNames;
     }
 
+    public function getFilterFieldList()
+    {
+	// add select info from flexform
+	$filterfields = $this->getFilterfields();
+	$parameter = 'typesection';
+	
+        $fieldList = array();
+	if (is_array($filterfields)) foreach($filterfields as $key => $value) {
+	    $name = $value[$parameter]['filterFieldName'];
+	    $fieldList[$name]['filterFieldName'] = $value[$parameter]['filterFieldName'];
+	    $fieldList[$name]['filterFieldType'] = $value[$parameter]['filterFieldType'];
+	    $fieldList[$name]['filterFieldWhere'] = $value[$parameter]['filterFieldWhere'];
+	}
+        return $fieldList;
+    }
 
     /**
      * retrieve the query from the flexform data array
@@ -108,6 +123,42 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function getQuery()
     {
 	return $this->getRequiredElement('query');
+    }
+
+    public function andWhere($rsrq_names) {
+
+	$whereClause = ' 1=1 ';
+
+        // DebugUtility::debug($rsrq_names,'rsrq_names in andWhere');
+	if (!is_array($rsrq_names)) return $whereClause;
+
+	$fieldList = $this->getFilterFieldList();
+        // DebugUtility::debug($fieldList,'fieldList in andWhere');
+	if (!is_array($fieldList)) return $whereClause;
+
+	// without passed-on value we don't need to filter the search. therefore only the rsrq_names are processed
+	foreach($rsrq_names AS $key => $value) {
+
+		// skip if value is empty
+		if (!$value) continue;
+
+		// select the flexform info (filter tab)
+		$temp = $fieldList[$key];
+		if (!strcmp($key,$temp['filterFieldName'])) {
+
+			// replace the ### with empty string
+			$search = '###'.$key.'###';
+			$replace = $value;
+			$subject = $temp['filterFieldWhere'];
+			$and = str_replace($search,$replace,$subject);
+
+			// add to the where-clause
+			$whereClause .= ' AND ('.$and.')';
+		}
+	}
+
+        // DebugUtility::debug($whereClause,'whereClause in addwhere');
+	return $whereClause;
     }
 
     /**
@@ -219,5 +270,10 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function getLinkfields()
     {
 	return $this->getOptionalElement('linkfields');
+    }
+
+    public function getFilterfields()
+    {
+	return $this->getOptionalElement('filterFields');
     }
 }

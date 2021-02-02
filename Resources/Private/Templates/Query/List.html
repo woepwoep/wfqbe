@@ -1,12 +1,22 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
+
 <f:comment>
   <f:debug>{_all}</f:debug>
- <h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
+  <h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
+  <f:variable name="RSRQ_joop" value="2009" />
 </f:comment>  
+
+
+<f:variable name="edit" value="EXT:wfqbe/Resources/Public/Icons/edit.gif" />
+<f:variable name="delete" value="EXT:wfqbe/Resources/Public/Icons/delete.gif" />
+<f:variable name="details" value="EXT:wfqbe/Resources/Public/Icons/details.gif" />
 
 <f:if condition="{rows}" >
     <f:then>
+       <f:if condition="{filterFieldList}" >
+             <f:render partial="Filter.html" arguments="{_all}" />
+      </f:if>
         <f:render section="resultTable" arguments="{_all}" />
     </f:then>
     <f:else>
@@ -20,14 +30,13 @@
 		action="addForm"
 		pageUid="{flexformdata.cudPage}"
 		arguments="{keyValue: '{keyValue}'}">
-			<button class="btn btn-primary" type="button" >{flexformdata.caption} aanmaken</button>
+          <button class="btn btn-primary" type="button" >{flexformdata.caption} aanmaken</button> 
 	    </f:link.action>		
 	</f:if>
     </f:else>
 </f:if>
 
 <f:section name="resultTable" >
-  
 <div class="container">
   <div id="{flexformdata.div_id}">
     <div class="wfqbe_description">
@@ -48,12 +57,12 @@
       </f:if>
 		<f:if condition="{flexformdata.cudPage}">
 		  <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" >
-			<button class="btn btn-secondary" type="button" >+</button>
+			<button class="btn btn-primary" type="button" >+</button>
 		  </f:link.action> 
 		</f:if>
     </div>
     <div class="table-responsive">
-	  <input type='hidden' id='sort' value='asc'>
+	  
       <table class="table table-bordered table-hover table-condensed" id="{flexformdata.div_id}_Table">
 	<div class="summary">
 	  <div class="collapse" id="collapseExample">
@@ -87,8 +96,8 @@
             <tr>  
 				<f:if condition="{flexformdata.detailPage}">
 					<td class="center"> 
-						<f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
-							<i class="fas fa-info-circle"></i>Details
+						<f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{RSRQ_keyValue: '{row.{flexformdata.keyField}}'}" >
+							<f:image src="{details}" alt="Details" />
 						</f:link.action>
 					</td>
 				</f:if>
@@ -98,12 +107,13 @@
 						<td> 
 						<f:if condition="{columnName.relationField}">
 						<f:then>
-							<f:link.action pageUid="{columnName.childPage}" arguments="{keyValue: '{row.{columnName.relationField}}'}"> 
-								<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+							<f:link.action pageUid="{columnName.childPage}" arguments="{RSRQ_linkValue: '{row.{columnName.relationField}}'}" > 
+                                  
+								<f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
 							</f:link.action>
 						</f:then>
 						<f:else>
-							<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+							<f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
 						</f:else>
 						</f:if>
 						</td>
@@ -113,11 +123,11 @@
 			<f:if condition="{flexformdata.cudPage}">
 				<td class="center"> 
 					<f:link.action controller="Cud" pluginName="Picud" action="updateForm" pageUid="{flexformdata.cudPage}" arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
-						<i class="fas fa-edit"></i>
+						<f:image src="{edit}" alt="Edit" />
 					</f:link.action>
 					&nbsp;-&nbsp;
 					<f:link.action controller="Cud"	pluginName="Picud" action="deleteForm" pageUid="{flexformdata.cudPage}"	arguments="{keyValue: '{row.{flexformdata.keyField}}'}" >
-						<i class="fas fa-trash-alt"></i>
+						<f:image src="{delete}" alt="Delete" />
 					</f:link.action>
 				</td>
 			</f:if>

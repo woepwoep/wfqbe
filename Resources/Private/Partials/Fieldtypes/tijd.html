@@ -1,9 +1,0 @@
-<f:if condition="{request.controllerActionName}=='updateForm' || {request.controllerActionName}=='addForm' " >
-	<f:then>
-		<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" 
-			value="{row.{columnName.name}-> f:format.date(format: 'H:i')}" />
-	</f:then>
-		<f:else><f:format.date format="H:i">{row.{columnName.name}}</f:format.date>
-	</f:else>
-</f:if>
-
