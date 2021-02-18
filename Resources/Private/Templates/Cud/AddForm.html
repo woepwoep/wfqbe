@@ -11,7 +11,7 @@
 
 <div class="container">  
 	<div id="{flexformdata.div_id}">
-		<f:form id="{flexformdata.div_id}_form" name="{flexformdata.div_id}_form" enctype="multipart/form-data" method="post" action="add" arguments="{keyValue: '{keyField}'}" >
+		<f:form id="{flexformdata.div_id}_form" name="{flexformdata.div_id}_form" enctype="multipart/form-data" method="post" action="add" arguments="{linkValue: '{keyField}'}" >
     		<div class="wfqbe_description">{flexformdata.caption} toevoegen</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
@@ -19,7 +19,6 @@
                       <tbody> 
               			<tbody> 
 							<f:render partial="FieldList" arguments="{_all}" />
-                      </tbody>
                       </tbody>
                    </table>
     			</div>

@@ -40,7 +40,7 @@
 								<td> 
 									<f:if condition="{columnName.relationField}">
 									<f:then>
-										<f:link.action pageUid="{columnName.childPage}" arguments="{keyValue: '{row.{columnName.relationField}}'}"> 
+										<f:link.action pageUid="{columnName.childPage}" arguments="{linkValue: '{row.{columnName.relationField}}'}"> 
 											<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
 										</f:link.action>
 									</f:then>

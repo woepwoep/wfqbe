@@ -32,13 +32,13 @@
         <source>Field Type</source>
       </trans-unit>
       <trans-unit id="valuta">
-        <source>XXX Currency</source>
+        <source>Currency format</source>
       </trans-unit>
 	  <trans-unit id="argument">
-        <source>XXX Argument</source>
+        <source>Select query</source>
       </trans-unit>
 	  <trans-unit id="additionalargument">
-        <source>XXX Additional Argument</source>
+        <source>onClick (Javascript)</source>
       </trans-unit>
 	  <trans-unit id="targetfield">
         <source>XXX Targetfield</source>

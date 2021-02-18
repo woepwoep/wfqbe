@@ -20,8 +20,9 @@ use \RedSeadog\Wfqbe\Service\FlexformInfoService;
 use \RedSeadog\Wfqbe\Service\PluginService;
 use \RedSeadog\Wfqbe\Service\SqlService;
 
-use \Cobweb\Expressions\ExpressionParser;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 
+use TYPO3\CMS\Core\Context\Context;
 /**
  * QueryController
  *
@@ -56,29 +57,8 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // retrieve the query from the flexform ...
         $this->query = $flexformInfoService->getQuery();
 
-        // ... and substitute where possible
-	$expr = explode('ExpressionParser',$this->query);
-	for ($i=1; $i<sizeof($expr); $i++) {
-	    $joop = $this->parseExpression($expr[$i]);
-	    $this->query = preg_replace('/ExpressionParser(.*)/',"'".$joop[0]."'",$this->query);
-	    $this->query.= $joop[1];
-	}
-
 	// retrieve other ffdata
         $this->ffdata = $flexformInfoService->getData();
-    }
-
-    /**
-     *  $expr contains {...expr...} then a space and then the rest
-     */
-    protected function parseExpression($expr)
-    {
-	$endpos = strpos($expr,' ');
-	$parsedExpr = substr($expr,0,$endpos);
-	$rest = substr($expr,$endpos);
-
-	$newExpr = ExpressionParser::evaluateExpression($parsedExpr);
-	return array($newExpr,$rest);
     }
 
     /**
@@ -102,6 +82,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
+
 	// search the where-clause for filter arguments ###filter###
 	$pattern = '/###[^#]*###/';
 	$subject = $this->query;
@@ -116,12 +97,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 	// process RSRQ_* arguments
 	$joop = $this->request->getArguments();
+        // DebugUtility::debug($joop,'getArguments in listAction');
 	foreach($joop as $rsrq_name => $rsrq_value) {
 	    $rest = substr($rsrq_name,0,5);
 	    if ($rest === 'RSRQ_') {
 		$rsrq_names[substr($rsrq_name,5)] = $rsrq_value;
 	    }
 	}
+        // DebugUtility::debug($rsrq_names,'rsrq_names in listAction');
 
 	// the RSRQ_* arguments are substituted in the raw query
 	if (!empty($rsrq_names)) foreach($rsrq_names as $rsrq_name => $rsrq_value) {
@@ -130,23 +113,10 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->query = $nieuw;
 	}
 
-        // retrieve the {keyValue} from Fluid
-        $parameter = 'keyValue';
-        if ($this->request->hasArgument($parameter)) {
-	    $keyValue = $this->request->getArgument($parameter);
-        }
-
-        // retrieve the {sortField} from Fluid
-        $parameter = 'orderby';
-        if ($this->request->hasArgument($parameter)) {
-	    $sortField = $this->request->getArgument($parameter);
-	    $nieuw.= ' ORDER BY '.$sortField;
-            $this->query = $nieuw;
-        }
-
 	// insert right after the WHERE
         $flexformInfoService = new FlexformInfoService();
 	$andWhere = $flexformInfoService->andWhere($rsrq_names);
+        // DebugUtility::debug($andWhere,'andWhere in listAction');
 
 	// replace the special marker ###filterFields### with andWhere
 	$string = $this->query;
@@ -161,6 +131,9 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 	$replacement = '';
 	$sjaak = preg_replace($pattern, $replacement, $string);
 	$this->query = $sjaak;
+
+	// special cases
+	$this->findAndReplace('TSFE:fe_user\|user\|', $GLOBALS['TSFE']->fe_user->user);
 
         // execute the query and get the result set (rows)
         // DebugUtility::debug($this->query,'this->query in listAction');
@@ -178,39 +151,45 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
         $filterFieldList = $flexformInfoService->getFilterFieldList();
 
+	/* pagination */
+	$itemsToBePaginated = $rows;
+	$itemsPerPage = $this->ffdata['recordsForPage'];
+	$currentPageNumber = 1;
+        $parameter = 'pageNo';
+        if ($this->request->hasArgument($parameter)) {
+	    $currentPageNumber = $this->request->getArgument($parameter);
+        }
+
+	$paginator = new ArrayPaginator($itemsToBePaginated, $currentPageNumber, $itemsPerPage);
+	$pageInfo = [
+	    'numberOfPages' => $paginator->getNumberOfPages(),
+	    'currentPageNumber' => $paginator->getCurrentPageNumber(),
+	    'rowsPerPage' => $itemsPerPage,
+	    'totalAmountOfRows' => sizeof($rows),
+	];
+
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
             'settings' => $this->pluginService->getSettings(),
             'flexformdata' => $this->ffdata,
             'query' => $this->query,
             'columnNames' => $newColumns,
-            'rows' => $rows,
+            'rows' => $paginator->getPaginatedItems(),
             'request' => $this->request,
             'user' => $GLOBALS["TSFE"]->fe_user->user,
 	    'filterFields' => $markerFields,
 	    'rsrq_names' => $rsrq_names,
 	    'filterFieldList' => $filterFieldList,
+	    'pageInfo' => $pageInfo,
         ]);
     }
 
-    /**
-     * param string $orderby
-     */
-    public function sortAction()
+    protected function findAndReplace($find,$replace)
     {
-        // retrieve the {sortField} from Fluid
-        $sortField = '';
-        $parameter = 'orderby';
-        if ($this->request->hasArgument($parameter)) {
-	    $sortField = $this->request->getArgument($parameter);
-        }
-
-        $this->redirect(
-            'list',	// action
-            null,	// controller
-            null,	// extension
-            [ 'orderby' => $sortField ]		// arguments
-        );
+	foreach ($replace AS $key => $value) {
+	    $sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$this->query);
+	    $this->query = $sjaak;
+	}
+	// DebugUtility::debug($sjaak,'sjaak in findAndReplace');
     }
-
 }

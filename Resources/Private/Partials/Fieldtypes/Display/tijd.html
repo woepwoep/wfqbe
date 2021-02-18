@@ -1,4 +1,1 @@
-<f:format.date class="form-control {columnName.type}" format="H:i">
-  {row.{columnName.name}}
-</f:format.date>
-	
+{row.{columnName.name}-> f:format.date(format: 'H:i')}

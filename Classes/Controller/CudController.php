@@ -98,16 +98,16 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
-        // retrieve the {keyValue} from Fluid
-        $parameter = 'keyValue';
+        // retrieve the {linkValue} from Fluid
+        $parameter = 'linkValue';
         if (!$this->request->hasArgument($parameter)) {
             DebugUtility::debug('showAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
             exit(1);
         }
-	$keyValue = $this->request->getArgument($parameter);
+	$linkValue = $this->request->getArgument($parameter);
 
         // execute the query
-        $statement = "select ".$this->fieldlist." from ".$this->targetTable." wHEre ".$this->keyField."='".$keyValue."'";
+        $statement = "select ".$this->fieldlist." from ".$this->targetTable." wHEre ".$this->keyField."='".$linkValue."'";
         $sqlService = new SqlService($statement);
 
         $rows = $sqlService->getRows();
@@ -118,7 +118,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
             'flexformdata' => $this->ffdata,
-            'keyValue' => $keyValue,
+            'linkValue' => $linkValue,
             'statement' => $statement,
             'columnNames' => $columnNames,
             'row' => $rows[0],
@@ -139,12 +139,28 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
 
+	// fixed values
+        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+        $TSparserObject->parse($this->ffdata['defaultvalues']);
+        $defaultvalues = $TSparserObject->setup;
+
+	$row = array();
+	if (!empty($defaultvalues)) foreach ($defaultvalues as $field => $value) {
+		if (!strncmp($value,'PHP:',4)) {
+			$row[$field] = $this->evalPHP(substr($value,4,strlen($value)-4));
+		}
+		if (!strncmp($value,'TSFE:',5)) {
+			$row[$field] = $this->findAndReplace('TSFE:fe_user\|user\|', $GLOBALS['TSFE']->fe_user->user,$value);
+		}
+	}
+
         // assign the results in a view for fluid Query/Show.html
         $this->view->assignMultiple([
             'settings' => $this->pluginSettings->getSettings(),
             'flexformdata' => $this->ffdata,
             'columnNames' => $columnNames,
             'request' => $this->request,
+	    'row' => $row,
         ]);
     }
 
@@ -188,25 +204,12 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $values .= "'".$value."',";
         }
 
-	// fixed values
-        $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
-        $TSparserObject->parse($this->ffdata['defaultvalues']);
-        $defaultvalues = $TSparserObject->setup;
-
-	if (!empty($defaultvalues)) foreach ($defaultvalues as $field => $value) {
-		$columns .= $field.",";
-		if (!strncmp($value,'php',3)) {
-			$output = $this->evalPHP(substr($value,3,strlen($value)-3));
-			$values .= "'".$output."',";
-		}
-	}
-
         // remove last comma
         $columns = rtrim($columns,',');
         $values = rtrim($values,',');
 
         $statement .= " (".$columns.") VALUES (".$values.")";
-        // DebugUtility::debug($statement,'statement in addAction');
+        // DebugUtility::debug($statement,'statement in addAction'); exit(1);
 
         // execute the query
         $sqlService = new SqlService($statement);
@@ -248,24 +251,24 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
-        // retrieve the {keyField : keyValue} from Fluid
-        $parameter = 'keyValue';
+        // retrieve the {keyField : linkValue} from Fluid
+        $parameter = 'linkValue';
         if (!$this->request->hasArgument($parameter)) {
             DebugUtility::debug('updateAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
             exit(1);
         }
-	$keyValue = $this->request->getArgument($parameter);
+	$linkValue = $this->request->getArgument($parameter);
 
         // retrieve the new values for this row
         $argList = $this->request->getArguments();
 
         // retrieve the row to see what columns have changed
-        $statement = "select ".$this->fieldlist." from ".$this->targetTable." whEre ".$this->keyField."='".$keyValue."'";
+        $statement = "select ".$this->fieldlist." from ".$this->targetTable." whEre ".$this->keyField."='".$linkValue."'";
         $sqlService = new SqlService($statement);
 
         $rows = $sqlService->getRows();
         if(sizeof($rows) <> 1) {
-            DebugUtility::debug($parameter.' value '.$keyValue.' is NIET uniek.');
+            DebugUtility::debug($parameter.' value '.$linkValue.' is NIET uniek.');
             exit(1);
         }
 
@@ -288,10 +291,32 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if (!strcmp($columnName,$this->keyField)) {
                 continue;
             }
-            // add to update statement if value has changed
-            //if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
-                $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
-            //}
+
+            // add to update statement if value has changed.
+	    switch ($columnNames[$columnName]['type']) {
+	    default: 
+		if (strcmp($oldValues[$columnName],$newValues[$columnName])) {
+		    $updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
+		}
+		break;
+
+	    // file is different because it is an array ($_FILES)
+	    case 'file': 
+		// first case: newValues shows error 4: no file was uploaded. so nothing has changed
+		if ($newValues[$columnName]['error'] == 4) {
+		    continue;
+		}
+
+		// second case: there was a problem uploading a file
+		if ($newValues[$columnName]['error']) {
+			DebugUtility::debug($oldValues[$columnName],'oldValue type file in updateAction');
+			DebugUtility::debug($newValues[$columnName],'newValue type file in updateAction');exit(1);
+		}
+		
+		// third case: a file was uploaded so we overwrite the previous content including a new filename
+		$updateList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
+		break;
+	    }
         }
 
         // update changed column values
@@ -318,7 +343,8 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
             // remove last comma
             $statement = rtrim($statement,',');
-            $statement .= " wHeRe ".$this->keyField."='".$keyValue."'";
+            $statement .= " wHeRe ".$this->keyField."='".$linkValue."'";
+            // DebugUtility::debug($statement,'statement for updateAction');exit(1);
 
             // execute the query
             $sqlService = new SqlService($statement);
@@ -361,17 +387,17 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->setTemplatePathAndFilename($this->templateFile);
         }
 
-        // retrieve the {keyField : keyValue} from Fluid
-        $parameter = 'keyValue';
+        // retrieve the {keyField : linkValue} from Fluid
+        $parameter = 'linkValue';
         if (!$this->request->hasArgument($parameter)) {
             DebugUtility::debug('updateAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
             exit(1);
         }
-	$keyValue = $this->request->getArgument($parameter);
+	$linkValue = $this->request->getArgument($parameter);
 
 	// build delete statement
         $statement = "delete from ".$this->targetTable;
-        $statement.= " where ".$this->keyField."='".$keyValue."'";
+        $statement.= " where ".$this->keyField."='".$linkValue."'";
         // DebugUtility::debug($statement,'statement for deleteAction');exit(1);
 
         // execute the query
@@ -415,5 +441,15 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		move_uploaded_file($tmp_name, $location);
 	    }
 	}
+    }
+
+    protected function findAndReplace($find,$replace,$valuestring)
+    {
+	foreach ($replace AS $key => $value) {
+	    $sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$valuestring);
+	    $valuestring = $sjaak;
+	}
+	// DebugUtility::debug($sjaak,'sjaak in findAndReplace');exit(1);
+	return $valuestring;
     }
 }

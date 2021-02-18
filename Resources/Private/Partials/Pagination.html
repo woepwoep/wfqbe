@@ -1,0 +1,28 @@
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
+<f:comment>
+Partial Pagination
+<h5>Page {pageInfo.currentPageNumber} of {pageInfo.numberOfPages}.</h5>
+<h5>{pageInfo.rowsPerPage} items per page, {pageInfo.totalAmountOfRows} items total</h5>
+</f:comment>
+
+<f:link.action arguments="{pageNo: '1'}" addQueryString="TRUE"><span class="badge badge-pill badge-primary">First page </span> </f:link.action> 
+<v:iterator.loop count="{pageInfo.numberOfPages}" iteration="iteration" >
+    <f:link.action  arguments="{pageNo: '{iteration.cycle}'}" addQueryString="TRUE">
+  		<f:if condition="{iteration.cycle}=={pageInfo.currentPageNumber}" >
+      	<f:then>
+      		<f:variable name="Bingo" value="Red" />
+      		<span class="{Bingo} badge badge-pill badge-info" >{iteration.cycle}</span> 
+      	</f:then>
+      	<f:else>
+        	<f:variable name="Bingo" value="Blue" />
+      		<span class="{Bingo} badge badge-pill badge-info" >{iteration.cycle}</span> 
+      	</f:else>
+  		</f:if>
+  	</f:link.action>
+</v:iterator.loop>
+<f:link.action arguments="{pageNo: '{pageInfo.numberOfPages}'}"><span class="badge badge-pill badge-primary"> Last page </span></f:link.action> 
+<br/><br/>
+
+

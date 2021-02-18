@@ -90,6 +90,7 @@ class SqlService
             $newValue = strtotime($value);
             break;
 	case 'image':
+	case 'file':
 	    $newValue = preg_replace('/\s+/', '_', $value['name']);
 	    if ($newValue) {
 		$newValue = date_timestamp_get(date_create()).'_'.$newValue;

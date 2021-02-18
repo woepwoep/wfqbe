@@ -62,6 +62,18 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 			$options = explode(",",$value[$parameter]['selectarray']);
 			$columnNames[$field]['selectarray'] = $options;
 		    }
+		    // if type = select then arguments holds the query to fetch the foreign table rows
+		    if (!strcmp('select',$columnNames[$field]['type'])) {
+			$fkStatement = $value[$parameter]['argument'];
+			$fkService = new SqlService($fkStatement);
+			$fkRows = $fkService->getRows();
+			$fieldNameArray = array_keys($fkRows[0]);
+			$fkRowArr = array();
+			foreach ($fkRows AS $key2 => $value2) {
+			    $fkRowArr[$value2[$fieldNameArray[0]]] = $value2[$fieldNameArray[1]];
+			}
+			$columnNames[$field]['select'] = $fkRowArr;
+		    }
 		}
 	    }
 
@@ -83,7 +95,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 		}
 	    }
 
-	    // add select info from flexform
+	    // add linkfields info from flexform
 	    $parameter = 'linksection';
 	    $columnNames[$field]['relationField'] = '';
 	    $columnNames[$field]['childPage'] = '';
@@ -95,7 +107,6 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	    }
 
         }
-        //DebugUtility::debug($linkfields,'linkfields');
 
         return $columnNames;
     }
@@ -139,8 +150,8 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 	// without passed-on value we don't need to filter the search. therefore only the rsrq_names are processed
 	foreach($rsrq_names AS $key => $value) {
 
-		// skip if value is empty
-		if (!$value) continue;
+		// skip if no filtervalue has been entered
+		if (!strlen($value)) continue;
 
 		// select the flexform info (filter tab)
 		$temp = $fieldList[$key];

@@ -79,11 +79,27 @@
 				<argument>
 					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:argument</label>
 					<config>
+						<type>text</type>
+						<cols>45</cols>
+						<rows>5</rows>
+						<eval>trim</eval>
+					</config>
+					<displayCond>FIELD:veldtype:=:select</displayCond>
+				</argument>
+				<selectarray>
+					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectarray</label>
+					<displayCond>
+						<or>
+							<value1>FIELD:veldtype:=:select</value1>
+							<value2>FIELD:veldtype:=:radio</value2>
+						</or>
+					</displayCond>
+					<config>
 						<type>input</type>
 						<cols>15</cols>
 						<eval>trim</eval>
 					</config>
-				</argument>
+				</selectarray>
 				<additionalargument>
 					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:additionalargument</label>
 					<config>
@@ -91,30 +107,13 @@
 						<cols>15</cols>
 						<eval>trim</eval>
 					</config>
+					<displayCond>FIELD:veldtype:!=:nodisplay</displayCond>
 				</additionalargument>
-				<targetfield>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:targetfield</label>
-					<config>
-						<type>input</type>
-						<cols>15</cols>
-						<eval>trim</eval>
-					</config>
-				</targetfield>
-				<selectarray>
-					<label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:selectarray</label>
-					<displayCond>FIELD:veldtype:=:selectarray</displayCond>
-					<config>
-						<type>input</type>
-						<cols>15</cols>
-						<eval>trim</eval>
-					</config>
-				</selectarray>
-                            </el>
-                        </typesection>
+				   </el>
+                  </typesection>
                    </el>
             </fieldtypes>
             <defaultvalues>
-                
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:fixedvalues</label>
                     <config>
                         <type>text</type>
