@@ -77,12 +77,12 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // retrieve the tablename and the keyfield(s) from the flexform
         $flexformInfoService = new FlexformInfoService();
-	$this->targetTable = $flexformInfoService->getTargetTable();
+		$this->targetTable = $flexformInfoService->getTargetTable();
         $this->keyField = $flexformInfoService->getKeyField();
         $this->fieldlist = $flexformInfoService->getFieldlist();
-	$this->templateFile = $flexformInfoService->getTemplateFile();
+		$this->templateFile = $flexformInfoService->getTemplateFile();
 
-	// retrieve the other required information from the flexform
+		// retrieve the other required information from the flexform
         $this->ffdata = $flexformInfoService->getData();
 
     }
@@ -104,7 +104,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             DebugUtility::debug('showAction: Parameter '.$parameter.' ontbreekt in Fluid aanroep.');
             exit(1);
         }
-	$linkValue = $this->request->getArgument($parameter);
+		$linkValue = $this->request->getArgument($parameter);
 
         // execute the query
         $statement = "select ".$this->fieldlist." from ".$this->targetTable." wHEre ".$this->keyField."='".$linkValue."'";
@@ -138,21 +138,22 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
+        DebugUtility::debug($columnNames,'columnNames in addFormAction');
 
-	// fixed values
+		// fixed values
         $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
         $TSparserObject->parse($this->ffdata['defaultvalues']);
         $defaultvalues = $TSparserObject->setup;
 
-	$row = array();
-	if (!empty($defaultvalues)) foreach ($defaultvalues as $field => $value) {
-		if (!strncmp($value,'PHP:',4)) {
-			$row[$field] = $this->evalPHP(substr($value,4,strlen($value)-4));
+		$row = array();
+		if (!empty($defaultvalues)) foreach ($defaultvalues as $field => $value) {
+			if (!strncmp($value,'PHP:',4)) {
+				$row[$field] = $this->evalPHP(substr($value,4,strlen($value)-4));
+			}
+			if (!strncmp($value,'TSFE:',5)) {
+				$row[$field] = $this->findAndReplace('TSFE:fe_user\|user\|', $GLOBALS['TSFE']->fe_user->user,$value);
+			}
 		}
-		if (!strncmp($value,'TSFE:',5)) {
-			$row[$field] = $this->findAndReplace('TSFE:fe_user\|user\|', $GLOBALS['TSFE']->fe_user->user,$value);
-		}
-	}
 
         // assign the results in a view for fluid Query/Show.html
         $this->view->assignMultiple([
@@ -184,7 +185,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         foreach($columnNames as $columnName) {
 
-	    $columnName = $columnName['name'];
+	    	$columnName = $columnName['name'];
 
             // add to insert
             $insertList[$columnName] = $sqlService->convert($columnName,$columnNames[$columnName]['type'],$newValues[$columnName]);
@@ -215,17 +216,17 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $sqlService = new SqlService($statement);
         $rowsAffected = $sqlService->insertRow();
 
-	// perhaps a file was uploaded
-	$this->uploadFile($_FILES);
+		// perhaps a file was uploaded
+		$this->uploadFile($_FILES);
 
         // redirect to redirectPage
-	$pageUid = $this->ffdata['redirectPage'];
+		$pageUid = $this->ffdata['redirectPage'];
 
-	$uriBuilder = $this->uriBuilder;
-	$uri = $uriBuilder
-	   ->setTargetPageUid($pageUid)
-	   ->build();
-	$this->redirectToURI($uri);
+		$uriBuilder = $this->uriBuilder;
+		$uri = $uriBuilder
+	   		->setTargetPageUid($pageUid)
+	   		->build();
+		$this->redirectToURI($uri);
     }
 
     /**
@@ -445,11 +446,11 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     protected function findAndReplace($find,$replace,$valuestring)
     {
-	foreach ($replace AS $key => $value) {
-	    $sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$valuestring);
-	    $valuestring = $sjaak;
-	}
-	// DebugUtility::debug($sjaak,'sjaak in findAndReplace');exit(1);
-	return $valuestring;
+		if (is_array($replace)) foreach ($replace AS $key => $value) {
+			$sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$valuestring);
+			$valuestring = $sjaak;
+		}
+		// DebugUtility::debug($sjaak,'sjaak in findAndReplace');exit(1);
+		return $valuestring;
     }
 }

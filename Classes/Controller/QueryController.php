@@ -186,10 +186,10 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     protected function findAndReplace($find,$replace)
     {
-	foreach ($replace AS $key => $value) {
-	    $sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$this->query);
-	    $this->query = $sjaak;
+		if (is_array($replace)) foreach ($replace AS $key => $value) {
+	    	$sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$this->query);
+	    	$this->query = $sjaak;
+		}
+		// DebugUtility::debug('Please login first');
 	}
-	// DebugUtility::debug($sjaak,'sjaak in findAndReplace');
-    }
 }
