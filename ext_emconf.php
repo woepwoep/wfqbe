@@ -25,6 +25,7 @@ $EM_CONF['wfqbe'] = [
         'depends' => [
             'php' => '7.2.0-7.4.99',
             'typo3' => '10.4.0-10.9.99',
+			'vhs' => '6.0.5-6.9.9',
         ],
         'conflicts' => [],
         'suggests' => [],
