@@ -77,9 +77,6 @@
       <trans-unit id="childPage">
         <source>Child page</source>
       </trans-unit>
-      <trans-unit id="marker">
-        <source>Marker</source>
-      </trans-unit>
 	  
       <trans-unit id="sheet_filter">
         <source>Filter</source>

@@ -53,17 +53,6 @@
                                     </config>
                                 </TCEforms>
                             </childPage>
-                            <marker>
-                                <TCEforms>
-                                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:marker</label>
-                                    <config>
-                                        <type>input</type>
-                                        <size>45</size>
-                                        <max>45</max>
-                                        <eval>trim</eval>
-                                    </config>
-                                </TCEforms>
-                            </marker>
                         </el>
                     </linksection>
                 </el>
