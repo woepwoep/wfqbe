@@ -65,9 +65,6 @@
       <trans-unit id="sheet_child">
         <source>childPage</source>
       </trans-unit>
-      <trans-unit id="childPage">
-        <source>Child page</source>
-      </trans-unit>
       <trans-unit id="linkFields">
         <source>Link Fields</source>
       </trans-unit>
@@ -76,6 +73,12 @@
       </trans-unit>
       <trans-unit id="relationField">
         <source>Relation Field</source>
+      </trans-unit>
+      <trans-unit id="childPage">
+        <source>Child page</source>
+      </trans-unit>
+      <trans-unit id="marker">
+        <source>Marker</source>
       </trans-unit>
 	  
       <trans-unit id="sheet_filter">
