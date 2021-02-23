@@ -5,11 +5,11 @@ defined('TYPO3_MODE') or die('Access denied.');
     'RedSeadog.wfqbe',
     'Piquery',
     [
-        'Query' => 'list,detailForm,filter',
+        'Query' => 'list,detailForm,filter'
     ],
     // non-cacheable actions
     [
-        'Query' => 'list,detailForm,filter',
+        'Query' => 'list,detailForm,filter'
     ]
 );
 
@@ -17,10 +17,10 @@ defined('TYPO3_MODE') or die('Access denied.');
     'RedSeadog.wfqbe',
     'Picud',
     [
-        'Cud' => 'show,addForm,add,updateForm,update,deleteForm,delete',
+        'Cud' => 'show,addForm,add,updateForm,update,deleteForm,delete'
     ],
     // non-cacheable actions
     [
-        'Cud' => 'show,addForm,add,updateForm,update,deleteForm,delete',
+        'Cud' => 'show,addForm,add,updateForm,update,deleteForm,delete'
     ]
 );

@@ -4,7 +4,7 @@ namespace RedSeadog\Wfqbe\Service;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use \RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
+use RedSeadog\Wfqbe\Domain\Repository\QueryRepository;
 
 /**
  *  SqlService
@@ -15,14 +15,14 @@ class SqlService
     protected $query;
     protected $rows;
 
-
     public function __construct($query)
     {
         $this->query = $query;
 
         // we need a connection
-        $this->connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('fe_users');
-
+        $this->connection = GeneralUtility::makeInstance(
+            ConnectionPool::class
+        )->getConnectionForTable('fe_users');
     }
 
     public function getColumnNamesFromResultRows($rows)
@@ -30,11 +30,12 @@ class SqlService
         $columnNames = array();
 
         // if no rows, then skip this exercise
-        if (!is_array($rows) || !is_array($rows[0])) return $columnNames;
+        if (!is_array($rows) || !is_array($rows[0])) {
+            return $columnNames;
+        }
 
-        foreach($rows[0] as $field => $value)
-        {
-	    $columnNames[] = $field;
+        foreach ($rows[0] as $field => $value) {
+            $columnNames[] = $field;
         }
 
         return $columnNames;
@@ -43,10 +44,7 @@ class SqlService
     public function getRows()
     {
         // now execute the query
-        $this->rows = $this->connection
-            ->executeQuery($this->query)
-            ->fetchAll()
-        ;
+        $this->rows = $this->connection->executeQuery($this->query)->fetchAll();
 
         // Return the values
         return $this->rows;
@@ -79,29 +77,31 @@ class SqlService
         return $rowsAffected;
     }
 
-    public function convert($columnName,$type,$value)
+    public function convert($columnName, $type, $value)
     {
-        switch($type) {
-        default:
-            $newValue = $value;
-            break;
-        case 'datum':
-        case 'tijd':
-            $newValue = strtotime($value);
-            break;
-	case 'image':
-	case 'file':
-	    $newValue = preg_replace('/\s+/', '_', $value['name']);
-	    if ($newValue) {
-		$newValue = date_timestamp_get(date_create()).'_'.$newValue;
-	    }
-	    $_FILES['tx_wfqbe_picud']['name'][$columnName] = $newValue;
-	    break;
-	case 'valuta':
-	    $newValue = str_replace(',','.',$value);
-	    break;
+        switch ($type) {
+            default:
+                $newValue = $value;
+                break;
+            case 'datum':
+            case 'tijd':
+                $newValue = strtotime($value);
+                break;
+            case 'image':
+            case 'file':
+                $newValue = preg_replace('/\s+/', '_', $value['name']);
+                if ($newValue) {
+                    $newValue =
+                        date_timestamp_get(date_create()) . '_' . $newValue;
+                }
+                $_FILES['tx_wfqbe_picud']['name'][$columnName] = $newValue;
+                break;
+            case 'valuta':
+                $newValue = str_replace(',', '.', $value);
+                break;
         }
-	//Debug('Convert. type=:'.$type.': value=:'.$value.': newValue=:'.$newValue.':',$columnName);
+        //Debug('Convert. type=:'.$type.': value=:'.$value.': newValue=:'.$newValue.':',$columnName);
         return $newValue;
     }
 }
+

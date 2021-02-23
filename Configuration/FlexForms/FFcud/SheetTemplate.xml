@@ -10,19 +10,19 @@
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_cud.xlf:templateFile</label>
                     <config type="array">
-                                <type>group</type>
-                                <internal_type>folder</internal_type>
-                                <allowed>html</allowed>
-                                <max_size>2000</max_size>
-                                <show_thumbs>0</show_thumbs>
-                                <size>1</size>
-                                <minitems>0</minitems>
-                                <maxitems>1</maxitems>
-                                <eval></eval>
+                        <type>group</type>
+                        <internal_type>folder</internal_type>
+                        <allowed>html</allowed>
+                        <max_size>2000</max_size>
+                        <show_thumbs>0</show_thumbs>
+                        <size>1</size>
+                        <minitems>0</minitems>
+                        <maxitems>1</maxitems>
+                        <eval></eval>
                     </config>
                 </TCEforms>
             </templateFile>
-	    <caption>
+            <caption>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:caption</label>
                     <config>

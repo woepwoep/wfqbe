@@ -8,13 +8,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class GetUidViewHelper extends AbstractViewHelper
 {
-   use CompileWithRenderStatic;
+    use CompileWithRenderStatic;
 
-   public static function renderStatic(
-       array $arguments,
-       \Closure $renderChildrenClosure,
-       RenderingContextInterface $renderingContext
-   ) {
-       return $GLOBALS['TSFE']->fe_user->user["uid"];
-   }
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        return $GLOBALS['TSFE']->fe_user->user["uid"];
+    }
 }

@@ -11,7 +11,8 @@
 
 $EM_CONF['wfqbe'] = [
     'title' => 'DB Integration for TYPO3 v10',
-    'description' => 'This extension is based on the DB Integration (wfqbe) extension using TYPO3 v10 standards.',
+    'description' =>
+        'This extension is based on the DB Integration (wfqbe) extension using TYPO3 v10 standards.',
     'category' => 'plugin',
     'version' => '10.4.12',
     'state' => 'alpha',
@@ -25,9 +26,9 @@ $EM_CONF['wfqbe'] = [
         'depends' => [
             'php' => '7.2.0-7.4.99',
             'typo3' => '10.4.0-10.9.99',
-			'vhs' => '6.0.5-6.9.9',
+            'vhs' => '6.0.5-6.9.9'
         ],
         'conflicts' => [],
-        'suggests' => [],
-    ],
+        'suggests' => []
+    ]
 ];

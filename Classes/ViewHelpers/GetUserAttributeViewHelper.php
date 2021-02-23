@@ -27,18 +27,22 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 class GetUserAttributeViewHelper extends AbstractViewHelper
-
 {
-	/**
+    /**
      *
      */
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('attribute', 'string', 'het argument van het user-object', true );
+        $this->registerArgument(
+            'attribute',
+            'string',
+            'het argument van het user-object',
+            true
+        );
     }
 
-	 /**
+    /**
      * @return string
      */
     public function render()
@@ -46,5 +50,4 @@ class GetUserAttributeViewHelper extends AbstractViewHelper
         $attribute = $this->arguments['attribute'];
         return strval($GLOBALS['TSFE']->fe_user->user[$attribute]);
     }
-
 }

@@ -40,7 +40,7 @@
   font-size: 1.3em;
 }
 
-#Listing {
+.Listing {
   background: none repeat scroll 0 0 lightyellow;
   border: 1px solid;
   border-radius: 5px 5px 5px 5px;

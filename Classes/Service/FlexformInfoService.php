@@ -8,21 +8,28 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  *  FlexformInfoService
  */
-class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class FlexformInfoService extends
+    \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     protected $ffdata;
 
     public function __construct()
     {
-        $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-        $configurationManager = $objectManager->get('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
+        $objectManager = GeneralUtility::makeInstance(
+            'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
+        );
+        $configurationManager = $objectManager->get(
+            'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager'
+        );
 
         // Get the data object (contains the tt_content fields)
         $cObj = $configurationManager->getContentObject();
 
         // Retrieve flexform values
         $flexformService = new FlexformService();
-	$this->ffdata = $flexformService->convertFlexFormContentToArray($cObj->data['pi_flexform']);
+        $this->ffdata = $flexformService->convertFlexFormContentToArray(
+            $cObj->data['pi_flexform']
+        );
     }
 
     public function getData()
@@ -31,81 +38,129 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         return $this->ffdata;
     }
 
-
     public function mergeFieldTypes($fieldlist = null)
     {
-	if (empty($fieldlist)) {
-	    $fieldlist = explode(',',$this->getFieldlist());
-	}
+        if (empty($fieldlist)) {
+            $fieldlist = explode(',', $this->getFieldlist());
+        }
 
-	$fieldtypes = $this->getFieldtypes();
-	$validators = $this->getValidators();
-	$valutas = $this->getValutas();
-	$linkfields = $this->getLinkfields();
+        $fieldtypes = $this->getFieldtypes();
+        $validators = $this->getValidators();
+        $valutas = $this->getValutas();
+        $linkfields = $this->getLinkfields();
 
         $columnNames = array();
         foreach ($fieldlist as $field) {
-
             // name is important
             $columnNames[$field]['name'] = $field;
 
-	    // add select info from flexform
-	    $parameter = 'typesection';
-	    $columnNames[$field]['type'] = 'TEXT';
-	    if (is_array($fieldtypes)) foreach($fieldtypes as $key => $value) {
-		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
-		    $columnNames[$field]['type'] = $value[$parameter]['veldtype'];
-		    $columnNames[$field]['argument'] = $value[$parameter]['argument'];
-		    $columnNames[$field]['additionalargument'] = $value[$parameter]['additionalargument'];
-		    $columnNames[$field]['targetfield'] = $value[$parameter]['targetfield'];
-		    if (!strcmp('selectarray',$columnNames[$field]['type'])) {
-			$options = explode(",",$value[$parameter]['selectarray']);
-			$columnNames[$field]['selectarray'] = $options;
-		    }
-		    // if type = select then arguments holds the query to fetch the foreign table rows
-		    if (!strcmp('select',$columnNames[$field]['type'])) {
-			$fkStatement = $value[$parameter]['argument'];
-			$fkService = new SqlService($fkStatement);
-			$fkRows = $fkService->getRows();
-			$fieldNameArray = array_keys($fkRows[0]);
-			$fkRowArr = array();
-			foreach ($fkRows AS $key2 => $value2) {
-			    $fkRowArr[$value2[$fieldNameArray[0]]] = $value2[$fieldNameArray[1]];
-			}
-			$columnNames[$field]['select'] = $fkRowArr;
-		    }
-		}
-	    }
+            // add select info from flexform
+            $parameter = 'typesection';
+            $columnNames[$field]['type'] = 'TEXT';
+            if (is_array($fieldtypes)) {
+                foreach ($fieldtypes as $key => $value) {
+                    if (
+                        !strcasecmp(
+                            $columnNames[$field]['name'],
+                            $value[$parameter]['name']
+                        )
+                    ) {
+                        $columnNames[$field]['type'] =
+                            $value[$parameter]['veldtype'];
+                        $columnNames[$field]['nodisplay'] =
+                            $value[$parameter]['nodisplay'];
+                        $columnNames[$field]['argument'] =
+                            $value[$parameter]['argument'];
+                        $columnNames[$field]['additionalargument'] =
+                            $value[$parameter]['additionalargument'];
+                        $columnNames[$field]['targetfield'] =
+                            $value[$parameter]['targetfield'];
 
-	    // add validation info from flexform
-	    $parameter = 'validation';
-	    $columnNames[$field][$parameter] = '';
-	    if (is_array($validators)) foreach($validators as $key => $value) {
-		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
-		    $columnNames[$field][$parameter] = $value[$parameter]['validator'];
-		}
-	    }
-		
-	    // <<<EW>>> add valuta currency info from flexform
-	    $parameter = 'valuta';
-	    $columnNames[$field][$parameter] = '';
-	    if (is_array($valutas)) foreach($valuta as $key => $value) {
-		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['name'])) {
-		    $columnNames[$field][$parameter] = $value[$parameter]['valuta'];
-		}
-	    }
+                        // if type = radio or type == selectarray
+                        if (
+                            !strcmp('radio', $columnNames[$field]['type']) ||
+                            !strcmp('selectarray', $columnNames[$field]['type'])
+                        ) {
+                            $TSparserObject = GeneralUtility::makeInstance(
+                                \TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class
+                            );
+                            $TSparserObject->parse(
+                                $value[$parameter]['optionlist']
+                            );
+                            $options = $TSparserObject->setup;
+                            $columnNames[$field]['select'] = $options;
+                        }
 
-	    // add linkfields info from flexform
-	    $parameter = 'linksection';
-	    $columnNames[$field]['relationField'] = '';
-	    $columnNames[$field]['childPage'] = '';
-	    if (is_array($linkfields)) foreach($linkfields as $key => $value) {
-		if (!strcasecmp($columnNames[$field]['name'],$value[$parameter]['linkField'])) {
-		    $columnNames[$field]['relationField'] = $value[$parameter]['relationField'];
-		    $columnNames[$field]['childPage'] = $value[$parameter]['childPage'];
-		}
-	    }
+                        // if type = select then arguments holds the query to fetch the foreign table rows
+                        if (!strcmp('select', $columnNames[$field]['type'])) {
+                            $fkStatement = $value[$parameter]['argument'];
+                            $fkService = new SqlService($fkStatement);
+                            $fkRows = $fkService->getRows();
+                            $fieldNameArray = array_keys($fkRows[0]);
+                            $fkRowArr = array();
+                            foreach ($fkRows as $key2 => $value2) {
+                                $fkRowArr[$value2[$fieldNameArray[0]]] =
+                                    $value2[$fieldNameArray[1]];
+                            }
+                            $columnNames[$field]['select'] = $fkRowArr;
+                        }
+                    }
+                };
+            }
 
+            // add validation info from flexform
+            $parameter = 'validation';
+            $columnNames[$field][$parameter] = '';
+            if (is_array($validators)) {
+                foreach ($validators as $key => $value) {
+                    if (
+                        !strcasecmp(
+                            $columnNames[$field]['name'],
+                            $value[$parameter]['name']
+                        )
+                    ) {
+                        $columnNames[$field][$parameter] =
+                            $value[$parameter]['validator'];
+                    }
+                };
+            }
+
+            // <<<EW>>> add valuta currency info from flexform
+            $parameter = 'valuta';
+            $columnNames[$field][$parameter] = '';
+            if (is_array($valutas)) {
+                foreach ($valuta as $key => $value) {
+                    if (
+                        !strcasecmp(
+                            $columnNames[$field]['name'],
+                            $value[$parameter]['name']
+                        )
+                    ) {
+                        $columnNames[$field][$parameter] =
+                            $value[$parameter]['valuta'];
+                    }
+                };
+            }
+
+            // add linkfields info from flexform
+            $parameter = 'linksection';
+            $columnNames[$field]['relationField'] = '';
+            $columnNames[$field]['childPage'] = '';
+            if (is_array($linkfields)) {
+                foreach ($linkfields as $key => $value) {
+                    if (
+                        !strcasecmp(
+                            $columnNames[$field]['name'],
+                            $value[$parameter]['linkField']
+                        )
+                    ) {
+                        $columnNames[$field]['relationField'] =
+                            $value[$parameter]['relationField'];
+                        $columnNames[$field]['childPage'] =
+                            $value[$parameter]['childPage'];
+                    }
+                };
+            }
         }
 
         return $columnNames;
@@ -113,17 +168,22 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
     public function getFilterFieldList()
     {
-	// add select info from flexform
-	$filterfields = $this->getFilterfields();
-	$parameter = 'typesection';
-	
+        // add select info from flexform
+        $filterfields = $this->getFilterfields();
+        $parameter = 'typesection';
+
         $fieldList = array();
-	if (is_array($filterfields)) foreach($filterfields as $key => $value) {
-	    $name = $value[$parameter]['filterFieldName'];
-	    $fieldList[$name]['filterFieldName'] = $value[$parameter]['filterFieldName'];
-	    $fieldList[$name]['filterFieldType'] = $value[$parameter]['filterFieldType'];
-	    $fieldList[$name]['filterFieldWhere'] = $value[$parameter]['filterFieldWhere'];
-	}
+        if (is_array($filterfields)) {
+            foreach ($filterfields as $key => $value) {
+                $name = $value[$parameter]['filterFieldName'];
+                $fieldList[$name]['filterFieldName'] =
+                    $value[$parameter]['filterFieldName'];
+                $fieldList[$name]['filterFieldType'] =
+                    $value[$parameter]['filterFieldType'];
+                $fieldList[$name]['filterFieldWhere'] =
+                    $value[$parameter]['filterFieldWhere'];
+            };
+        }
         return $fieldList;
     }
 
@@ -133,43 +193,47 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getQuery()
     {
-	return $this->getRequiredElement('query');
+        return $this->getRequiredElement('query');
     }
 
-    public function andWhere($rsrq_names) {
-
-	$whereClause = ' 1=1 ';
+    public function andWhere($rsrq_names)
+    {
+        $whereClause = ' 1=1 ';
 
         // DebugUtility::debug($rsrq_names,'rsrq_names in andWhere');
-	if (!is_array($rsrq_names)) return $whereClause;
+        if (!is_array($rsrq_names)) {
+            return $whereClause;
+        }
 
-	$fieldList = $this->getFilterFieldList();
+        $fieldList = $this->getFilterFieldList();
         // DebugUtility::debug($fieldList,'fieldList in andWhere');
-	if (!is_array($fieldList)) return $whereClause;
+        if (!is_array($fieldList)) {
+            return $whereClause;
+        }
 
-	// without passed-on value we don't need to filter the search. therefore only the rsrq_names are processed
-	foreach($rsrq_names AS $key => $value) {
+        // without passed-on value we don't need to filter the search. therefore only the rsrq_names are processed
+        foreach ($rsrq_names as $key => $value) {
+            // skip if no filtervalue has been entered
+            if (!strlen($value)) {
+                continue;
+            }
 
-		// skip if no filtervalue has been entered
-		if (!strlen($value)) continue;
+            // select the flexform info (filter tab)
+            $temp = $fieldList[$key];
+            if (!strcmp($key, $temp['filterFieldName'])) {
+                // replace the ### with empty string
+                $search = '###' . $key . '###';
+                $replace = $value;
+                $subject = $temp['filterFieldWhere'];
+                $and = str_replace($search, $replace, $subject);
 
-		// select the flexform info (filter tab)
-		$temp = $fieldList[$key];
-		if (!strcmp($key,$temp['filterFieldName'])) {
-
-			// replace the ### with empty string
-			$search = '###'.$key.'###';
-			$replace = $value;
-			$subject = $temp['filterFieldWhere'];
-			$and = str_replace($search,$replace,$subject);
-
-			// add to the where-clause
-			$whereClause .= ' AND ('.$and.')';
-		}
-	}
+                // add to the where-clause
+                $whereClause .= ' AND (' . $and . ')';
+            }
+        }
 
         // DebugUtility::debug($whereClause,'whereClause in addwhere');
-	return $whereClause;
+        return $whereClause;
     }
 
     /**
@@ -178,7 +242,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getTargetTable()
     {
-	return $this->getRequiredElement('targetTable');
+        return $this->getRequiredElement('targetTable');
     }
 
     /**
@@ -187,7 +251,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getKeyField()
     {
-	return $this->getRequiredElement('identifiers');
+        return $this->getRequiredElement('identifiers');
     }
 
     /**
@@ -196,7 +260,7 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getFieldlist()
     {
-	return $this->getOptionalElement('fieldlist');
+        return $this->getOptionalElement('fieldlist');
     }
 
     /**
@@ -206,14 +270,14 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function getFieldtypes()
     {
         // introduce the fieldtype array
-/**
- * no longer TypoScript
- *      $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
- *      $TSparserObject->parse($this->getOptionalElement('fieldtypes'));
- *      $fieldtypes = $TSparserObject->setup;
- */
+        /**
+         * no longer TypoScript
+         *	  $TSparserObject = GeneralUtility::makeInstance(\TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser::class);
+         *	  $TSparserObject->parse($this->getOptionalElement('fieldtypes'));
+         *	  $fieldtypes = $TSparserObject->setup;
+         */
 
-	return $this->getOptionalElement('fieldtypes');
+        return $this->getOptionalElement('fieldtypes');
     }
 
     /**
@@ -222,17 +286,17 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getValidators()
     {
-	return $this->getOptionalElement('field');
+        return $this->getOptionalElement('field');
     }
-	
-	//<<<EW>>>
-	/**
+
+    //<<<EW>>>
+    /**
      * retrieve the validators from the flexform data array
      * (validators is optional in all CRUD actions)
      */
     public function getValutas()
     {
-	return $this->getOptionalElement('valuta');
+        return $this->getOptionalElement('valuta');
     }
 
     /**
@@ -241,11 +305,11 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function getTemplateFile()
     {
-	$templateFile = $this->getOptionalElement('templateFile');
+        $templateFile = $this->getOptionalElement('templateFile');
         if (!empty($templateFile)) {
             $templateFile = GeneralUtility::getFileAbsFilename($templateFile);
-	}
-	return $templateFile;
+        }
+        return $templateFile;
     }
 
     /**
@@ -253,38 +317,42 @@ class FlexformInfoService extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     protected function getRequiredElement($key)
     {
-	$value = $this->getOptionalElement($key);
+        $value = $this->getOptionalElement($key);
 
         if (empty($value)) {
-            DebugUtility::debug($this->ffdata,'Required key '.$key.' is empty or notfound in flexform.');
+            DebugUtility::debug(
+                $this->ffdata,
+                'Required key ' . $key . ' is empty or notfound in flexform.'
+            );
             exit(1);
         }
 
-	return $value;
+        return $value;
     }
 
     /**
      * retrieve an array element $key from the flexform data array
      * default value is returned if array element is not found
      */
-    protected function getOptionalElement($key,$default='')
+    protected function getOptionalElement($key, $default = '')
     {
-	$value = $this->ffdata[$key];
+        $value = $this->ffdata[$key];
 
         if (empty($value)) {
             $value = $default;
         }
 
-	return $value;
+        return $value;
     }
 
     public function getLinkfields()
     {
-	return $this->getOptionalElement('linkfields');
+        return $this->getOptionalElement('linkfields');
     }
 
     public function getFilterfields()
     {
-	return $this->getOptionalElement('filterFields');
+        return $this->getOptionalElement('filterFields');
     }
 }
+

@@ -22,26 +22,27 @@
  */
 class tx_wfqbe_query_wizicon
 {
-
     /**
      * Processing the wizard items array
      *
      * @param	array		$wizardItems: The wizard items
      * @return	Modified array with wizard items
      */
-    function proc($wizardItems)	{
-    	global $LANG;
+    function proc($wizardItems)
+    {
+        global $LANG;
 
-    	$LL = $this->includeLocalLang();
+        $LL = $this->includeLocalLang();
 
-    	$wizardItems['plugins_tx_wfqbe_query'] = array(
-    		'icon'=>'EXT:wfqbe/Resources/Public/Icons/ce_wiz.gif',
-    		'title'=>$LANG->getLLL('query_title',$LL),
-    		'description'=>$LANG->getLLL('query_plus_wiz_description',$LL),
-    		'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=wfqbe_query'
-    	);
+        $wizardItems['plugins_tx_wfqbe_query'] = array(
+            'icon' => 'EXT:wfqbe/Resources/Public/Icons/ce_wiz.gif',
+            'title' => $LANG->getLLL('query_title', $LL),
+            'description' => $LANG->getLLL('query_plus_wiz_description', $LL),
+            'params' =>
+                '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=wfqbe_query'
+        );
 
-    	return $wizardItems;
+        return $wizardItems;
     }
 
     /**
@@ -49,10 +50,12 @@ class tx_wfqbe_query_wizicon
      *
      * @return	The array with language labels
      */
-    function includeLocalLang()	{
-    	global $LANG;
+    function includeLocalLang()
+    {
+        global $LANG;
 
-    	$LOCAL_LANG = $LANG->includeLLFile('EXT:wfqbe/locallang.xlf',FALSE);
-    	return $LOCAL_LANG;
+        $LOCAL_LANG = $LANG->includeLLFile('EXT:wfqbe/locallang.xlf', false);
+        return $LOCAL_LANG;
     }
 }
+

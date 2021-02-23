@@ -37,6 +37,9 @@
 	  <trans-unit id="argument">
         <source>Select query</source>
       </trans-unit>
+	  <trans-unit id="optionlist">
+        <source>Option list</source>
+      </trans-unit>
 	  <trans-unit id="additionalargument">
         <source>onClick (Javascript)</source>
       </trans-unit>
@@ -45,9 +48,6 @@
       </trans-unit>
 	  <trans-unit id="custom">
         <source>XXX Custom Fieldtype</source>
-      </trans-unit>
-	  <trans-unit id="selectarray">
-        <source>Value array for f:form.select</source>
       </trans-unit>
 	  <trans-unit id="fixedvalues">
         <source>Fixed values</source>

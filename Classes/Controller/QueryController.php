@@ -16,9 +16,9 @@ namespace RedSeadog\Wfqbe\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
-use \RedSeadog\Wfqbe\Service\FlexformInfoService;
-use \RedSeadog\Wfqbe\Service\PluginService;
-use \RedSeadog\Wfqbe\Service\SqlService;
+use RedSeadog\Wfqbe\Service\FlexformInfoService;
+use RedSeadog\Wfqbe\Service\PluginService;
+use RedSeadog\Wfqbe\Service\SqlService;
 
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 
@@ -45,7 +45,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $query;
 
-
     /**
      * __construct() ... retrieve both the plugin settings and the flexform info
      */
@@ -57,7 +56,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // retrieve the query from the flexform ...
         $this->query = $flexformInfoService->getQuery();
 
-	// retrieve other ffdata
+        // retrieve other ffdata
         $this->ffdata = $flexformInfoService->getData();
     }
 
@@ -66,7 +65,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function filterAction()
     {
-	return $this->listAction();
+        return $this->listAction();
     }
 
     /**
@@ -74,7 +73,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function detailFormAction()
     {
-	return $this->listAction();
+        return $this->listAction();
     }
 
     /**
@@ -82,91 +81,105 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
+        // search the where-clause for filter arguments ###filter###
+        $pattern = '/###[^#]*###/';
+        $subject = $this->query;
+        preg_match_all($pattern, $subject, $matches);
+        $markerFields = array_unique($matches[0]);
 
-	// search the where-clause for filter arguments ###filter###
-	$pattern = '/###[^#]*###/';
-	$subject = $this->query;
-	preg_match_all($pattern, $subject, $matches);
-	$markerFields = array_unique($matches[0]);
+        // replace the ### with empty string
+        $search = '###';
+        $replace = '';
+        $subject = $markerFields;
+        $markerFields = str_replace($search, $replace, $subject);
 
-	// replace the ### with empty string
-	$search = '###';
-	$replace = '';
-	$subject = $markerFields;
-	$markerFields = str_replace($search,$replace,$subject);
-
-	// process RSRQ_* arguments
-	$joop = $this->request->getArguments();
+        // process RSRQ_* arguments
+        $joop = $this->request->getArguments();
         // DebugUtility::debug($joop,'getArguments in listAction');
-	foreach($joop as $rsrq_name => $rsrq_value) {
-	    $rest = substr($rsrq_name,0,5);
-	    if ($rest === 'RSRQ_') {
-		$rsrq_names[substr($rsrq_name,5)] = $rsrq_value;
-	    }
-	}
+        foreach ($joop as $rsrq_name => $rsrq_value) {
+            $rest = substr($rsrq_name, 0, 5);
+            if ($rest === 'RSRQ_') {
+                $rsrq_names[substr($rsrq_name, 5)] = $rsrq_value;
+            }
+        }
         // DebugUtility::debug($rsrq_names,'rsrq_names in listAction');
 
-	// the RSRQ_* arguments are substituted in the raw query
-	if (!empty($rsrq_names)) foreach($rsrq_names as $rsrq_name => $rsrq_value) {
-	    $replace = '###'.$rsrq_name.'###';
-	    $nieuw = str_replace($replace,$rsrq_value,$this->query);
-            $this->query = $nieuw;
-	}
+        // the RSRQ_* arguments are substituted in the raw query
+        if (!empty($rsrq_names)) {
+            foreach ($rsrq_names as $rsrq_name => $rsrq_value) {
+                $replace = '###' . $rsrq_name . '###';
+                $nieuw = str_replace($replace, $rsrq_value, $this->query);
+                $this->query = $nieuw;
+            };
+        }
 
-	// insert right after the WHERE
+        // insert right after the WHERE
         $flexformInfoService = new FlexformInfoService();
-	$andWhere = $flexformInfoService->andWhere($rsrq_names);
+        $andWhere = $flexformInfoService->andWhere($rsrq_names);
         // DebugUtility::debug($andWhere,'andWhere in listAction');
 
-	// replace the special marker ###filterFields### with andWhere
-	$string = $this->query;
-	$pattern = '/###filterFields###/';
-	$replacement = $andWhere;
-	$sjaak = preg_replace($pattern, $replacement, $string);
-	$this->query = $sjaak;
+        // replace the special marker ###filterFields### with andWhere
+        $string = $this->query;
+        $pattern = '/###filterFields###/';
+        $replacement = $andWhere;
+        $sjaak = preg_replace($pattern, $replacement, $string);
+        $this->query = $sjaak;
 
-	// remove any other marker from the query
-	$string = $this->query;
-	$pattern = '/###[^#]+###/';
-	$replacement = '';
-	$sjaak = preg_replace($pattern, $replacement, $string);
-	$this->query = $sjaak;
+        // remove any other marker from the query
+        $string = $this->query;
+        $pattern = '/###[^#]+###/';
+        $replacement = '';
+        $sjaak = preg_replace($pattern, $replacement, $string);
+        $this->query = $sjaak;
 
-	// special cases
-	$this->findAndReplace('TSFE:fe_user\|user\|', $GLOBALS['TSFE']->fe_user->user);
+        // special cases
+        $this->findAndReplace(
+            'TSFE:fe_user\|user\|',
+            $GLOBALS['TSFE']->fe_user->user
+        );
+        $this->findAndReplace(
+            'cObj:',
+            $this->configurationManager->getContentObject()->data
+        );
 
         // execute the query and get the result set (rows)
-        // DebugUtility::debug($this->query,'this->query in listAction');
+        DebugUtility::debug($this->query, 'this->query in listAction');
         $sqlService = new SqlService($this->query);
 
         // use the template from the Flexform if there is one
         if (!empty($this->ffdata['templateFile'])) {
-            $templateFile = GeneralUtility::getFileAbsFilename($this->ffdata['templateFile']);
+            $templateFile = GeneralUtility::getFileAbsFilename(
+                $this->ffdata['templateFile']
+            );
             $this->view->setTemplatePathAndFilename($templateFile);
         }
 
-	// execute the query
+        // execute the query
         $rows = $sqlService->getRows();
-	$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
+        $columnNames = $sqlService->getColumnNamesFromResultRows($rows);
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
         $filterFieldList = $flexformInfoService->getFilterFieldList();
 
-	/* pagination */
-	$itemsToBePaginated = $rows;
-	$itemsPerPage = $this->ffdata['recordsForPage'];
-	$currentPageNumber = 1;
+        /* pagination */
+        $itemsToBePaginated = $rows;
+        $itemsPerPage = $this->ffdata['recordsForPage'];
+        $currentPageNumber = 1;
         $parameter = 'pageNo';
         if ($this->request->hasArgument($parameter)) {
-	    $currentPageNumber = $this->request->getArgument($parameter);
+            $currentPageNumber = $this->request->getArgument($parameter);
         }
 
-	$paginator = new ArrayPaginator($itemsToBePaginated, $currentPageNumber, $itemsPerPage);
-	$pageInfo = [
-	    'numberOfPages' => $paginator->getNumberOfPages(),
-	    'currentPageNumber' => $paginator->getCurrentPageNumber(),
-	    'rowsPerPage' => $itemsPerPage,
-	    'totalAmountOfRows' => sizeof($rows),
-	];
+        $paginator = new ArrayPaginator(
+            $itemsToBePaginated,
+            $currentPageNumber,
+            $itemsPerPage
+        );
+        $pageInfo = [
+            'numberOfPages' => $paginator->getNumberOfPages(),
+            'currentPageNumber' => $paginator->getCurrentPageNumber(),
+            'rowsPerPage' => $itemsPerPage,
+            'totalAmountOfRows' => sizeof($rows)
+        ];
 
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
@@ -177,19 +190,26 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'rows' => $paginator->getPaginatedItems(),
             'request' => $this->request,
             'user' => $GLOBALS["TSFE"]->fe_user->user,
-	    'filterFields' => $markerFields,
-	    'rsrq_names' => $rsrq_names,
-	    'filterFieldList' => $filterFieldList,
-	    'pageInfo' => $pageInfo,
+            'cObject' => $this->configurationManager->getContentObject()->data,
+            'filterFields' => $markerFields,
+            'rsrq_names' => $rsrq_names,
+            'filterFieldList' => $filterFieldList,
+            'pageInfo' => $pageInfo
         ]);
     }
 
-    protected function findAndReplace($find,$replace)
+    protected function findAndReplace($find, $replace)
     {
-		if (is_array($replace)) foreach ($replace AS $key => $value) {
-	    	$sjaak = preg_replace('/'.$find.'('.$key.')/',$value,$this->query);
-	    	$this->query = $sjaak;
-		}
-		// DebugUtility::debug('Please login first');
-	}
+        if (is_array($replace)) {
+            foreach ($replace as $key => $value) {
+                $sjaak = preg_replace(
+                    '/' . $find . '(' . $key . ')/',
+                    $value,
+                    $this->query
+                );
+                $this->query = $sjaak;
+            };
+        }
+        // DebugUtility::debug('Please login first');
+    }
 }

@@ -34,5 +34,5 @@ return [
     'xMOD_tx_wfqbe_query_searchwiz' => [
         'path' => '/wfqbe/tx_wfqbe_query_search/tx_wfqbe_searchform_generator/',
         'target' => tx_wfqbe_tx_wfqbe_query_searchwiz::class . '::main'
-    ],
+    ]
 ];

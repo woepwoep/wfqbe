@@ -19,14 +19,19 @@ defined('TYPO3_MODE') or die();
 /**
  * Remove unused fields
  */
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['wfqbe_piquery'] = 'layout,select_key,pages,recursive';
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['wfqbe_picud'] = 'layout,select_key,pages,recursive';
-
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][
+    'wfqbe_piquery'
+] = 'layout,select_key,pages,recursive';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][
+    'wfqbe_picud'
+] = 'layout,select_key,pages,recursive';
 
 /**
  * Add Flexform for query plugin
  */
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_piquery'] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][
+    'wfqbe_piquery'
+] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'wfqbe_piquery',
     'FILE:EXT:wfqbe/Configuration/FlexForms/Flexform_query.xml'
@@ -35,7 +40,9 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_piquer
 /**
  * Add Flexform for cud plugin
  */
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_picud'] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][
+    'wfqbe_picud'
+] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'wfqbe_picud',
     'FILE:EXT:wfqbe/Configuration/FlexForms/Flexform_cud.xml'
@@ -49,3 +56,4 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['wfqbe_picud'
     'Configuration/TypoScript',
     'DB Integration for TYPO3 v10'
 );
+

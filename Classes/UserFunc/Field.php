@@ -17,9 +17,8 @@ namespace RedSeadog\Wfqbe\UserFunc;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Core\Environment;
-use \RedSeadog\Wfqbe\Service\SqlService;
-use \RedSeadog\Wfqbe\Service\FlexformInfoService;
-
+use RedSeadog\Wfqbe\Service\SqlService;
+use RedSeadog\Wfqbe\Service\FlexformInfoService;
 
 /**
  * QueryController
@@ -31,194 +30,195 @@ class Field
     /**
      * @param array $config configuration array
      * @param $parentObject parent object
-     * @return array 
+     * @return array
      */
     public function getColumnNames(array &$config, &$parentObject)
     {
         $targetTable = $config['row']['targetTable'][0];
-	$rows = $this->showColumns($targetTable);
+        $rows = $this->showColumns($targetTable);
         $fieldList = array();
         $options = [];
-        foreach($rows AS $row)
-        {
+        foreach ($rows as $row) {
             //$options[] = [$value,$value];
-            $options[] = [$row['Field'],$row['Field']];
+            $options[] = [$row['Field'], $row['Field']];
         }
         //DebugUtility::debug($options);exit(1);
-	$config['items'] = $options;
+        $config['items'] = $options;
     }
 
-	/**
-	 * PopulateTargetTable - used to populate 'select targetTable' in the Cud/database.xml flexform
-	 *
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function populateTargetTable(array &$config, &$parentObject)
-	{
-		$options = [];
+    /**
+     * PopulateTargetTable - used to populate 'select targetTable' in the Cud/database.xml flexform
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function populateTargetTable(array &$config, &$parentObject)
+    {
+        $options = [];
 
-		/** $label = Locale::translate("please_select", \RedSeadog\wfqbe\Configuration\ExtensionConfiguration::EXTENSION_KEY); **/
-		$label = "Select targetTable";
-		$options[] = [0 => $label, 1 => ""];
+        /** $label = Locale::translate("please_select", \RedSeadog\wfqbe\Configuration\ExtensionConfiguration::EXTENSION_KEY); **/
+        $label = "Select targetTable";
+        $options[] = [0 => $label, 1 => ""];
 
-		$sqlService = new SqlService('SHOW TABLES');
-		$tables = $sqlService->getRows();
-		
-		foreach($tables as $_table)
-		{
-			$tableName = reset($_table);
-			$options[] = [0 => $tableName, 1 => $tableName];
-		}
-		
-		$config["items"] = $options;
+        $sqlService = new SqlService('SHOW TABLES');
+        $tables = $sqlService->getRows();
 
-		return $config;
-	}
-	
-	/**
-	 * Populate flexform fieldlist
-	 *
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function populateFieldNames(array &$config, &$parentObject)
-	{
-		$options = [];
-		$pi_flexform = $config['flexParentDatabaseRow']['pi_flexform'];
-		$fields = $pi_flexform['data']['database']['lDEF']['fieldlist']['vDEF'];
+        foreach ($tables as $_table) {
+            $tableName = reset($_table);
+            $options[] = [0 => $tableName, 1 => $tableName];
+        }
 
-		$fieldlist = [];
-		if (is_string($fields) && strpos($fields,',')) {
-			$fieldlist = explode(',',$fields);
-			foreach($fieldlist as $_field) {
-				$fieldName = $_field;
-				$options[] = [0 => $fieldName, 1 => $fieldName];
-			}
-		}
+        $config["items"] = $options;
 
-		$config["items"] = $options;
+        return $config;
+    }
 
-		return $config;
-	}
+    /**
+     * Populate flexform fieldlist
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function populateFieldNames(array &$config, &$parentObject)
+    {
+        $options = [];
+        $pi_flexform = $config['flexParentDatabaseRow']['pi_flexform'];
+        $fields = $pi_flexform['data']['database']['lDEF']['fieldlist']['vDEF'];
 
-	/**
-	 * Display a rendered template from a
-	 * given path by parameters -> template
-	 *
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function displayTemplate(array &$config, &$parentObject)
-	{
-		$parameters = $config["parameters"];
-		$template = (isset($parameters["template"]))?$parameters["template"]:null;
-		
-		if(!is_null($template))
-		{
-			$templateFile = GeneralUtility::getFileAbsFileName($template);
-			if(file_exists($templateFile))
-			{
-				/* @var StandaloneView $view */
-				//$view = $this->objectManager->get(StandaloneView::class);
-				//$view->setTemplatePathAndFilename($templateFile);
-				//$view->assignMultiple($parameters);
-				//$view->assign("config", $config);
-				
-				//return $view->render();
-				$tekst = "Hier moet de inhoud van een template staan";
-				return $tekst;
-			}
-		}
-		
-		return;
-	}
+        $fieldlist = [];
+        if (is_string($fields) && strpos($fields, ',')) {
+            $fieldlist = explode(',', $fields);
+            foreach ($fieldlist as $_field) {
+                $fieldName = $_field;
+                $options[] = [0 => $fieldName, 1 => $fieldName];
+            }
+        }
 
-	/**
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function showQueryColumns(array &$config, &$parentObject)
-	{
-		$options = [];
+        $config["items"] = $options;
 
-		$statement = $config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['query']['vDEF'];
-		if (empty($statement)) {
-			$config['items'] = $options;
-			return;
-		}
+        return $config;
+    }
 
-		// remove WHERE part because we need the column names
+    /**
+     * Display a rendered template from a
+     * given path by parameters -> template
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function displayTemplate(array &$config, &$parentObject)
+    {
+        $parameters = $config["parameters"];
+        $template = isset($parameters["template"])
+            ? $parameters["template"]
+            : null;
+
+        if (!is_null($template)) {
+            $templateFile = GeneralUtility::getFileAbsFileName($template);
+            if (file_exists($templateFile)) {
+                /* @var StandaloneView $view */
+                //$view = $this->objectManager->get(StandaloneView::class);
+                //$view->setTemplatePathAndFilename($templateFile);
+                //$view->assignMultiple($parameters);
+                //$view->assign("config", $config);
+
+                //return $view->render();
+                $tekst = "Hier moet de inhoud van een template staan";
+                return $tekst;
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function showQueryColumns(array &$config, &$parentObject)
+    {
+        $options = [];
+
+        $statement =
+            $config['flexParentDatabaseRow']['pi_flexform']['data']['database'][
+                'lDEF'
+            ]['query']['vDEF'];
+        if (empty($statement)) {
+            $config['items'] = $options;
+            return;
+        }
+
+        // remove WHERE part because we need the column names
         // DebugUtility::debug($statement,'BEFORE');
-		$wherepos = strripos($statement,'WHERE');
-		if ($wherepos !== FALSE) {
-			$newstatement = substr($statement,0,$wherepos);
-			$newstatement.= ' WHERE 1=1';
-		} else {
-			$newstatement = $statement;
-		}
-		$newstatement.= ' LIMIT 1';
+        $wherepos = strripos($statement, 'WHERE');
+        if ($wherepos !== false) {
+            $newstatement = substr($statement, 0, $wherepos);
+            $newstatement .= ' WHERE 1=1';
+        } else {
+            $newstatement = $statement;
+        }
+        $newstatement .= ' LIMIT 1';
         // DebugUtility::debug($newstatement,'AFTER');
 
-		$sqlService = new SqlService($newstatement);
-		$rows = $sqlService->getRows();
-		$columnNames = $sqlService->getColumnNamesFromResultRows($rows);
-		$options = [];
-		foreach($columnNames AS $columnName)
-		{
-			$options[] = [0 => $columnName, 1 => $columnName];
-		}
-		$config['items'] = $options;
-	}
+        $sqlService = new SqlService($newstatement);
+        $rows = $sqlService->getRows();
+        $columnNames = $sqlService->getColumnNamesFromResultRows($rows);
+        $options = [];
+        foreach ($columnNames as $columnName) {
+            $options[] = [0 => $columnName, 1 => $columnName];
+        }
+        $config['items'] = $options;
+    }
 
-	/**
-	 * PopulateFieldTypes - showing the Partials dir with a partial for each fieldType, both in CUD and in Query/database.xml flexform
-	 *
-	 *  fieldtypes are arrays of { name, veldtype }
-	 *  the names are populated in showQueryColumns (for Query) and populateFieldNames (for Cud)
-	 *  the veldtypes are populated
-	 *
-	 * @param array $config Configuration Array
-	 * @param array $parentObject Parent Object
-	 * @return array
-	 */
-	public function populateFieldTypes(array &$config, &$parentObject)
-	{
-		$options = [];
+    /**
+     * PopulateFieldTypes - showing the Partials dir with a partial for each fieldType, both in CUD and in Query/database.xml flexform
+     *
+     *  fieldtypes are arrays of { name, veldtype }
+     *  the names are populated in showQueryColumns (for Query) and populateFieldNames (for Cud)
+     *  the veldtypes are populated
+     *
+     * @param array $config Configuration Array
+     * @param array $parentObject Parent Object
+     * @return array
+     */
+    public function populateFieldTypes(array &$config, &$parentObject)
+    {
+        $options = [];
 
-		$label = "--- Please Select field ---";
-		$options[] = [0 => $label, 1 => ""];
+        $label = "--- Please Select field ---";
+        $options[] = [0 => $label, 1 => ""];
 
-		$partialDir = Environment::getPublicPath().'/typo3conf/ext/wfqbe/Resources/Private/Partials/Fieldtypes/';
-		$filelist = array_diff(scandir($partialDir), array('..', '.'));
+        $partialDir =
+            Environment::getPublicPath() .
+            '/typo3conf/ext/wfqbe/Resources/Private/Partials/Fieldtypes/';
+        $filelist = array_diff(scandir($partialDir), array('..', '.'));
 
-		foreach($filelist as $_file)
-		{
-			$fileName = basename($_file,'.html');
-			$options[] = [0 => $fileName, 1 => $fileName];
-		}
+        foreach ($filelist as $_file) {
+            $fileName = basename($_file, '.html');
+            $options[] = [0 => $fileName, 1 => $fileName];
+        }
 
-		$config["items"] = $options;
+        $config["items"] = $options;
 
-		return $config;
-	}
+        return $config;
+    }
 
     /**
      *
      */
     protected function showColumns($targetTable)
     {
-	$rows = array();
-	if (!empty($targetTable)) {
-            $statement = "SHOW COLUMNS FROM ".$targetTable;
+        $rows = array();
+        if (!empty($targetTable)) {
+            $statement = "SHOW COLUMNS FROM " . $targetTable;
             $sqlService = new SqlService($statement);
-	    $rows = $sqlService->getRows();
-	}
-	return $rows;
+            $rows = $sqlService->getRows();
+        }
+        return $rows;
     }
-	
 }
+
