@@ -25,7 +25,7 @@
                     <tbody>
                         <f:for each="{rows}" as="row">
                             <f:for each="{columnNames}" as="columnName">
-                                <f:if condition='{columnName.type} != "nodisplay"'>
+                                <f:if condition='{columnName.nodisplay} != "1"'>
                                     <tr>
                                         <td>
                                             <div class="{flexformdata.div_id}_label">

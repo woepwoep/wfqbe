@@ -17,7 +17,7 @@
                                 <tr>
                                     <td>
                                         <span class="label">
-                                            <f:if condition="{columnName.type} != 'nodisplay'">
+                                            <f:if condition="{columnName.nodisplay} != '1'">
                                                 <label for="{columnName.name}">
                                                     <f:translate id="{columnName.name}" key="{columnName.name}" default="{columnName.name}" />
                                                 </label>
