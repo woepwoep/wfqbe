@@ -6,9 +6,19 @@
     <h5>{pageInfo.rowsPerPage} items per page, {pageInfo.totalAmountOfRows} items total</h5>
 </f:comment>
 
-<f:link.action arguments="{pageNo: '1'}" addQueryString="TRUE"><span class="badge badge-pill badge-primary">First page </span> </f:link.action>
+<f:variable name="pageNo" value="{pageNo: '1'}" />
+<f:variable name="joop" value="{pageNo}"/>
+<f:variable name="rsrq_newnames" value="<rs:prependString array='{rsrq_names}' string='RSRQ_' />" />
+<f:if condition="{rsrq_newnames}">
+	<f:then>
+		<f:variable name="joop" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{joop}'/>" />
+	</f:then>
+</f:if>
+<f:link.action arguments="{joop}" addQueryString="TRUE"><span class="badge badge-pill badge-primary">First page </span> </f:link.action>
 <v:iterator.loop count="{pageInfo.numberOfPages}" iteration="iteration">
-    <f:link.action arguments="{pageNo: '{iteration.cycle}'}" addQueryString="TRUE">
+	<f:variable name="pageNo" value="{pageNo: '{iteration.cycle}'}" />
+	<f:variable name="joop" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{pageNo}'/>" />
+    <f:link.action arguments="{joop}" addQueryString="TRUE">
         <f:if condition="{iteration.cycle}=={pageInfo.currentPageNumber}">
             <f:then>
                 <f:variable name="Bingo" value="Red" />
@@ -21,6 +31,8 @@
         </f:if>
     </f:link.action>
 </v:iterator.loop>
-<f:link.action arguments="{pageNo: '{pageInfo.numberOfPages}'}"><span class="badge badge-pill badge-primary"> Last page </span></f:link.action>
+<f:variable name="pageNo" value="{pageNo: '{pageInfo.numberOfPages}'}" />
+<f:variable name="joop" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{pageNo}'/>" />
+<f:link.action arguments="{joop}"><span class="badge badge-pill badge-primary"> Last page </span></f:link.action>
 <br />
 <br />
