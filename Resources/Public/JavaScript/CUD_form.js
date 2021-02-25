@@ -37,5 +37,24 @@ jQuery(document).ready(function() {
       'step': 15,
       'scrollDefault': 'now',
       'show2400': true });
+	  
+	$("#searchInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		$("#theTable tr").filter(function() {
+		  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+	
+	$("p").on("click", function(){
+    $(this).hide();
+	});
+	
+	var total = 0;
+    $( ".Bedrag" ).each( function(){
+	total += parseFloat($(this).val()) || 0;
+	});
+    //alert(total);
+
+	console.log(total);
    
 });
