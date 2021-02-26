@@ -1,4 +1,5 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers} {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
 <f:comment>
     <f:debug>{_all}</f:debug>
@@ -50,6 +51,8 @@
                     </f:link.action>
                 </f:if>
             </div>
+
+			<b>Result:</b> {pageInfo.totalAmountOfRows} rows found</p>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-condensed" id="{flexformdata.div_id}_Table">
