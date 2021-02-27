@@ -46,7 +46,7 @@
                 </f:if>
 
                 <f:if condition="{flexformdata.cudPage}">
-                    <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}">
+                    <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" arguments="{parentFieldName: '{flexformdata.parentField}', parentFieldValue: '{rsrq_names.linkValue}'}">
                         <button class="btn btn-primary" type="button">+</button>
                     </f:link.action>
                 </f:if>

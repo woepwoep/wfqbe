@@ -145,7 +145,7 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         $flexformInfoService = new FlexformInfoService();
         $columnNames = $flexformInfoService->mergeFieldTypes();
-        DebugUtility::debug($columnNames, 'columnNames in addFormAction');
+        // DebugUtility::debug($columnNames, 'columnNames in addFormAction');
 
         // fixed values
         $TSparserObject = GeneralUtility::makeInstance(
@@ -170,6 +170,13 @@ class CudController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     );
                 }
             };
+        }
+
+        // default value for parentField
+        if ($this->request->hasArgument('parentFieldName') && $this->request->hasArgument('parentFieldValue')) {
+            $parentFieldName = $this->request->getArgument('parentFieldName');
+            $parentFieldValue = $this->request->getArgument('parentFieldValue');
+            $row[$parentFieldName] = $parentFieldValue;
         }
 
         // assign the results in a view for fluid Query/Show.html
