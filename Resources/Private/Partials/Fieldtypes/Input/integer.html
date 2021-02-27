@@ -1,10 +1,2 @@
-<div class="{columnName.type}">
-    <f:if condition="{request.controllerActionName}=='updateForm' || {request.controllerActionName}=='addForm' ">
-        <f:then>
-            <f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.number(decimals="0")}" />
-        </f:then>
-        <f:else>
-            <f:format.number decimals="0">{row.{columnName.name}}</f:format.number>
-        </f:else>
-    </f:if>
-</div>
+<f:form.textfield class="form-control {columnName.type}" name="{columnName.name}" value="{row.{columnName.name}-> f:format.number(decimals="0")}" />
+       

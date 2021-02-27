@@ -1,12 +1,6 @@
-<f:if condition="{request.controllerActionName}=='updateForm' || {request.controllerActionName}=='addForm' ">
-    <f:then>
-        <f:form.select name="{columnName.name}" options="{columnName.selectarray}" value="{row.{columnName.name}}" />
-    </f:then>
-    <f:else>
-        <f:for each="{columnName.selectarray}" as="selectLabel" key="selectKey">
-            <f:if condition="{selectKey}=={row.{columnName.name}}">
-                {selectLabel}
-            </f:if>
-        </f:for>
-    </f:else>
-</f:if>
+<f:for each="{columnName.select}" as="selectLabel" key="selectKey">
+	<f:if condition="{selectKey}=={row.{columnName.name}}">
+		{selectLabel}
+	</f:if>
+</f:for>
+    

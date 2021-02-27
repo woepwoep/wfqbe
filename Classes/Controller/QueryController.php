@@ -94,9 +94,9 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $markerFields = str_replace($search, $replace, $subject);
 
         // process RSRQ_* arguments
-        $joop = $this->request->getArguments();
-        // DebugUtility::debug($joop,'getArguments in listAction');
-        foreach ($joop as $rsrq_name => $rsrq_value) {
+        $args = $this->request->getArguments();
+        // DebugUtility::debug($args,'getArguments in listAction');
+        foreach ($args as $rsrq_name => $rsrq_value) {
             $rest = substr($rsrq_name, 0, 5);
             if ($rest === 'RSRQ_') {
                 $rsrq_names[substr($rsrq_name, 5)] = $rsrq_value;
