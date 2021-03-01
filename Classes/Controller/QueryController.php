@@ -202,12 +202,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         if (is_array($replace)) {
             foreach ($replace as $key => $value) {
-                $sjaak = preg_replace(
-                    '/' . $find . '(' . $key . ')/',
-                    $value,
-                    $this->query
-                );
-                $this->query = $sjaak;
+                if (!is_array($value)) {
+                    $sjaak = preg_replace(
+                        '/' . $find . '(' . $key . ')/',
+                        $value,
+                        $this->query
+                    );
+                    $this->query = $sjaak;
+                }
             };
         }
         // DebugUtility::debug('Please login first');
