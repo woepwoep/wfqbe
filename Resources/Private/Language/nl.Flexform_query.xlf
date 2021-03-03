@@ -46,7 +46,7 @@
         <source>Results</source>
         <target>Resultaten</target>
       </trans-unit>
-      <trans-unit id="max_items_in_list">
+      <trans-unit id="recordsForPage">
         <source>Records for page</source>
       </trans-unit>
       <trans-unit id="emptyResult">

@@ -174,11 +174,22 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $currentPageNumber,
             $itemsPerPage
         );
+		$numberOfPages = $paginator->getNumberOfPages();
+
+		$slidingPages = $this->ffdata['slidingPages'];
+		$slidingFrom = $currentPageNumber - floor(($slidingPages - 1)/2);
+		if ($slidingFrom < 1) $slidingFrom = 1;
+		$slidingTo = $slidingFrom + $slidingPages - 1;
+		if ($slidingTo > $numberOfPages ) $slidingFrom = $numberOfPages;
+
         $pageInfo = [
-            'numberOfPages' => $paginator->getNumberOfPages(),
+            'numberOfPages' => $numberOfPages,
             'currentPageNumber' => $paginator->getCurrentPageNumber(),
+			'slidingPages' => $slidingPages,
+			'slidingFrom' => $slidingFrom,
+			'slidingTo' => $slidingTo,
             'rowsPerPage' => $itemsPerPage,
-            'totalAmountOfRows' => sizeof($rows)
+            'totalAmountOfRows' => sizeof($rows),
         ];
 
         // assign the results in a view for fluid Query/List.html

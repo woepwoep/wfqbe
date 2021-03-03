@@ -55,8 +55,11 @@
       <trans-unit id="sheet_results">
         <source>Results</source>
       </trans-unit>
-      <trans-unit id="max_items_in_list">
+      <trans-unit id="recordsForPage">
         <source>Records for page</source>
+      </trans-unit>
+      <trans-unit id="slidingPages">
+        <source>Number of sliding pages</source>
       </trans-unit>
       <trans-unit id="emptyResult">
         <source>Text for empty result</source>

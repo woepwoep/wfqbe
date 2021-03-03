@@ -10,7 +10,7 @@
         <el>
             <recordsForPage>
                 <TCEforms>
-                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:max_items_in_list</label>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:recordsForPage</label>
                     <config>
                         <type>input</type>
                         <size>5</size>
@@ -23,6 +23,17 @@
                     </config>
                 </TCEforms>
             </recordsForPage>
+            <slidingPages>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:slidingPages</label>
+                    <config>
+                        <type>input</type>
+                        <size>5</size>
+                        <max>3</max>
+                        <eval>trim,num,int</eval>
+                    </config>
+                </TCEforms>
+            </slidingPages>
             <emptyResult>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:emptyResult</label>

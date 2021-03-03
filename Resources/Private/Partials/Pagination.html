@@ -12,27 +12,65 @@
 <f:variable name="rsrq_newnames" value="<rs:prependString array='{rsrq_names}' string='RSRQ_' />" />
 
 <f:if condition="{rsrq_newnames}">
-	<f:then>
-		<f:variable name="args" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{args}'/>" />
-	</f:then>
+    <f:then>
+        <f:variable name="args" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{args}'/>" />
+    </f:then>
 </f:if>
 <f:link.action arguments="{args}" addQueryString="TRUE"><span class="badge badge-pill badge-primary">First page </span> </f:link.action>
+
+<f:debug>{pageInfo}</f:debug>
 <v:iterator.loop count="{pageInfo.numberOfPages}" iteration="iteration">
-	<f:variable name="pageNo" value="{pageNo: '{iteration.cycle}'}" />
-	<f:variable name="args" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{pageNo}'/>" />
-    <f:link.action arguments="{args}" addQueryString="TRUE">
+    <f:variable name="pageNo" value="{pageNo: '{iteration.cycle}'}" />
+    <f:variable name="args" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{pageNo}'/>" />
+
+	<f:debug>{iteration.cycle}</f:debug>
+	<f:variable name="fromMinusOne" value="<v:math.sum({pageInfo.slidingFrom},-1) />" />
+	<f:variable name="toPlusOne" value='{pageInfo.slidingTo}+1' />
+	<f:debug>fromMinusOne="{fromMinusOne}" toplusone="{toPlusOne}"</f:debug>
+
+	<f:switch expression="{iteration.cycle}">
+	<f:case value="1"><f:variable name="linkAction" value="showBullet" /><f:debug>1.</f:debug></f:case>
+	<f:case value="{pageInfo.numberOfPages}"><f:variable name="linkAction" value="showBullet" /><f:debug>numPages</f:debug></f:case>
+	<f:case value="{fromMinusOne}"><f:variable name="linkAction" value="showDots" /><f:debug>from-1</f:debug></f:case>
+	<f:case value="{toPlusOne}"><f:variable name="linkAction" value="showDots" /><f:debug>to+1</f:debug></f:case>
+	<f:defaultCase>
+		<f:debug>default</f:debug>
+		<f:if condition="{iteration.cycle} < {pageInfo.slidingFrom}">
+		<f:then><f:variable name="linkAction" value="noDisplay" /><f:debug>nodisplay lt from</f:debug></f:then>
+		<f:else if="{iteration.cycle} > {pageInfo.slidingTo}"><f:variable name="linkAction" value="noDisplay" /><f:debug>nodisplay gt to</f:debug></f:else>
+		<f:else><f:variable name="linkAction" value="showBullet" /><f:debug>defaultCase else</f:debug></f:else>
+		</f:if>
+	</f:defaultCase>
+	</f:switch>
+
+	<f:if condition="{linkAction} != 'noDisplay'">
+	<f:then>
+        <f:variable name="Bingo" value="Blue" />
+
         <f:if condition="{iteration.cycle}=={pageInfo.currentPageNumber}">
-            <f:then>
-                <f:variable name="Bingo" value="Red" />
-                <span class="{Bingo} badge badge-pill badge-info">{iteration.cycle}</span>
-            </f:then>
-            <f:else>
-                <f:variable name="Bingo" value="Blue" />
-                <span class="{Bingo} badge badge-pill badge-info">{iteration.cycle}</span>
-            </f:else>
+        <f:then>
+            <f:variable name="Bingo" value="Red" />
+        </f:then>
         </f:if>
-    </f:link.action>
+
+        <f:link.action arguments="{args}" addQueryString="TRUE">
+            <f:if condition="{pageInfo.slidingPages}==0">
+            <f:then>
+                <span class="{Bingo} badge badge-pill badge-info">{iteration.cycle}</span>
+		    </f:then>
+		    <f:else>
+	            <f:switch expression="{linkAction}">
+		        <f:case value="showBullet"><span class="{Bingo} badge badge-pill badge-info">{iteration.cycle}</span></f:case>
+		        <f:case value="showDots"> ... </f:case>
+		        <f:defaultCase>joop-{iteration.cycle}</span></f:defaultCase>
+		        </f:switch>
+		    </f:else>
+		    </f:if>
+        </f:link.action>
+	</f:then>
+    </f:if>
 </v:iterator.loop>
+
 <f:variable name="pageNo" value="{pageNo: '{pageInfo.numberOfPages}'}" />
 <f:variable name="args" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{pageNo}'/>" />
 <f:link.action arguments="{args}"><span class="badge badge-pill badge-primary"> Last page </span></f:link.action>

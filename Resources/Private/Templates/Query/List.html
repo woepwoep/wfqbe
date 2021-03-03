@@ -1,140 +1,166 @@
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
-{namespace rs=RedSeadog\Wfqbe\ViewHelpers} {namespace v=FluidTYPO3\Vhs\ViewHelpers}
+
 
 <f:comment>
+  <h3> EXT:wfqbe/Resources/Private/Templates/Query/List.html </h3>
     <f:debug>{_all}</f:debug>
-    <h3>EXT:wfqbe/Resources/Private/Templates/Query/List.html</h3>
 </f:comment>
 
 <f:variable name="edit" value="EXT:wfqbe/Resources/Public/Icons/edit.gif" />
 <f:variable name="delete" value="EXT:wfqbe/Resources/Public/Icons/delete.gif" />
 <f:variable name="details" value="EXT:wfqbe/Resources/Public/Icons/details.gif" />
 
-<f:if condition="{rows}">
-    <f:then>
-        <f:if condition="{filterFieldList}">
-            <f:render partial="Filter.html" arguments="{_all}" />
-        </f:if>
-        <f:render section="resultTable" arguments="{_all}" />
-    </f:then>
-    <f:else>
-        <div class="alert alert-warning emptyResult" role="alert">
-            <f:format.html>{flexformdata.emptyResult}</f:format.html>
-        </div>
-        <f:if condition="{flexformdata.cudPage}">
-            <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" arguments="{linkValue: '{linkValue}'}">
-                <button class="btn btn-primary" type="button">{flexformdata.caption} aanmaken</button>
-            </f:link.action>
-        </f:if>
-    </f:else>
+<f:if condition="{rows}" >
+<f:then>
+  <f:if condition="{filterFieldList}" >
+    <f:render partial="Filter.html" arguments="{_all}" />
+  </f:if>
+  <f:render section="resultTable" arguments="{_all}" />
+</f:then>
+<f:else>
+  <div class="alert alert-warning emptyResult" role="alert">
+    <f:format.html>{flexformdata.emptyResult}</f:format.html>
+  </div>
+  <f:if condition="{flexformdata.cudPage}">
+    <f:link.action
+      controller="Cud"
+      pluginName="Picud"
+      action="addForm"
+      pageUid="{flexformdata.cudPage}"
+      arguments="{linkValue: '{linkValue}'}">
+      <button class="btn btn-primary" type="button" >{flexformdata.caption} aanmaken</button>
+    </f:link.action>
+  </f:if>
+</f:else>
 </f:if>
 
-<f:section name="resultTable">
-    <div class="container">
-        <div id="{flexformdata.div_id}">
-            <div class="wfqbe_description">
-                <f:if condition="{flexformdata.summary}">
-                    <f:then>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            {flexformdata.caption}
-                        </button>
-                    </f:then>
-                    <f:else>
-                        {flexformdata.caption}
-                    </f:else>
-                </f:if>
+<f:section name="resultTable" >
+<div class="container"> 
+  <div class="{flexformdata.div_id}">
+    <div class="wfqbe_description">
 
-                <f:if condition="{flexformdata.cudPage}">
-                    <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" arguments="{parentFieldName: '{flexformdata.parentField}', parentFieldValue: '{rsrq_names.linkValue}'}">
-                        <button class="btn btn-primary" type="button">+</button>
-                    </f:link.action>
-                </f:if>
-            </div>
+      <f:if condition="{flexformdata.summary}">
+      <f:then>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#summary{cObject.uid}"
+          aria-expanded="false"
+          aria-controls="summary{cObject.uid}" >
+            {flexformdata.caption}</button>
+      </f:then>
+      <f:else>
+        {flexformdata.caption}
+      </f:else>
+      </f:if>
 
-			<b>Result:</b> {pageInfo.totalAmountOfRows} rows found</p>
-
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover table-condensed" id="{flexformdata.div_id}_Table">
-                    <f:if condition="{pageInfo.numberOfPages} > '1' ">
-                        <f:render partial="Pagination" arguments="{_all}"></f:render>
-                    </f:if>
-
-                    <div class="summary">
-                        <div class="collapse" id="collapseExample">
-                            <div class="card card-body bg-light">{flexformdata.summary}</div>
-                        </div>
-                    </div>
-
-                    <thead class="wfqbe_table_header">
-                        <tr>
-                            <f:if condition="{flexformdata.detailPage}">
-                                <th></th>
-                            </f:if>
-
-                            <f:for each="{columnNames}" as="columnName">
-                                <f:if condition='{columnName.nodisplay} != "1"'>
-                                    <th>
-                                        <div class="{flexformdata.div_id}_label">
-                                            <span><f:translate id="{columnName.name}" key="{columnName.name}" default="{columnName.name}" /></span>
-                                        </div>
-                                    </th>
-                                </f:if>
-                            </f:for>
-
-                            <f:if condition="{flexformdata.cudPage}">
-                                <th class="center">Edit - Delete</th>
-                            </f:if>
-                        </tr>
-                    </thead>
-
-                    <tbody id="theTable">
-                        <f:for each="{rows}" as="row">
-                            <tr>
-                                <f:if condition="{flexformdata.detailPage}">
-                                    <td class="center">
-                                        <f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{RSRQ_linkValue: '{row.{flexformdata.keyField}}'}">
-                                            <f:image src="{details}" alt="Details" />
-                                        </f:link.action>
-                                    </td>
-                                </f:if>
-
-                                <f:for each="{columnNames}" as="columnName">
-                                    <f:if condition='{columnName.nodisplay} != "1"'>
-                                        <td>
-                                            <f:if condition="{columnName.relationField}">
-                                                <f:then>
-                                                    <f:link.action pageUid="{columnName.childPage}" arguments="{RSRQ_linkValue: '{row.{columnName.relationField}}'}">
-                                                        <f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
-                                                    </f:link.action>
-                                                </f:then>
-                                                <f:else>
-                                                    <f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
-                                                </f:else>
-                                            </f:if>
-                                        </td>
-                                    </f:if>
-                                </f:for>
-
-                                <f:if condition="{flexformdata.cudPage}">
-                                    <td class="center">
-                                        <f:link.action controller="Cud" pluginName="Picud" action="updateForm" pageUid="{flexformdata.cudPage}" arguments="{linkValue: '{row.{flexformdata.keyField}}'}">
-                                            <f:image src="{edit}" alt="Edit" />
-                                        </f:link.action>
-                                        &nbsp;-&nbsp;
-                                        <f:link.action controller="Cud" pluginName="Picud" action="deleteForm" pageUid="{flexformdata.cudPage}" arguments="{linkValue: '{row.{flexformdata.keyField}}'}">
-                                            <f:image src="{delete}" alt="Delete" />
-                                        </f:link.action>
-                                    </td>
-                                </f:if>
-                            </tr>
-                        </f:for>
-                    </tbody>
-                </table>
-
-                <f:if condition="{pageInfo.rowsPerPage}>='50' ">
-                    <f:render partial="Pagination" arguments="{_all}"></f:render>
-                </f:if>
-            </div>
-        </div>
+      <f:if condition="{flexformdata.cudPage}">
+        <f:link.action controller="Cud" pluginName="Picud" action="addForm" pageUid="{flexformdata.cudPage}" arguments="{parentFieldName: '{flexformdata.parentField}', parentFieldValue: '{rsrq_names.linkValue}'}">
+          <button class="btn btn-primary" type="button" >+</button>
+        </f:link.action>
+      </f:if>
     </div>
+	
+    <div class="table-responsive">
+      	<f:if condition="{flexformdata.isChildPage}=='0' ">
+              <input type="text" id="searchInput" size="50" placeholder="Zoek in tabel.." onchange="sum('Bedrag')" /> 
+			  <br>
+			  
+			  <br>
+       </f:if>
+        
+          
+      <table class="table table-bordered table-hover table-condensed" >
+        <f:if condition="{pageInfo.numberOfPages} > '1' ">
+          <f:render partial="Pagination" arguments="{_all}"></f:render>
+        </f:if>
+
+        <div class="summary">
+          <div class="collapse" id="summary{cObject.uid}">
+            <div class="card card-body bg-light">{flexformdata.summary}</div>
+          </div>
+        </div>
+		
+        <thead class="wfqbe_table_header">
+        <tr>
+          <f:if condition="{flexformdata.detailPage}">
+            <th></th>
+          </f:if>
+
+          <f:for each="{columnNames}" as="columnName">
+            <f:if condition='{columnName.nodisplay} != "1" '> 
+              <th>
+                <div class="{flexformdata.div_id}_label">
+                  <f:translate  key="{columnName.name}" default="{columnName.name}" />
+                </div>
+              </th>
+            </f:if>
+          </f:for>
+
+          <f:if condition="{flexformdata.cudPage}">
+            <th class="center"> Edit - Delete </th>
+          </f:if>
+        </tr>
+        </thead>
+
+        <tbody id="theTable">
+        <f:for each="{rows}" as="row" >
+          <tr>
+            <f:if condition="{flexformdata.detailPage}">
+              <td class="center">
+                <f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{RSRQ_linkValue: '{row.{flexformdata.keyField}}'}" >
+                  <f:image src="{details}" alt="Details" />
+                </f:link.action>
+              </td>
+            </f:if>
+
+            <f:for each="{columnNames}" as="columnName">
+              <f:if condition='{columnName.nodisplay} != "1" '>
+                <td class="{columnName.name}">
+                  <f:if condition="{columnName.relationField}">
+                  <f:then>
+                     <f:link.action pageUid="{columnName.childPage}" arguments="{RSRQ_linkValue: '{row.{columnName.relationField}}'}">
+                      <f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
+                    </f:link.action>
+                  </f:then>
+                  <f:else>
+                    <f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
+                  </f:else>
+                  </f:if>
+                </td>
+              </f:if>
+            </f:for>
+
+            <f:if condition="{flexformdata.cudPage}">
+              <td class="center">
+                <f:link.action controller="Cud" pluginName="Picud" action="updateForm" pageUid="{flexformdata.cudPage}"
+                  arguments="{linkValue: '{row.{flexformdata.keyField}}'}" >
+                  <f:image src="{edit}" alt="Edit" />
+                </f:link.action>
+                &nbsp;-&nbsp;
+                <f:link.action controller="Cud"        pluginName="Picud" action="deleteForm" pageUid="{flexformdata.cudPage}"
+                  arguments="{linkValue: '{row.{flexformdata.keyField}}'}" >
+                  <f:image src="{delete}" alt="Delete" />
+                </f:link.action>
+              </td>
+            </f:if>
+          </tr>
+        </f:for>
+        </tbody>
+      </table>
+
+      <f:if condition="{pageInfo.rowsPerPage}>='50' ">
+        <f:render partial="Pagination" arguments="{_all}"></f:render>
+      </f:if>
+       <br/>
+       <f:if condition="{flexformdata.isChildPage}">
+          <f:then>
+            <f:render partial="ChildPage" arguments="{_all}" />       
+          </f:then>
+       </f:if>
+      </div>
+    </div>
+  </div>
+</div>
 </f:section>
