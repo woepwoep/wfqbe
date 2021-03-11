@@ -191,7 +191,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'rowsPerPage' => $itemsPerPage,
             'totalAmountOfRows' => sizeof($rows),
         ];
-        DebugUtility::debug($pageInfo,'pageInfo in listAction');
+        // DebugUtility::debug($pageInfo,'pageInfo in listAction');
 
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
