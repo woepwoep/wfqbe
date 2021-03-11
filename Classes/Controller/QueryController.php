@@ -180,17 +180,18 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		$slidingFrom = $currentPageNumber - floor(($slidingPages - 1)/2);
 		if ($slidingFrom < 1) $slidingFrom = 1;
 		$slidingTo = $slidingFrom + $slidingPages - 1;
-		if ($slidingTo > $numberOfPages ) $slidingFrom = $numberOfPages;
+		if ($slidingTo > $numberOfPages ) $slidingTo = $numberOfPages;
 
         $pageInfo = [
             'numberOfPages' => $numberOfPages,
-            'currentPageNumber' => $paginator->getCurrentPageNumber(),
+            'currentPageNumber' => $currentPageNumber,
 			'slidingPages' => $slidingPages,
 			'slidingFrom' => $slidingFrom,
 			'slidingTo' => $slidingTo,
             'rowsPerPage' => $itemsPerPage,
             'totalAmountOfRows' => sizeof($rows),
         ];
+        DebugUtility::debug($pageInfo,'pageInfo in listAction');
 
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
