@@ -159,6 +159,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $columnNames = $sqlService->getColumnNamesFromResultRows($rows);
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
         $filterFieldList = $flexformInfoService->getFilterFieldList();
+        // DebugUtility::debug($filterFieldList,'filterFieldList in listAction');
 
         /* pagination */
         $itemsToBePaginated = $rows;
@@ -177,6 +178,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 		$numberOfPages = $paginator->getNumberOfPages();
 
 		$slidingPages = $this->ffdata['slidingPages'];
+		if (!$slidingPages) $slidingPages = 1;
 		$slidingFrom = $currentPageNumber - floor(($slidingPages - 1)/2);
 		if ($slidingFrom < 1) $slidingFrom = 1;
 		$slidingTo = $slidingFrom + $slidingPages - 1;
