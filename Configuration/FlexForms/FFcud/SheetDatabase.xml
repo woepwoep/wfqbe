@@ -24,7 +24,7 @@
                     <type>input</type>
                     <size>45</size>
                     <max>45</max>
-                    <eval>trim</eval>
+                    <eval>trim,required</eval>
                 </config>
             </identifiers>
             <fieldlist>
