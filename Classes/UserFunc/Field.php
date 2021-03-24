@@ -152,18 +152,13 @@ class Field
             return;
         }
 
-        // remove WHERE part because we need the column names
-        // DebugUtility::debug($statement,'BEFORE');
-        $wherepos = strripos($statement, 'WHERE');
-        if ($wherepos !== false) {
-            $newstatement = substr($statement, 0, $wherepos);
-            $newstatement .= ' WHERE 1=1';
-        } else {
-            $newstatement = $statement;
-        }
-        $newstatement .= ' LIMIT 1';
-        // DebugUtility::debug($newstatement,'AFTER');
+		// remove ###filterFields###
+        $pattern = '/###filterFields###/';
+        $replacement = '1=1';
+        $newstatement = preg_replace($pattern, $replacement, $statement);
 
+		// get the column names
+        // DebugUtility::debug($newstatement, 'newstatement in showQueryColumns');
         $sqlService = new SqlService($newstatement);
         $rows = $sqlService->getRows();
         $columnNames = $sqlService->getColumnNamesFromResultRows($rows);

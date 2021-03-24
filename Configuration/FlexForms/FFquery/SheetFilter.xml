@@ -50,7 +50,10 @@
                                         <eval>trim</eval>
                                     </config>
                                     <displayCond>
-										FIELD:filterFieldType:=:selectarray                                        
+                                        <or>
+									    	<value2>FIELD:filterFieldType:=:select</value2>
+									    	<value3>FIELD:filterFieldType:=:selectarray</value3>
+                                        </or>
                                     </displayCond>
                                 </TCEforms>
                             </optionlist>

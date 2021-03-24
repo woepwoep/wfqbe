@@ -10,11 +10,6 @@ EXT:.../Cud/UpdateForm.html
 <div class="container">  
 	<div id="{flexformdata.div_id}">
 		<f:form id="CUD_form" name="CUD_form" enctype="multipart/form-data" method="post" action="update" arguments="{linkValue: '{linkValue}'}"  >
-          <f:for each="{columnNames}" as="columnName">
-    		<f:if condition="{columnName.nodisplay} = '1'">
-              <f:form.hidden name="{columnName.name}" value="{row.{columnName.name}}" />
-            </f:if>
-          </f:for>
           
     		<div class="wfqbe_description">{flexformdata.caption} wijzigen</div>
 				

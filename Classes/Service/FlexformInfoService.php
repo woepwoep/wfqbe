@@ -93,16 +93,7 @@ class FlexformInfoService extends
 
                         // if type = select then arguments holds the query to fetch the foreign table rows
                         if (!strcmp('select', $columnNames[$field]['type'])) {
-                            $fkStatement = $value[$parameter]['argument'];
-                            $fkService = new SqlService($fkStatement);
-                            $fkRows = $fkService->getRows();
-                            $fieldNameArray = array_keys($fkRows[0]);
-                            $fkRowArr = array();
-                            foreach ($fkRows as $key2 => $value2) {
-                                $fkRowArr[$value2[$fieldNameArray[0]]] =
-                                    $value2[$fieldNameArray[1]];
-                            }
-                            $columnNames[$field]['select'] = $fkRowArr;
+                            $columnNames[$field]['select'] = $this->getOptionList($value[$parameter]['argument']);
                         }
                     }
                 };
@@ -176,14 +167,24 @@ class FlexformInfoService extends
         if (is_array($filterfields)) {
             foreach ($filterfields as $key => $value) {
                 $name = $value[$parameter]['filterFieldName'];
-                $fieldList[$name]['filterFieldName'] =
-                    $value[$parameter]['filterFieldName'];
-                $fieldList[$name]['filterFieldType'] =
-                    $value[$parameter]['filterFieldType'];
-                $fieldList[$name]['filterFieldWhere'] =
-                    $value[$parameter]['filterFieldWhere'];
+				$type = $value[$parameter]['filterFieldType'];
+				$where = $value[$parameter]['filterFieldWhere'];
+				$options = $value[$parameter]['optionlist'];
+                $fieldList[$name]['filterFieldName'] = $name;
+                $fieldList[$name]['filterFieldType'] = $type;
+                $fieldList[$name]['filterFieldWhere'] = $where;
+
+			    switch($type) {
+				default:
+					$fieldList[$name]['optionlist'] = '';
+					break;
+				case 'select':
+					$fieldList[$name]['optionlist'] = $this->getOptionList($value[$parameter]['optionlist']);
+					break;
+				}
             };
         }
+        // DebugUtility::debug($filterfields,'filterfields in getFilterFieldList');
         return $fieldList;
     }
 
@@ -354,5 +355,20 @@ class FlexformInfoService extends
     {
         return $this->getOptionalElement('filterFields');
     }
+
+	protected function getOptionList($statement)
+	{
+        // DebugUtility::debug($statement,'statement in getOptionList');
+        $service = new SqlService($statement);
+        $rows = $service->getRows();
+        // DebugUtility::debug($rows,'rows in getOptionList');
+        $fieldNameArray = array_keys($rows[0]);
+        $rowArr = array();
+        foreach ($rows as $key => $value) {
+            $rowArr[$value[$fieldNameArray[0]]] = $value[$fieldNameArray[1]];
+        }
+                            
+		return $rowArr;
+	}
 }
 

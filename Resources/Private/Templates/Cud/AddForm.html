@@ -10,11 +10,7 @@
 <div class="container">  
 	<div id="{flexformdata.div_id}">
 		<f:form id="{flexformdata.div_id}_form" name="{flexformdata.div_id}_form" enctype="multipart/form-data" method="post" action="add" arguments="{linkValue: '{keyField}'}" >
-    		<f:for each="{columnNames}" as="columnName">
-              <f:if condition="{columnName.nodisplay} = '1'">
-                <f:form.hidden name="{columnName.name}" value="{row.{columnName.name}}" />
-              </f:if>
-        </f:for>
+    		
           <div class="wfqbe_description">{flexformdata.caption} toevoegen</div>
     		<div class="wfqbe_block">
             	<div class="table-responsive"> 
