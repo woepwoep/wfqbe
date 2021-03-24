@@ -102,7 +102,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 $rsrq_names[substr($rsrq_name, 5)] = $rsrq_value;
             }
         }
-        DebugUtility::debug($rsrq_names,'rsrq_names in listAction');
+        // DebugUtility::debug($rsrq_names,'rsrq_names in listAction');
 
         // the RSRQ_* arguments are substituted in the raw query
         if (!empty($rsrq_names)) {
@@ -143,7 +143,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         );
 
         // execute the query and get the result set (rows)
-        DebugUtility::debug($this->query, 'this->query in listAction');
+        // DebugUtility::debug($this->query, 'this->query in listAction');
         $sqlService = new SqlService($this->query);
 
         // use the template from the Flexform if there is one
