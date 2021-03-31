@@ -19,6 +19,12 @@
       <trans-unit id="columnNames">
         <source>columnNames</source>
       </trans-unit>
+      <trans-unit id="sortField">
+        <source>sortField</source>
+      </trans-unit>
+      <trans-unit id="sortOrder">
+        <source>sortOrder</source>
+      </trans-unit>
       <trans-unit id="fieldtypes">
         <source>Field Types</source>
       </trans-unit>

@@ -28,6 +28,36 @@
                     </config>
                 </TCEforms>
             </columnNames>
+            <sortField>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sortField</label>
+                    <config>
+                        <type>input</type>
+                        <size>50</size>
+                        <max>50</max>
+                        <eval>trim,required</eval>
+                    </config>
+                </TCEforms>
+            </sortField>
+            <sortOrder>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:sortOrder</label>
+                    <config>
+                        <type>radio</type>
+                        <default>1</default>
+						<items type="array">
+							<numIndex index="0" type="array">
+								<numIndex index="0">ASC</numIndex>
+								<numIndex index="1">0</numIndex>
+							</numIndex>
+							<numIndex index="1" type="array">
+								<numIndex index="0">DESC</numIndex>
+								<numIndex index="1">1</numIndex>
+							</numIndex>
+						</items>
+                    </config>
+                </TCEforms>
+            </sortOrder>
             <fieldtypes>
                 <section>1</section>
                 <type>array</type>

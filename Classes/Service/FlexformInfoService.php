@@ -237,6 +237,21 @@ class FlexformInfoService extends
         return $whereClause;
     }
 
+	// getOrderBy
+	public function getOrderBy($rsrq_names)
+	{
+        // DebugUtility::debug($rsrq_names,'rsrq_names in getOrderBy');
+        $sortField = $this->getOptionalElement('sortField');
+		if ($rsrq_names['sortField']) $sortField = $rsrq_names['sortField'];
+        $sortOrder = $this->getOptionalElement('sortOrder');
+		if ($rsrq_names['sortOrder']) $sortOrder = $rsrq_names['sortOrder'];
+		$orderBy = '';
+		if ($sortField) $orderBy .= 'ORDER BY '.$sortField;
+		if ($sortOrder) $orderBy .= ' '.$sortOrder;
+        // DebugUtility::debug($orderBy,'orderBy in getOrderBy');
+		return $orderBy;
+	}
+
     /**
      * retrieve the targetTable from the flexform data array
      * (targetTable is required in all CRUD actions)

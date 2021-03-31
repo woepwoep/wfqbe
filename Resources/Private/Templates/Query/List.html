@@ -92,7 +92,9 @@
             <f:if condition='{columnName.nodisplay} != "1" '> 
               <th>
                 <div class="{flexformdata.div_id}_label">
-                  <f:translate  key="{columnName.name}" default="{columnName.name}" />
+				  <f:link.action arguments="{RSRQ_sortField: '{columnName.name}'}">
+                      <f:translate key="{columnName.name}" default="{columnName.name}" />
+				  </f:link.action>
                 </div>
               </th>
             </f:if>

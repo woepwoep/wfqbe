@@ -125,6 +125,15 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $sjaak = preg_replace($pattern, $replacement, $string);
         $this->query = $sjaak;
 
+		// replace the ###sortField### and ###sortOrder### markers
+        $orderBy = $flexformInfoService->getOrderBy($rsrq_names);
+        // DebugUtility::debug($orderBy,'orderBy in listAction');
+        $string = $this->query;
+        $pattern = '/###orderBy###/';
+        $replacement = $orderBy;
+        $sjaak = preg_replace($pattern, $replacement, $string);
+        $this->query = $sjaak;
+
         // remove any other marker from the query
         $string = $this->query;
         $pattern = '/###[^#]+###/';
