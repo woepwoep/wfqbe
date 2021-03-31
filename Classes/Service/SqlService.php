@@ -38,6 +38,7 @@ class SqlService
             $columnNames[] = $field;
         }
 
+		// DebugUtility::Debug($columnNames,'columnNames');
         return $columnNames;
     }
 
