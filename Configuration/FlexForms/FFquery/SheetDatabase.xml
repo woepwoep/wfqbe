@@ -17,6 +17,17 @@
                     </config>
                 </TCEforms>
             </query>
+            <columnNames>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:columnNames</label>
+                    <config>
+                        <type>input</type>
+                        <size>255</size>
+                        <max>255</max>
+                        <eval>trim,required</eval>
+                    </config>
+                </TCEforms>
+            </columnNames>
             <fieldtypes>
                 <section>1</section>
                 <type>array</type>

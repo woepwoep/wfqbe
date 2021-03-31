@@ -16,6 +16,9 @@
       <trans-unit id="query">
         <source>Query</source>
       </trans-unit>
+      <trans-unit id="columnNames">
+        <source>columnNames</source>
+      </trans-unit>
       <trans-unit id="fieldtypes">
         <source>Field Types</source>
       </trans-unit>

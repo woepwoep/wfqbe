@@ -141,33 +141,17 @@ class Field
      */
     public function showQueryColumns(array &$config, &$parentObject)
     {
-        $options = [];
-
-        $statement =
-            $config['flexParentDatabaseRow']['pi_flexform']['data']['database'][
-                'lDEF'
-            ]['query']['vDEF'];
-        if (empty($statement)) {
-            $config['items'] = $options;
-            return;
-        }
-
-		// remove ###filterFields###
-        $pattern = '/###filterFields###/';
-        $replacement = '1=1';
-        $newstatement = preg_replace($pattern, $replacement, $statement);
-
-		// get the column names
-        // DebugUtility::debug($newstatement, 'newstatement in showQueryColumns');
-        $sqlService = new SqlService($newstatement);
-        $rows = $sqlService->getRows();
-        $columnNames = $sqlService->getColumnNamesFromResultRows($rows);
+        $columnList = $config['flexParentDatabaseRow']['pi_flexform']['data']['database']['lDEF']['columnNames']['vDEF'];
+		$columnNames = explode(",",$columnList);
+		// DebugUtility::debug($columnNames,'columnNames in showQueryColumns');
         $options = [];
         foreach ($columnNames as $columnName) {
-            $options[] = [0 => $columnName, 1 => $columnName];
+			$trimmedColumnName = trim($columnName);
+            $options[] = [0 => $trimmedColumnName, 1 => $trimmedColumnName];
         }
         $config['items'] = $options;
-    }
+		// DebugUtility::debug($config['items'],'items in showQueryColumns');
+	}
 
     /**
      * PopulateFieldTypes - showing the Partials dir with a partial for each fieldType, both in CUD and in Query/database.xml flexform
