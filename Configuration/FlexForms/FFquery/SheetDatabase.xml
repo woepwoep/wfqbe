@@ -35,7 +35,7 @@
                         <type>input</type>
                         <size>50</size>
                         <max>50</max>
-                        <eval>trim,required</eval>
+                        <eval>trim</eval>
                     </config>
                 </TCEforms>
             </sortField>
@@ -48,11 +48,11 @@
 						<items type="array">
 							<numIndex index="0" type="array">
 								<numIndex index="0">ASC</numIndex>
-								<numIndex index="1">0</numIndex>
+								<numIndex index="1">ASC</numIndex>
 							</numIndex>
 							<numIndex index="1" type="array">
 								<numIndex index="0">DESC</numIndex>
-								<numIndex index="1">1</numIndex>
+								<numIndex index="1">DESC</numIndex>
 							</numIndex>
 						</items>
                     </config>
