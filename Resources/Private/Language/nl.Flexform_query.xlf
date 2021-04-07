@@ -53,6 +53,10 @@
         <source>Text for empty result</source>
         <target>Tekst voor lege resultaten</target>
       </trans-unit>
+	  <trans-unit id="numberOfColumns">
+		<source>Number of Columns</source>
+		<target>Aantal Kolommen</target>
+	  </trans-unit>
       <trans-unit id="summary">
         <source>Summary</source>
         <target>Samenvatting</target>

@@ -38,6 +38,9 @@
       <trans-unit id="templateFile">
         <source>Fluid template file</source>
       </trans-unit>
+	  <trans-unit id="numberOfColumns">
+		<source>Number of Columns</source>
+	  </trans-unit>
       <trans-unit id="summary">
         <source>Summary</source>
       </trans-unit>
