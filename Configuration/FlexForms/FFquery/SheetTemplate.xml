@@ -21,20 +21,6 @@
                     </config>
                 </TCEforms>
             </templateFile>
-            <isChildPage>
-                <TCEforms>
-                    <label>isChildPage (Y/N)</label>
-                    <config>
-                        <type>check</type>
-                        <items type="array">
-                            <numIndex index="0" type="array">
-                                <numIndex index="0"></numIndex>
-                                <numIndex index="1">isChildPage</numIndex>
-                            </numIndex>
-                        </items>
-                    </config>
-                </TCEforms>
-            </isChildPage>
             <caption>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:caption</label>

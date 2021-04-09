@@ -97,7 +97,7 @@
                                     <config>
                                         <type>select</type>
                                         <renderType>selectSingle</renderType>
-                                        <itemsProcFunc>RedSeadog\Wfqbe\UserFunc\Field->populateFieldTypes</itemsProcFunc>
+                                        <itemsProcFunc>RedSeadog\Wfqbe\UserFunc\Field->populateDisplayFieldTypes</itemsProcFunc>
                                         <autosizemax>2</autosizemax>
                                         <size>25</size>
                                         <maxitems>1</maxitems>

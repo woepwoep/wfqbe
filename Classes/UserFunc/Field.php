@@ -164,7 +164,28 @@ class Field
      * @param array $parentObject Parent Object
      * @return array
      */
-    public function populateFieldTypes(array &$config, &$parentObject)
+    public function populateDisplayFieldTypes(array &$config, &$parentObject)
+    {
+        $config["items"] = $this->populateFieldTypes('Display');
+        return $config;
+    }
+
+    public function populateInputFieldTypes(array &$config, &$parentObject)
+    {
+        $config["items"] = $this->populateFieldTypes('Input');
+        return $config;
+    }
+
+    public function populateFilterFieldTypes(array &$config, &$parentObject)
+    {
+        $config["items"] = $this->populateFieldTypes('Filter');
+        return $config;
+    }
+
+    /**
+     *
+     */
+    protected function populateFieldTypes($subdir)
     {
         $options = [];
 
@@ -173,7 +194,7 @@ class Field
 
         $partialDir =
             Environment::getPublicPath() .
-            '/typo3conf/ext/wfqbe/Resources/Private/Partials/Fieldtypes/';
+            '/typo3conf/ext/wfqbe/Resources/Private/Partials/Fieldtypes/'.$subdir;
         $filelist = array_diff(scandir($partialDir), array('..', '.'));
 
         foreach ($filelist as $_file) {
@@ -181,14 +202,8 @@ class Field
             $options[] = [0 => $fileName, 1 => $fileName];
         }
 
-        $config["items"] = $options;
-
-        return $config;
+        return $options;
     }
-
-    /**
-     *
-     */
     protected function showColumns($targetTable)
     {
         $rows = array();
