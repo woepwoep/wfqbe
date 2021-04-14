@@ -126,13 +126,14 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->query = $sjaak;
 
 		// replace the ###sortField### and ###sortOrder### markers
-        $orderBy = $flexformInfoService->getOrderBy($rsrq_names);
-        // DebugUtility::debug($orderBy,'orderBy in listAction');
+        $sortObject = $flexformInfoService->getSortObject($rsrq_names);
+        // DebugUtility::debug($sortObject,'sortObject in listAction');
         $string = $this->query;
         $pattern = '/###orderBy###/';
-        $replacement = $orderBy;
+        $replacement = $sortObject['statement'];
         $sjaak = preg_replace($pattern, $replacement, $string);
         $this->query = $sjaak;
+        // DebugUtility::debug($this->query,'query na sortObject in listAction');
 
         // remove any other marker from the query
         $string = $this->query;
@@ -227,7 +228,8 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'filterFields' => $markerFields,
             'rsrq_names' => $rsrq_names,
             'filterFieldList' => $filterFieldList,
-            'pageInfo' => $pageInfo
+            'pageInfo' => $pageInfo,
+			'sortObject' => $sortObject,
         ]);
     }
 

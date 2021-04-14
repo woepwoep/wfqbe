@@ -237,19 +237,36 @@ class FlexformInfoService extends
         return $whereClause;
     }
 
-	// getOrderBy
-	public function getOrderBy($rsrq_names)
+	// getSortObject
+	public function getSortObject($rsrq_names)
 	{
-        // DebugUtility::debug($rsrq_names,'rsrq_names in getOrderBy');
+        // DebugUtility::debug($rsrq_names,'rsrq_names in getSortObject');
+
+		// sortField and sortOrder in flexform
         $sortField = $this->getOptionalElement('sortField');
-		if ($rsrq_names['sortField']) $sortField = $rsrq_names['sortField'];
         $sortOrder = $this->getOptionalElement('sortOrder');
+        // DebugUtility::debug($sortField.' '.$sortOrder,'sortField and sortOrder in flexform');
+
+		// sortField and sortOrder overrule
+		if ($rsrq_names['sortField']) $sortField = $rsrq_names['sortField'];
 		if ($rsrq_names['sortOrder']) $sortOrder = $rsrq_names['sortOrder'];
-		$orderBy = '';
-		if ($sortField) $orderBy .= 'ORDER BY '.$sortField;
-		if ($orderBy && $sortOrder) $orderBy .= ' '.$sortOrder;
-        // DebugUtility::debug($orderBy,'orderBy in getOrderBy');
-		return $orderBy;
+        // DebugUtility::debug($sortField.' '.$sortOrder,'sortField and sortOrder overrule');
+
+		$statement = '';
+		if ($sortField) $statement .= 'ORDER BY '.$sortField;
+		if ($statement && $sortOrder) $statement .= ' '.$sortOrder;
+
+		// change order for fluid
+		if ($rsrq_names['sortOrder']) $sortOrder = $this->inverseSortOrder($rsrq_names['sortOrder']);
+
+		// return values
+		$sortObject = [
+			'sortField' => $sortField,
+			'sortOrder' => $sortOrder,
+			'statement' => $statement,
+		];
+        // DebugUtility::debug($sortObject,'sortObject in getSortObject');
+		return $sortObject;
 	}
 
     /**
@@ -384,6 +401,21 @@ class FlexformInfoService extends
         }
                             
 		return $rowArr;
+	}
+
+	protected function inverseSortOrder($sortOrder)
+	{
+		$inverse='';
+		switch($sortOrder) {
+		case 'DESC':
+			$inverse = 'ASC';
+			break;
+		case 'ASC':
+		default:
+			$inverse = 'DESC';
+			break;
+		}
+		return $inverse;
 	}
 }
 

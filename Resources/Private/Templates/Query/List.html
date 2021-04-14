@@ -6,6 +6,9 @@
     <f:debug>{_all}</f:debug>
 </f:comment>
 
+
+
+
 <f:variable name="edit" value="EXT:wfqbe/Resources/Public/Icons/edit.gif" />
 <f:variable name="delete" value="EXT:wfqbe/Resources/Public/Icons/delete.gif" />
 <f:variable name="details" value="EXT:wfqbe/Resources/Public/Icons/details.gif" />
@@ -92,9 +95,18 @@
             <f:if condition='{columnName.nodisplay} != "1" '> 
               <th>
                 <div class="{flexformdata.div_id}_label">
-				  <f:link.action arguments="{RSRQ_sortField: '{columnName.name}'}">
-                      <f:translate key="{columnName.name}" default="{columnName.name}" />
-				  </f:link.action>
+                 
+                  <f:if condition="{sortObject.sortField}">
+                  	<f:then>
+                    	<f:link.action arguments="{RSRQ_sortField: '{columnName.name}', RSRQ_sortOrder:'{sortObject.sortOrder}'}">
+                     		<f:translate key="{columnName.name}" default="{columnName.name}" />
+				  		</f:link.action>
+                    </f:then>
+                    <f:else>
+                        <f:translate key="{columnName.name}" default="{columnName.name}" />
+                    </f:else>
+                  </f:if>
+				  
                 </div>
               </th>
             </f:if>
