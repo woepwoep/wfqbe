@@ -248,7 +248,7 @@ class FlexformInfoService extends
 		$orderBy = '';
 		if ($sortField) $orderBy .= 'ORDER BY '.$sortField;
 		if ($orderBy && $sortOrder) $orderBy .= ' '.$sortOrder;
-        DebugUtility::debug($orderBy,'orderBy in getOrderBy');
+        // DebugUtility::debug($orderBy,'orderBy in getOrderBy');
 		return $orderBy;
 	}
 

@@ -3,28 +3,12 @@
 
 <f:comment>
 <f:debug>{_all}</f:debug>
-cObject UID is: {cObject.uid} <br>
-numberOfColumns is: {flexformdata.numberOfColumns}
-<br><br>
+<h3>
+  fileadmin/tmpl/wfqbe/MultiColumns.html
+</h3>
 </f:comment>
 
-<f:asset.css identifier="Detail-{cObject.uid}">
-.grid-container-{cObject.uid} {
-  display: grid;
-  grid-template-columns: 
-    <v:iterator.for from='1' to='{flexformdata.numberOfColumns}'>
-      auto 
-  	</v:iterator.for>;
-  grid-gap: 5px;
-  background-color: #2196F3;
-  padding: 3px;
-}
-</f:asset.css>
-
-
 <div class="container">
-	
-    <div id="{flexformdata.div_id}">
         <div class="wfqbe_description">
             <f:if condition="{flexformdata.summary}">
                 <f:then>
@@ -43,32 +27,51 @@ numberOfColumns is: {flexformdata.numberOfColumns}
 				<div class="card card-body bg-light">{flexformdata.summary}</div>
 			</div>
 		</div>
-		<div class="grid-container grid-container-{cObject.uid}">
 		
-			<f:for each="{rows}" as="row">
-				<f:for each="{columnNames}" as="columnName">
-					<f:if condition='{columnName.nodisplay} != "1"'>
-						<div class="{flexformdata.div_id}_label">
-							<b><f:translate id="{columnName.name}" key="{columnName.name}" default="{columnName.name}" />:</b>
-						</div>
-						<div>
-						<f:if condition="{columnName.relationField}">
-							<f:then>
-								<f:link.action pageUid="{columnName.childPage}" arguments="{linkValue: '{row.{columnName.relationField}}'}">
-									<f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
-								</f:link.action>
-							</f:then>
-							<f:else>
-								<f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
-							</f:else>
-						</f:if>
-						</div>
-					</f:if>
-				</f:for>
-			</f:for>
-		</div>
-        <div class="wfqbe_block">
-            <button class="btn btn-warning" onclick="goBack()">Terug</button>
+      <f:if condition="{flexformdata.gridMode}">
+      	<f:then>
+          <f:render partial="Grid.html" arguments="{_all}" />
+        </f:then>
+        <f:else>
+          <div class="wfqbe_block {flexformdata.div_id}">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-condensed">
+                    <tbody>
+                        <f:for each="{rows}" as="row">
+                            <f:for each="{columnNames}" as="columnName">
+                                <f:if condition='{columnName.nodisplay} != "1"'>
+                                    <tr>
+                                        <td>
+                                            <div class="{flexformdata.div_id}_label">
+                                                <b>
+                                                    <f:translate id="{columnName.name}" key="{columnName.name}" default="{columnName.name}" />:
+                                                </b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <f:if condition="{columnName.relationField}">
+                                                <f:then>
+                                                    <f:link.action pageUid="{columnName.childPage}" arguments="{linkValue: '{row.{columnName.relationField}}'}">
+                                                        <f:render partial="Fieldtypes/{columnName.type}" arguments="{_all}" />
+                                                    </f:link.action>
+                                                </f:then>
+                                                <f:else>
+                                                    <f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
+                                                </f:else>
+                                            </f:if>
+                                        </td>
+                                    </tr>
+                                </f:if>
+                            </f:for>
+                        </f:for>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+        </f:else>
+      </f:if>
+      <div class="wfqbe_block">
+        <br>
+        <button class="btn btn-warning" onclick="goBack()">Terug</button>
+      </div>
 </div>
