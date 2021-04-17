@@ -116,7 +116,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // insert right after the WHERE
         $flexformInfoService = new FlexformInfoService();
         $andWhere = $flexformInfoService->andWhere($rsrq_names);
-        // DebugUtility::debug($andWhere,'andWhere in listAction');
 
         // replace the special marker ###filterFields### with andWhere
         $string = $this->query;
@@ -127,13 +126,11 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 		// replace the ###sortField### and ###sortOrder### markers
         $sortObject = $flexformInfoService->getSortObject($rsrq_names);
-        // DebugUtility::debug($sortObject,'sortObject in listAction');
         $string = $this->query;
         $pattern = '/###orderBy###/';
         $replacement = $sortObject['statement'];
         $sjaak = preg_replace($pattern, $replacement, $string);
         $this->query = $sjaak;
-        // DebugUtility::debug($this->query,'query na sortObject in listAction');
 
         // remove any other marker from the query
         $string = $this->query;
@@ -169,7 +166,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $columnNames = $sqlService->getColumnNamesFromResultRows($rows);
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
         $filterFieldList = $flexformInfoService->getFilterFieldList();
-        // DebugUtility::debug($filterFieldList,'filterFieldList in listAction');
 
         /* pagination */
         $itemsToBePaginated = $rows;
@@ -213,7 +209,6 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'rowsPerPage' => $itemsPerPage,
             'totalAmountOfRows' => sizeof($rows),
         ];
-        // DebugUtility::debug($pageInfo,'pageInfo in listAction');
 
         // assign the results in a view for fluid Query/List.html
         $this->view->assignMultiple([
@@ -247,6 +242,5 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             };
         }
-        // DebugUtility::debug('Please login first');
     }
 }
