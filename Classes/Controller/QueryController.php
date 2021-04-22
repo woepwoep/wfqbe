@@ -166,6 +166,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $columnNames = $sqlService->getColumnNamesFromResultRows($rows);
         $newColumns = $flexformInfoService->mergeFieldTypes($columnNames);
         $filterFieldList = $flexformInfoService->getFilterFieldList();
+        $chartFieldList = $flexformInfoService->getChartFieldList();
 
         /* pagination */
         $itemsToBePaginated = $rows;
@@ -221,6 +222,7 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'user' => $GLOBALS["TSFE"]->fe_user->user,
             'cObject' => $this->configurationManager->getContentObject()->data,
             'filterFields' => $markerFields,
+            'chartFields' => $chartFieldList,
             'rsrq_names' => $rsrq_names,
             'filterFieldList' => $filterFieldList,
             'pageInfo' => $pageInfo,

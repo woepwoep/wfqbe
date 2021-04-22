@@ -62,6 +62,20 @@
                     </config>
                 </TCEforms>
             </isChildPage>
+			<renderChart>
+                <TCEforms>
+                    <label>Render Chart (Y/N)</label>
+                    <config>
+                        <type>check</type>
+                        <items type="array">
+                            <numIndex index="0" type="array">
+                                <numIndex index="0"></numIndex>
+                                <numIndex index="1">renderChart</numIndex>
+                            </numIndex>
+                        </items>
+                    </config>
+                </TCEforms>
+            </renderChart>
         </el>
     </ROOT>
 </T3DataStructure>

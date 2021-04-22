@@ -157,6 +157,27 @@ class FlexformInfoService extends
         return $columnNames;
     }
 
+    public function getChartFieldList()
+	{
+        // add select info from flexform
+        $chartfields = $this->getChartfields();
+        $parameter = 'typesection';
+
+        $fieldList = array();
+        if (is_array($chartfields)) {
+            foreach ($chartfields as $key => $value) {
+                $name = $value[$parameter]['name'];
+				$type = $value[$parameter]['chartType'];
+				$color = $value[$parameter]['chartColor'];
+                $fieldList[$name]['name'] = $name;
+                $fieldList[$name]['chartType'] = $type;
+                $fieldList[$name]['chartColor'] = $color;
+            };
+        }
+        // DebugUtility::debug($fieldList,'fieldList in getChartFieldList');
+        return $fieldList;
+	}
+
     public function getFilterFieldList()
     {
         // add select info from flexform
@@ -184,7 +205,7 @@ class FlexformInfoService extends
 				}
             };
         }
-        // DebugUtility::debug($filterfields,'filterfields in getFilterFieldList');
+        // DebugUtility::debug($fieldList,'fieldList in getFilterFieldList');
         return $fieldList;
     }
 
@@ -253,7 +274,7 @@ class FlexformInfoService extends
         // DebugUtility::debug($sortField.' '.$sortOrder,'sortField and sortOrder overrule');
 
 		$statement = '';
-		if ($sortField) $statement .= 'ORDER BY '.$sortField;
+		if ($sortField) $statement .= 'ORDER BY '.$this->quoted($sortField);
 		if ($statement && $sortOrder) $statement .= ' '.$sortOrder;
 
 		// change order for fluid
@@ -383,6 +404,11 @@ class FlexformInfoService extends
         return $this->getOptionalElement('linkfields');
     }
 
+    public function getChartfields()
+    {
+        return $this->getOptionalElement('chartFields');
+    }
+
     public function getFilterfields()
     {
         return $this->getOptionalElement('filterFields');
@@ -416,6 +442,15 @@ class FlexformInfoService extends
 			break;
 		}
 		return $inverse;
+	}
+
+	/**
+	 *	quoted - surround $text with single quote
+	 */
+	protected function quoted($text)
+	{
+		$quote = "'";
+		return $quote.$text.$quote;
 	}
 }
 

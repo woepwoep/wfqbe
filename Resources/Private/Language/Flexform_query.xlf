@@ -111,6 +111,31 @@
       <trans-unit id="filterFieldWhere">
         <source>Filter Field Where-clause</source>
       </trans-unit>
+	  
+	  <trans-unit id="sheet_chart">
+        <source>Chart</source>
+      </trans-unit>
+	  <trans-unit id="chartType">
+        <source>ChartType</source>
+      </trans-unit>
+	  <trans-unit id="chartColor">
+        <source>ChartColor</source>
+      </trans-unit>
+	  <trans-unit id="chartLine">
+        <source>Line</source>
+      </trans-unit>
+	  <trans-unit id="chartBar">
+        <source>Bar</source>
+      </trans-unit>
+	  <trans-unit id="chartRadar">
+        <source>Radar</source>
+      </trans-unit>
+	  <trans-unit id="label">
+        <source>Label (X-axis)</source>
+      </trans-unit>
+	  <trans-unit id="dataSet">
+        <source>Dataset</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

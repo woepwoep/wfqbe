@@ -6,9 +6,6 @@
     <f:debug>{_all}</f:debug>
 </f:comment>
 
-
-
-
 <f:variable name="edit" value="EXT:wfqbe/Resources/Public/Icons/edit.gif" />
 <f:variable name="delete" value="EXT:wfqbe/Resources/Public/Icons/delete.gif" />
 <f:variable name="details" value="EXT:wfqbe/Resources/Public/Icons/details.gif" />
@@ -36,6 +33,14 @@
   </f:if>
 </f:else>
 </f:if>
+
+<f:if condition="{flexformdata.renderChart}" >
+	<f:render partial="Chart.html" arguments="{_all}" />
+</f:if>
+
+<div>
+  <canvas id="myChart-{cObject.uid}"></canvas>
+</div>
 
 <f:section name="resultTable" >
 <div class="container"> 

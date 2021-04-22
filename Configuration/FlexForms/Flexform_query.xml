@@ -11,5 +11,6 @@
         <results>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetResults.xml</results>
         <child>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetChild.xml</child>
         <filter>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetFilter.xml</filter>
+		<chart>EXT:wfqbe/Configuration/FlexForms/FFquery/SheetChart.xml</chart>
     </sheets>
 </T3DataStructure>
