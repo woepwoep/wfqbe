@@ -130,6 +130,9 @@
 	  <trans-unit id="chartRadar">
         <source>Radar</source>
       </trans-unit>
+	  <trans-unit id="chartPie">
+        <source>Pie</source>
+      </trans-unit>
 	  <trans-unit id="label">
         <source>Label (X-axis)</source>
       </trans-unit>

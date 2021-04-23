@@ -3,12 +3,16 @@
 
 <f:comment>
 <f:debug>{_all}</f:debug>
+ {string -> f:format.raw()}
+ <f:if condition="{i.isFirst}" ><f:format.raw value="{dataSet}" /></f:if>
 </f:comment>
 
 <f:variable name="chartData" value="<rs:array2Chart rows='{rows}' />" />
 
 <f:asset.script identifier="identifier-2" src="https://cdn.jsdelivr.net/npm/chart.js" priority="1" />
 <f:asset.script identifier="identifier-3" >
+
+
 
 const data = {
   labels: <f:for each="<rs:array2Chart rows='{rows}' />" as="dataSet" iteration="i" >
@@ -21,7 +25,22 @@ const data = {
               type: <f:if condition="1">'{dataSet.chartType}',</f:if>
               label: <f:if condition="1">'{dataSet.name}',</f:if>
               data: <f:if condition="1">{chartData.{dataSet.name}},</f:if>
-              backgroundColor: <f:if condition="1">'{dataSet.chartColor}',</f:if>
+              backgroundColor: 
+				<f:if condition="{dataSet.chartColor}">
+					<f:then>
+						'{dataSet.chartColor}',
+					</f:then>
+					<f:else>
+						[
+							'rgba(255, 99, 132, 0.6)',
+							'rgba(54, 162, 235, 0.6)',
+							'rgba(255, 206, 86, 0.6)',
+							'rgba(75, 192, 192, 0.6)',
+							'rgba(153, 102, 255, 0.6)',
+							'rgba(255, 159, 64, 0.6)'
+						],
+					</f:else>
+				</f:if>
               },
             </f:for>
         ]
@@ -35,8 +54,13 @@ const config = {
         borderWidth: 3
       }
     },
+	responsive: true,
   	plugins: {
-  	  title: {
+		legend: {
+			display: true,
+			position: 'top',
+			},
+		title: {
   		display: true,
   		text: <f:if condition="1">'{flexformdata.caption}',</f:if>
   		font: {

@@ -50,7 +50,7 @@
 												<numIndex index="1">radar</numIndex>
 											</numIndex>
 											<numIndex index="3">
-												<numIndex index="0">chartPie</numIndex>
+												<numIndex index="0">LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:chartPie</numIndex>
 												<numIndex index="1">pie</numIndex>
 											</numIndex>
 										</items>
