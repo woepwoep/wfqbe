@@ -106,8 +106,8 @@
                  
                   <f:if condition="{sortObject.sortField}">
                   	<f:then>
-<f:variable name="args1" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{RSRQ_sortField: \'{columnName.name}\'}'/>" />
-<f:variable name="args2" value="<rs:arrayMerge array1='{args1}' array2='{RSRQ_sortOrder: \'{sortObject.sortOrder}\'}'/>" />
+						<f:variable name="args1" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{RSRQ_sortField: \'{columnName.name}\'}'/>" />
+						<f:variable name="args2" value="<rs:arrayMerge array1='{args1}' array2='{RSRQ_sortOrder: \'{sortObject.sortOrder}\'}'/>" />
                     	<f:link.action arguments="{args2}">
                      		<f:translate key="{columnName.name}" default="{columnName.name}" />
 				  		</f:link.action>
@@ -133,7 +133,7 @@
           <tr>
             <f:if condition="{flexformdata.detailPage}">
               <td class="center">
-                <f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{RSRQ_linkValue: '{row.{flexformdata.keyField}}'}" >
+                <f:link.action action="detailForm" pageUid="{flexformdata.detailPage}" arguments="{RSRQ_linkValue: '{row.{flexformdata.keyField}}', RSRQ_parentField: '{row.{flexformdata.parentField}}'}" >
                   <f:image src="{details}" alt="Details" />
                 </f:link.action>
               </td>
@@ -144,7 +144,7 @@
                 <td class="{columnName.name}">
                   <f:if condition="{columnName.relationField}">
                   <f:then>
-                     <f:link.action pageUid="{columnName.childPage}" arguments="{RSRQ_linkValue: '{row.{columnName.relationField}}'}">
+                     <f:link.action pageUid="{columnName.childPage}" arguments="{RSRQ_linkValue: '{row.{columnName.relationField}}', RSRQ_parentField: '{row.{flexformdata.parentField}}'}">
                       <f:render partial="Fieldtypes/Display/{columnName.type}" arguments="{_all}" />
                     </f:link.action>
                   </f:then>
