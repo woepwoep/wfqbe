@@ -274,7 +274,7 @@ class FlexformInfoService extends
         // DebugUtility::debug($sortField.' '.$sortOrder,'sortField and sortOrder overrule');
 
 		$statement = '';
-		if ($sortField) $statement .= 'ORDER BY '.$this->quoted($sortField);
+		if ($sortField) $statement .= 'ORDER BY '.$this->backquoted($sortField);
 		if ($statement && $sortOrder) $statement .= ' '.$sortOrder;
 
 		// change order for fluid
@@ -445,11 +445,11 @@ class FlexformInfoService extends
 	}
 
 	/**
-	 *	quoted - surround $text with single quote
+	 *	backquoted - surround $text with single backquote
 	 */
-	protected function quoted($text)
+	protected function backquoted($text)
 	{
-		$quote = "'";
+		$quote = "`";
 		return $quote.$text.$quote;
 	}
 }

@@ -1,3 +1,4 @@
+{namespace rs=RedSeadog\Wfqbe\ViewHelpers}
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
 
@@ -9,6 +10,8 @@
 <f:variable name="edit" value="EXT:wfqbe/Resources/Public/Icons/edit.gif" />
 <f:variable name="delete" value="EXT:wfqbe/Resources/Public/Icons/delete.gif" />
 <f:variable name="details" value="EXT:wfqbe/Resources/Public/Icons/details.gif" />
+
+<f:variable name="rsrq_newnames" value="<rs:prependString array='{rsrq_names}' string='RSRQ_' />" />
 
 <f:if condition="{rows}" >
 <f:then>
@@ -103,7 +106,9 @@
                  
                   <f:if condition="{sortObject.sortField}">
                   	<f:then>
-                    	<f:link.action arguments="{RSRQ_sortField: '{columnName.name}', RSRQ_sortOrder:'{sortObject.sortOrder}'}">
+<f:variable name="args1" value="<rs:arrayMerge array1='{rsrq_newnames}' array2='{RSRQ_sortField: \'{columnName.name}\'}'/>" />
+<f:variable name="args2" value="<rs:arrayMerge array1='{args1}' array2='{RSRQ_sortOrder: \'{sortObject.sortOrder}\'}'/>" />
+                    	<f:link.action arguments="{args2}">
                      		<f:translate key="{columnName.name}" default="{columnName.name}" />
 				  		</f:link.action>
                     </f:then>
