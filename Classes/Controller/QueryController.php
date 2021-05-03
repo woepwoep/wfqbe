@@ -150,7 +150,9 @@ class QueryController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         );
 
         // execute the query and get the result set (rows)
-        // DebugUtility::debug($this->query, 'this->query in listAction');
+        if ($this->ffdata['debug']) {
+			DebugUtility::debug($this->query, 'this->query in listAction');
+		}
         $sqlService = new SqlService($this->query);
 
         // use the template from the Flexform if there is one

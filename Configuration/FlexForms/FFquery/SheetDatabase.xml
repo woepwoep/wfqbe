@@ -17,6 +17,14 @@
                     </config>
                 </TCEforms>
             </query>
+            <debug>
+                <TCEforms>
+                    <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:debug</label>
+                    <config>
+                        <type>check</type>
+                    </config>
+                </TCEforms>
+            </debug>
             <columnNames>
                 <TCEforms>
                     <label>LLL:EXT:wfqbe/Resources/Private/Language/Flexform_query.xlf:columnNames</label>
