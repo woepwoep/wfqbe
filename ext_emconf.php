@@ -14,8 +14,8 @@ $EM_CONF['wfqbe'] = [
     'description' =>
         'This extension is based on the DB Integration (wfqbe) extension using TYPO3 v10 standards.',
     'category' => 'plugin',
-    'version' => '10.4.12',
-    'state' => 'alpha',
+    'version' => '10.4.15',
+    'state' => 'beta',
     'uploadfolder' => false,
     'createDirs' => '',
     'clearcacheonload' => true,
