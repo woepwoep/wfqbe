@@ -7,6 +7,8 @@
     <f:debug>{_all}</f:debug>
 </f:comment>
 
+<f:debug>{_all}</f:debug>
+
 <f:variable name="edit" value="EXT:wfqbe/Resources/Public/Icons/edit.gif" />
 <f:variable name="delete" value="EXT:wfqbe/Resources/Public/Icons/delete.gif" />
 <f:variable name="details" value="EXT:wfqbe/Resources/Public/Icons/details.gif" />
@@ -70,7 +72,7 @@
     </div>
 	
     <div class="table-responsive">
-      	<f:if condition="{flexformdata.isChildPage}=='0' ">
+      	<f:if condition="{flexformdata.searchField}=='1' ">
               <input type="text" id="searchInput" size="50" placeholder="Zoek in tabel.." onchange="sum('Bedrag')" /> 
 			  <br>
 			  
